@@ -32,7 +32,7 @@ export default async function AdminDashboardPage({
 
       <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <article className="card rounded-[1.8rem] p-6">
-          <p className="eyebrow text-sm text-accent">{dictionary.admin.pendingApprovals}</p>
+          <p className="eyebrow text-sm text-accent">{dictionary.admin.pendingPlayers}</p>
           <p className="mt-3 text-3xl font-black text-forest sm:text-4xl">{pendingPlayers.length}</p>
         </article>
         <article className="card rounded-[1.8rem] p-6">
@@ -74,15 +74,6 @@ export default async function AdminDashboardPage({
                     </div>
                     <div className="flex flex-wrap items-center gap-3">
                       <select
-                        name="paymentStatus"
-                        defaultValue={player.paymentStatus}
-                        className="rounded-full border border-line bg-white px-4 py-2 text-sm"
-                      >
-                        <option value="pending">{dictionary.common.statuses.pending}</option>
-                        <option value="confirmed">{dictionary.common.statuses.confirmed}</option>
-                        <option value="rejected">{dictionary.common.statuses.rejected}</option>
-                      </select>
-                      <select
                         name="approvalStatus"
                         defaultValue={player.approvalStatus}
                         className="rounded-full border border-line bg-white px-4 py-2 text-sm"
@@ -95,7 +86,7 @@ export default async function AdminDashboardPage({
                         type="submit"
                         className="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white hover:bg-forest/90"
                       >
-                        {dictionary.common.actions.save}
+                        {dictionary.admin.players.approveAction}
                       </button>
                     </div>
                   </div>

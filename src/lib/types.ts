@@ -1,6 +1,5 @@
 export type Role = "client" | "admin";
 export type ApprovalStatus = "pending" | "approved" | "rejected";
-export type PaymentStatus = "pending" | "confirmed" | "rejected";
 export type BracketStatus = "draft" | "published";
 
 export type Tournament = {
@@ -27,7 +26,6 @@ export type Profile = PublicProfile & {
   email: string;
   phone?: string | null;
   role: Role;
-  paymentStatus: PaymentStatus;
 };
 
 export type Registration = {

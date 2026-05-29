@@ -22,11 +22,10 @@ export default async function AdminPlayersPage({
       />
 
       <div className="mt-8 overflow-hidden rounded-[1.6rem] border border-line bg-surface shadow-sm sm:rounded-[2rem]">
-        <div className="hidden grid-cols-[1.2fr_1fr_0.9fr_0.9fr_0.7fr] gap-4 border-b border-line px-6 py-4 text-xs font-bold uppercase tracking-[0.18em] text-muted lg:grid">
+        <div className="hidden grid-cols-[1.2fr_1fr_1fr_0.7fr] gap-4 border-b border-line px-6 py-4 text-xs font-bold uppercase tracking-[0.18em] text-muted lg:grid">
           <span>{dictionary.admin.players.columns.player}</span>
           <span>{dictionary.admin.players.columns.contact}</span>
-          <span>{dictionary.admin.players.columns.payment}</span>
-          <span>{dictionary.admin.players.columns.approval}</span>
+          <span>{dictionary.admin.players.columns.status}</span>
           <span>{dictionary.admin.players.columns.save}</span>
         </div>
 
@@ -35,7 +34,7 @@ export default async function AdminPlayersPage({
             <form
               key={player.id}
               action={updatePlayerStatusAction}
-              className="grid gap-4 border-b border-line/80 px-6 py-5 last:border-b-0 lg:grid-cols-[1.2fr_1fr_0.9fr_0.9fr_0.7fr] lg:items-center"
+              className="grid gap-4 border-b border-line/80 px-6 py-5 last:border-b-0 lg:grid-cols-[1.2fr_1fr_1fr_0.7fr] lg:items-center"
             >
               <input type="hidden" name="profileId" value={player.id} />
               <input type="hidden" name="locale" value={locale} />
@@ -52,15 +51,6 @@ export default async function AdminPlayersPage({
                 <p>{player.category ?? dictionary.admin.players.noCategory}</p>
               </div>
               <select
-                name="paymentStatus"
-                defaultValue={player.paymentStatus}
-                className="rounded-2xl border border-line bg-white px-4 py-3 text-sm"
-              >
-                <option value="pending">{dictionary.common.statuses.pending}</option>
-                <option value="confirmed">{dictionary.common.statuses.confirmed}</option>
-                <option value="rejected">{dictionary.common.statuses.rejected}</option>
-              </select>
-              <select
                 name="approvalStatus"
                 defaultValue={player.approvalStatus}
                 className="rounded-2xl border border-line bg-white px-4 py-3 text-sm"
@@ -73,7 +63,7 @@ export default async function AdminPlayersPage({
                 type="submit"
                 className="rounded-full bg-forest px-4 py-3 text-sm font-semibold text-white hover:bg-forest/90"
               >
-                {dictionary.common.actions.save}
+                {dictionary.admin.players.approveAction}
               </button>
             </form>
           ))}

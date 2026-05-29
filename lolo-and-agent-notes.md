@@ -108,7 +108,6 @@ Enums:
 
 - `user_role`
 - `approval_status`
-- `payment_status`
 - `bracket_status`
 
 Important backend behavior:

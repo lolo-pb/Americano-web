@@ -24,7 +24,6 @@
       "pending": "Pending",
       "approved": "Approved",
       "rejected": "Rejected",
-      "confirmed": "Confirmed",
       "published": "Published",
       "draft": "Draft",
       "signupsOpen": "Signups open",
@@ -53,7 +52,7 @@
     "pitchSteps": [
       "Create your account and reserve your place.",
       "Email your payment proof to the tournament inbox.",
-      "Get approved by the admin and wait for bracket publication."
+      "Get accepted by the admin and wait for bracket publication."
     ],
     "location": "Location",
     "startDate": "Start date",
@@ -68,7 +67,7 @@
       },
       {
         "title": "Clear approval state",
-        "body": "Every player sees whether payment is pending, confirmed, or approved, without chasing admins over chat."
+        "body": "Every player sees whether their registration is pending, approved, or rejected, without chasing admins over chat."
       },
       {
         "title": "Published brackets",
@@ -159,7 +158,7 @@
     "empty": "No brackets are published yet.",
     "cardEyebrow": "Bracket",
     "emptyCard": "No players assigned yet.",
-    "publishHint": "Publish when assignments are final and payments are confirmed.",
+    "publishHint": "Publish when assignments are final and accepted players are set.",
     "joinNext": "Join next draw"
   },
   "playerProfile": {
@@ -171,13 +170,13 @@
   },
   "me": {
     "eyebrow": "My status",
-    "description": "This page keeps the player informed about payment, approval, and published tournament information.",
+    "description": "This page keeps the player informed about registration status and published tournament information.",
     "tournament": "Tournament",
     "paymentInbox": "Payment inbox",
     "bracketVisibility": "Bracket visibility",
     "published": "Published brackets are live now.",
     "notPublished": "Brackets are not published yet.",
-    "paymentHelp": "If your payment is still pending, email the proof to {paymentEmail}. Once the admin confirms it, your approval can move forward and your bracket assignment can be published.",
+    "paymentHelp": "If your registration is still pending, email your payment proof to {paymentEmail}. Once the admin confirms it, you will be accepted and your bracket assignment can be published.",
     "updateTitle": "Update profile",
     "bio": "Bio"
   },
@@ -185,7 +184,6 @@
     "eyebrow": "Admin dashboard",
     "title": "Keep approvals and brackets moving.",
     "description": "The admin view focuses on the two bottlenecks that matter most in v1: confirming players and publishing the right bracket at the right time.",
-    "pendingApprovals": "Pending approvals",
     "publishedBrackets": "Published brackets",
     "activeTournament": "Active tournament",
     "pendingPlayers": "Pending players",
@@ -197,13 +195,13 @@
     "openBracketManager": "Open bracket manager",
     "players": {
       "eyebrow": "Admin players",
-      "title": "Approve players and confirm payments.",
-      "description": "This screen is intentionally desktop-friendly and operational: review player details, confirm payment, and move them into approved status.",
+      "title": "Accept players into the tournament.",
+      "description": "This screen is intentionally desktop-friendly and operational: review player details and mark whether the registration stays pending, approved, or rejected.",
+      "approveAction": "Save status",
       "columns": {
         "player": "Player",
         "contact": "Contact",
-        "payment": "Payment",
-        "approval": "Approval",
+        "status": "Status",
         "save": "Save"
       },
       "noPhone": "No phone",
@@ -212,7 +210,7 @@
     "brackets": {
       "eyebrow": "Bracket manager",
       "title": "Assign players and publish when ready.",
-      "description": "V1 keeps bracket management explicit and manual: create a bracket, assign usernames in order, then publish it for everyone.",
+      "description": "V1 keeps bracket management explicit and manual: create a bracket, assign approved usernames in order, then publish it for everyone.",
       "createTitle": "Create a bracket",
       "createDescription": "Enter approved usernames separated by commas in the order you want them assigned.",
       "fields": {
@@ -226,7 +224,7 @@
         "usernames": "sofi-topspin, mateo-volley"
       },
       "save": "Save bracket",
-      "approvedPlayers": "Approved players",
+      "approvedPlayers": "Accepted players",
       "noApprovedPlayers": "No approved players yet.",
       "publishingControls": "Publishing controls",
       "publishingDescription": "Toggle visibility on the public brackets page. Draft brackets stay admin-only.",

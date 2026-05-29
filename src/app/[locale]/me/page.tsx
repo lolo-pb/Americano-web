@@ -32,7 +32,6 @@ export default async function MyProfilePage({
         <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <div className="flex flex-wrap gap-3">
             <StatusBadge label={dictionary.common.statuses[profile.approvalStatus]} tone={profile.approvalStatus} />
-            <StatusBadge label={dictionary.common.statuses[profile.paymentStatus]} tone={profile.paymentStatus} />
           </div>
           <dl className="mt-5 grid gap-4 text-sm">
             <div>

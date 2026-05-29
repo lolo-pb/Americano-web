@@ -2,7 +2,6 @@ create extension if not exists "pgcrypto";
 
 create type public.user_role as enum ('client', 'admin');
 create type public.approval_status as enum ('pending', 'approved', 'rejected');
-create type public.payment_status as enum ('pending', 'confirmed', 'rejected');
 create type public.bracket_status as enum ('draft', 'published');
 
 create table if not exists public.tournaments (
@@ -28,7 +27,6 @@ create table if not exists public.profiles (
   bio text,
   role public.user_role not null default 'client',
   approval_status public.approval_status not null default 'pending',
-  payment_status public.payment_status not null default 'pending',
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
@@ -127,8 +125,7 @@ begin
     phone,
     category,
     role,
-    approval_status,
-    payment_status
+    approval_status
   )
   values (
     new.id,
@@ -138,7 +135,6 @@ begin
     nullif(trim(coalesce(new.raw_user_meta_data ->> 'phone', '')), ''),
     nullif(trim(coalesce(new.raw_user_meta_data ->> 'category', '')), ''),
     'client',
-    'pending',
     'pending'
   );
 

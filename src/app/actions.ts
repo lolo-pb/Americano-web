@@ -39,7 +39,6 @@ export async function updatePlayerStatusAction(formData: FormData) {
 
   const profileId = String(formData.get("profileId"));
   const approvalStatus = String(formData.get("approvalStatus"));
-  const paymentStatus = String(formData.get("paymentStatus"));
 
   const supabase = await createClient();
 
@@ -47,7 +46,6 @@ export async function updatePlayerStatusAction(formData: FormData) {
     .from("profiles")
     .update({
       approval_status: approvalStatus,
-      payment_status: paymentStatus,
     })
     .eq("id", profileId);
 

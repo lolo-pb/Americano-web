@@ -24,7 +24,6 @@
       "pending": "Pendiente",
       "approved": "Aprobado",
       "rejected": "Rechazado",
-      "confirmed": "Confirmado",
       "published": "Publicado",
       "draft": "Borrador",
       "signupsOpen": "Inscripción abierta",
@@ -68,7 +67,7 @@
       },
       {
         "title": "Estado claro",
-        "body": "Cada jugador ve si el pago está pendiente, confirmado o aprobado, sin perseguir al admin por chat."
+        "body": "Cada jugador ve si su inscripción está pendiente, aprobada o rechazada, sin perseguir al admin por chat."
       },
       {
         "title": "Cuadros publicados",
@@ -159,7 +158,7 @@
     "empty": "Todavía no hay cuadros publicados.",
     "cardEyebrow": "Cuadro",
     "emptyCard": "Todavía no hay jugadores asignados.",
-    "publishHint": "Publicalo cuando las asignaciones y los pagos estén confirmados.",
+    "publishHint": "Publicalo cuando las asignaciones y los jugadores aceptados ya estén definidos.",
     "joinNext": "Sumarme al próximo cuadro"
   },
   "playerProfile": {
@@ -171,13 +170,13 @@
   },
   "me": {
     "eyebrow": "Mi estado",
-    "description": "Esta página mantiene al jugador al tanto del pago, la aprobación y la información publicada del torneo.",
+    "description": "Esta página mantiene al jugador al tanto del estado de su inscripción y la información publicada del torneo.",
     "tournament": "Torneo",
     "paymentInbox": "Correo de pagos",
     "bracketVisibility": "Visibilidad del cuadro",
     "published": "Los cuadros publicados ya están en vivo.",
     "notPublished": "Los cuadros todavía no están publicados.",
-    "paymentHelp": "Si tu pago sigue pendiente, enviá el comprobante a {paymentEmail}. Cuando el admin lo confirme, tu aprobación podrá avanzar y tu asignación al cuadro podrá publicarse.",
+    "paymentHelp": "Si tu inscripción sigue pendiente, enviá tu comprobante a {paymentEmail}. Cuando el admin la confirme, vas a quedar aceptado y tu asignación al cuadro podrá publicarse.",
     "updateTitle": "Actualizar perfil",
     "bio": "Biografía"
   },
@@ -185,7 +184,6 @@
     "eyebrow": "Panel admin",
     "title": "Mantené las aprobaciones y los cuadros en movimiento.",
     "description": "La vista admin se concentra en los dos cuellos de botella principales del v1: confirmar jugadores y publicar el cuadro correcto en el momento correcto.",
-    "pendingApprovals": "Aprobaciones pendientes",
     "publishedBrackets": "Cuadros publicados",
     "activeTournament": "Torneo activo",
     "pendingPlayers": "Jugadores pendientes",
@@ -197,13 +195,13 @@
     "openBracketManager": "Abrir gestor de cuadros",
     "players": {
       "eyebrow": "Jugadores admin",
-      "title": "Aprobá jugadores y confirmá pagos.",
-      "description": "Esta pantalla está pensada para escritorio y operación: revisar datos, confirmar pago y mover al jugador a aprobado.",
+      "title": "Aceptá jugadores al torneo.",
+      "description": "Esta pantalla está pensada para escritorio y operación: revisar datos del jugador y marcar si la inscripción queda pendiente, aprobada o rechazada.",
+      "approveAction": "Guardar estado",
       "columns": {
         "player": "Jugador",
         "contact": "Contacto",
-        "payment": "Pago",
-        "approval": "Aprobación",
+        "status": "Estado",
         "save": "Guardar"
       },
       "noPhone": "Sin teléfono",
@@ -212,7 +210,7 @@
     "brackets": {
       "eyebrow": "Gestor de cuadros",
       "title": "Asigná jugadores y publicá cuando esté listo.",
-      "description": "El v1 mantiene la gestión de cuadros explícita y manual: creá un cuadro, asigná usuarios en orden y después publicalo para todos.",
+      "description": "El v1 mantiene la gestión de cuadros explícita y manual: creá un cuadro, asigná usuarios aprobados en orden y después publicalo para todos.",
       "createTitle": "Crear un cuadro",
       "createDescription": "Ingresá los usernames aprobados separados por comas en el orden en que querés asignarlos.",
       "fields": {
@@ -226,7 +224,7 @@
         "usernames": "sofi-topspin, mateo-volley"
       },
       "save": "Guardar cuadro",
-      "approvedPlayers": "Jugadores aprobados",
+      "approvedPlayers": "Jugadores aceptados",
       "noApprovedPlayers": "Todavía no hay jugadores aprobados.",
       "publishingControls": "Controles de publicación",
       "publishingDescription": "Cambiá la visibilidad en la página pública de cuadros. Los cuadros en borrador quedan solo para admin.",

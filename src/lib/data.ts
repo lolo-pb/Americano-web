@@ -68,7 +68,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, username, display_name, email, phone, role, approval_status, payment_status, category, bio, avatar_url")
+    .select("id, username, display_name, email, phone, role, approval_status, category, bio, avatar_url")
     .eq("id", user.id)
     .single();
 
@@ -91,7 +91,6 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
       phone: profile.phone ? String(profile.phone) : null,
       role: String(profile.role) as Profile["role"],
       approvalStatus: String(profile.approval_status) as Profile["approvalStatus"],
-      paymentStatus: String(profile.payment_status) as Profile["paymentStatus"],
       category: profile.category ? String(profile.category) : null,
       bio: profile.bio ? String(profile.bio) : null,
       avatarUrl: profile.avatar_url ? String(profile.avatar_url) : null,
@@ -264,7 +263,7 @@ export async function getAdminPlayers(): Promise<Profile[]> {
   const supabase = await createClient();
   const { data } = await supabase!
     .from("profiles")
-    .select("id, username, display_name, email, phone, role, approval_status, payment_status, category, bio, avatar_url")
+    .select("id, username, display_name, email, phone, role, approval_status, category, bio, avatar_url")
     .order("created_at", { ascending: false });
 
   return (data ?? []).map((profile) => ({
@@ -275,7 +274,6 @@ export async function getAdminPlayers(): Promise<Profile[]> {
     phone: profile.phone ? String(profile.phone) : null,
     role: String(profile.role) as Profile["role"],
     approvalStatus: String(profile.approval_status) as Profile["approvalStatus"],
-    paymentStatus: String(profile.payment_status) as Profile["paymentStatus"],
     category: profile.category ? String(profile.category) : null,
     bio: profile.bio ? String(profile.bio) : null,
     avatarUrl: profile.avatar_url ? String(profile.avatar_url) : null,
