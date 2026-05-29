@@ -94,15 +94,19 @@
       "displayName": "Display name",
       "username": "Username",
       "email": "Email",
+      "confirmEmail": "Confirm email",
       "password": "Password",
-      "phone": "Phone",
+      "confirmPassword": "Confirm password",
+      "phone": "Phone (optional)",
       "category": "Category"
     },
     "placeholders": {
       "displayName": "Sofia Rojas",
       "username": "sofi-topspin",
       "email": "you@example.com",
+      "confirmEmail": "Repeat your email",
       "password": "8+ characters",
+      "confirmPassword": "Repeat your password",
       "phone": "+54 11 ..."
     },
     "paymentNotice": "After signup, send your payment proof to {paymentEmail}. An admin will confirm it and approve your entry.",
@@ -115,7 +119,9 @@
       "usernameLength": "Choose at least 3 characters.",
       "usernameFormat": "Use lowercase letters, numbers, and dashes only.",
       "email": "Use a valid email.",
+      "emailMatch": "Emails do not match.",
       "password": "Use at least 8 characters.",
+      "passwordMatch": "Passwords do not match.",
       "supabase": "Supabase is not configured yet. Add the environment variables to enable real signups.",
       "generic": "Signup failed."
     }

@@ -23,7 +23,7 @@ export default async function AdminDashboardPage({
   const publishedBrackets = brackets.filter((bracket) => bracket.status === "published");
 
   return (
-    <div className="page-shell py-10 sm:py-14">
+    <div className="page-shell py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.admin.eyebrow}
         title={dictionary.admin.title}
@@ -33,11 +33,11 @@ export default async function AdminDashboardPage({
       <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <article className="card rounded-[1.8rem] p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.admin.pendingApprovals}</p>
-          <p className="mt-3 text-4xl font-black text-forest">{pendingPlayers.length}</p>
+          <p className="mt-3 text-3xl font-black text-forest sm:text-4xl">{pendingPlayers.length}</p>
         </article>
         <article className="card rounded-[1.8rem] p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.admin.publishedBrackets}</p>
-          <p className="mt-3 text-4xl font-black text-forest">{publishedBrackets.length}</p>
+          <p className="mt-3 text-3xl font-black text-forest sm:text-4xl">{publishedBrackets.length}</p>
         </article>
         <article className="card rounded-[1.8rem] p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.admin.activeTournament}</p>
@@ -46,9 +46,9 @@ export default async function AdminDashboardPage({
       </div>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
-        <section className="card rounded-[2rem] p-6">
+        <section className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.pendingPlayers}</h2>
+            <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.pendingPlayers}</h2>
             <Link
               href={localizeHref(locale, "/admin/players")}
               className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
@@ -109,8 +109,8 @@ export default async function AdminDashboardPage({
           </div>
         </section>
 
-        <aside className="card rounded-[2rem] p-6">
-          <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.publishingState}</h2>
+        <aside className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.publishingState}</h2>
           <div className="mt-5 grid gap-4">
             {brackets.length ? (
               brackets.map((bracket) => (

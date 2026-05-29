@@ -15,7 +15,9 @@ type SignUpValues = {
   displayName: string;
   username: string;
   email: string;
+  confirmEmail: string;
   password: string;
+  confirmPassword: string;
   phone?: string;
   category?: string;
 };
@@ -41,9 +43,19 @@ export function SignUpForm({
         .min(3, t("signUp.errors.usernameLength"))
         .regex(/^[a-z0-9-]+$/, t("signUp.errors.usernameFormat")),
       email: z.email(t("signUp.errors.email")),
+      confirmEmail: z.email(t("signUp.errors.email")),
       password: z.string().min(8, t("signUp.errors.password")),
+      confirmPassword: z.string().min(8, t("signUp.errors.password")),
       phone: z.string().optional(),
       category: z.string().optional(),
+    })
+    .refine((data) => data.email === data.confirmEmail, {
+      message: t("signUp.errors.emailMatch"),
+      path: ["confirmEmail"],
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("signUp.errors.passwordMatch"),
+      path: ["confirmPassword"],
     })
     .transform((data) => ({
       ...data,
@@ -101,8 +113,8 @@ export function SignUpForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[2rem] p-6 sm:p-8">
-      <div className="grid gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">
+      <div className="grid gap-4 sm:gap-5">
         <label className="grid gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.displayName")}</span>
           <input
@@ -135,6 +147,17 @@ export function SignUpForm({
         </label>
 
         <label className="grid gap-2">
+          <span className="text-sm font-semibold text-ink">{t("signUp.fields.confirmEmail")}</span>
+          <input
+            {...register("confirmEmail")}
+            type="email"
+            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            placeholder={t("signUp.placeholders.confirmEmail")}
+          />
+          {errors.confirmEmail && <p className="text-sm text-danger">{errors.confirmEmail.message}</p>}
+        </label>
+
+        <label className="grid gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.password")}</span>
           <input
             {...register("password")}
@@ -143,6 +166,19 @@ export function SignUpForm({
             placeholder={t("signUp.placeholders.password")}
           />
           {errors.password && <p className="text-sm text-danger">{errors.password.message}</p>}
+        </label>
+
+        <label className="grid gap-2">
+          <span className="text-sm font-semibold text-ink">{t("signUp.fields.confirmPassword")}</span>
+          <input
+            {...register("confirmPassword")}
+            type="password"
+            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            placeholder={t("signUp.placeholders.confirmPassword")}
+          />
+          {errors.confirmPassword && (
+            <p className="text-sm text-danger">{errors.confirmPassword.message}</p>
+          )}
         </label>
 
         <div className="grid gap-5 sm:grid-cols-2">

@@ -14,14 +14,14 @@ export default async function AdminPlayersPage({
   const [players, dictionary] = await Promise.all([getAdminPlayers(), getDictionary(locale)]);
 
   return (
-    <div className="page-shell py-10 sm:py-14">
+    <div className="page-shell py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.admin.players.eyebrow}
         title={dictionary.admin.players.title}
         description={dictionary.admin.players.description}
       />
 
-      <div className="mt-8 overflow-hidden rounded-[2rem] border border-line bg-surface shadow-sm">
+      <div className="mt-8 overflow-hidden rounded-[1.6rem] border border-line bg-surface shadow-sm sm:rounded-[2rem]">
         <div className="hidden grid-cols-[1.2fr_1fr_0.9fr_0.9fr_0.7fr] gap-4 border-b border-line px-6 py-4 text-xs font-bold uppercase tracking-[0.18em] text-muted lg:grid">
           <span>{dictionary.admin.players.columns.player}</span>
           <span>{dictionary.admin.players.columns.contact}</span>

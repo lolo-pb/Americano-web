@@ -18,15 +18,15 @@ export default async function SignUpPage({
   }
 
   return (
-    <div className="page-shell grid gap-8 py-10 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
+    <div className="page-shell grid gap-7 py-8 sm:gap-8 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
       <div className="space-y-6">
         <SectionHeading
           eyebrow={dictionary.signUp.eyebrow}
           title={dictionary.signUp.title}
           description={dictionary.signUp.description}
         />
-        <div className="card rounded-[2rem] p-6">
-          <h3 className="text-xl font-bold text-forest">{dictionary.signUp.nextTitle}</h3>
+        <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <h3 className="text-lg font-bold text-forest sm:text-xl">{dictionary.signUp.nextTitle}</h3>
           <ol className="mt-4 grid gap-3 text-sm leading-7 text-muted">
             {dictionary.signUp.steps.map((step) => (
               <li key={step}>{interpolate(step, { paymentEmail: env.paymentEmail })}</li>

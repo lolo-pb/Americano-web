@@ -94,15 +94,19 @@
       "displayName": "Nombre visible",
       "username": "Usuario",
       "email": "Email",
+      "confirmEmail": "Repetir email",
       "password": "Contraseña",
-      "phone": "Teléfono",
+      "confirmPassword": "Repetir contraseña",
+      "phone": "Teléfono (opcional)",
       "category": "Categoría"
     },
     "placeholders": {
       "displayName": "Sofia Rojas",
       "username": "sofi-topspin",
       "email": "vos@ejemplo.com",
+      "confirmEmail": "Repetí tu email",
       "password": "8+ caracteres",
+      "confirmPassword": "Repetí tu contraseña",
       "phone": "+54 11 ..."
     },
     "paymentNotice": "Después de inscribirte, enviá tu comprobante de pago a {paymentEmail}. Un admin lo confirmará y aprobará tu entrada.",
@@ -115,7 +119,9 @@
       "usernameLength": "Elegí al menos 3 caracteres.",
       "usernameFormat": "Usá solo letras minúsculas, números y guiones.",
       "email": "Usá un email válido.",
+      "emailMatch": "Los emails no coinciden.",
       "password": "Usá al menos 8 caracteres.",
+      "passwordMatch": "Las contraseñas no coinciden.",
       "supabase": "Supabase todavía no está configurado. Agregá las variables de entorno para habilitar inscripciones reales.",
       "generic": "Falló la inscripción."
     }

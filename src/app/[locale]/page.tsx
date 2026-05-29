@@ -20,14 +20,14 @@ export default async function HomePage({
 
   return (
     <div className="pb-16">
-      <section className="page-shell grid gap-10 py-10 sm:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <section className="page-shell grid gap-8 py-8 sm:gap-10 sm:py-14 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div className="space-y-8">
           <div className="space-y-5">
             <p className="eyebrow text-accent">{dictionary.home.eyebrow}</p>
-            <h1 className="font-heading text-6xl leading-none text-forest sm:text-7xl">
+            <h1 className="font-heading text-5xl leading-none text-forest sm:text-7xl">
               {dictionary.home.title}
             </h1>
-            <p className="max-w-xl text-lg leading-8 text-muted">{dictionary.home.description}</p>
+            <p className="max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">{dictionary.home.description}</p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -70,11 +70,11 @@ export default async function HomePage({
           </div>
         </div>
 
-        <div className="card court-lines overflow-hidden rounded-[2.25rem] p-6 sm:p-8">
-          <div className="rounded-[1.5rem] border border-white/60 bg-white/65 p-6 backdrop-blur">
+        <div className="card court-lines overflow-hidden rounded-[1.8rem] p-4 sm:rounded-[2.25rem] sm:p-8">
+          <div className="rounded-[1.25rem] border border-white/60 bg-white/65 p-4 backdrop-blur sm:rounded-[1.5rem] sm:p-6">
             <p className="eyebrow text-sm text-accent">{dictionary.home.pitchEyebrow}</p>
-            <h2 className="mt-3 text-3xl font-extrabold text-forest">{tournament.name}</h2>
-            <p className="mt-4 leading-7 text-muted">{tournament.description}</p>
+            <h2 className="mt-3 text-2xl font-extrabold text-forest sm:text-3xl">{tournament.name}</h2>
+            <p className="mt-4 text-sm leading-6 text-muted sm:text-base sm:leading-7">{tournament.description}</p>
             <div className="mt-6 grid gap-3">
               {dictionary.home.pitchSteps.map((item) => (
                 <div key={item} className="rounded-2xl bg-forest px-4 py-3 text-sm font-medium text-white">
@@ -86,7 +86,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="page-shell py-8 sm:py-14">
+      <section className="page-shell py-7 sm:py-14">
         <SectionHeading
           eyebrow={dictionary.home.playersEyebrow}
           title={dictionary.home.playersTitle}
@@ -103,7 +103,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="page-shell py-8 sm:py-14">
+      <section className="page-shell py-7 sm:py-14">
         <SectionHeading
           eyebrow={dictionary.home.publishedEyebrow}
           title={dictionary.home.publishedTitle}
@@ -114,7 +114,7 @@ export default async function HomePage({
           {brackets.length ? (
             brackets.map((bracket) => <BracketCard key={bracket.id} bracket={bracket} locale={locale} />)
           ) : (
-            <div className="card rounded-[2rem] p-8 text-muted">{dictionary.home.emptyBrackets}</div>
+            <div className="card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">{dictionary.home.emptyBrackets}</div>
           )}
         </div>
       </section>

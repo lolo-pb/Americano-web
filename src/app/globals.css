@@ -50,6 +50,7 @@ body {
     linear-gradient(135deg, #f7efdc, #f8f3e8 48%, #ecf4ec);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
+  font-size: 15px;
 }
 
 a,
@@ -95,4 +96,16 @@ textarea {
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 100% 5rem, 5rem 100%;
   background-position: center;
+}
+
+@media (max-width: 767px) {
+  .page-shell {
+    width: min(1120px, calc(100% - 1rem));
+  }
+
+  .card {
+    box-shadow:
+      0 8px 24px rgba(35, 39, 37, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
 }

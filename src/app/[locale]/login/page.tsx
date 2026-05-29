@@ -21,14 +21,14 @@ export default async function LoginPage({
   }
 
   return (
-    <div className="page-shell grid gap-8 py-10 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
+    <div className="page-shell grid gap-7 py-8 sm:gap-8 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
       <div className="space-y-6">
         <SectionHeading
           eyebrow={dictionary.login.eyebrow}
           title={dictionary.login.title}
           description={dictionary.login.description}
         />
-        <div className="card rounded-[2rem] p-6 text-sm leading-7 text-muted">
+        <div className="card rounded-[1.6rem] p-4 text-sm leading-6 text-muted sm:rounded-[2rem] sm:p-6 sm:leading-7">
           {dictionary.login.pendingInfo}
         </div>
       </div>

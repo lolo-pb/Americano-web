@@ -16,7 +16,7 @@ export default async function BracketsPage({
   ]);
 
   return (
-    <div className="page-shell py-10 sm:py-14">
+    <div className="page-shell py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.brackets.eyebrow}
         title={`${tournament.name} ${dictionary.brackets.titleSuffix}`}
@@ -27,7 +27,7 @@ export default async function BracketsPage({
         {brackets.length ? (
           brackets.map((bracket) => <BracketCard key={bracket.id} bracket={bracket} locale={locale} />)
         ) : (
-          <div className="card rounded-[2rem] p-8 text-muted">{dictionary.brackets.empty}</div>
+          <div className="card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">{dictionary.brackets.empty}</div>
         )}
       </div>
     </div>

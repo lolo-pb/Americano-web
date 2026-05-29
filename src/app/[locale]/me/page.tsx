@@ -21,7 +21,7 @@ export default async function MyProfilePage({
   const profile = viewer.profile ?? demoProfiles[2];
 
   return (
-    <div className="page-shell grid gap-8 py-10 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
+    <div className="page-shell grid gap-7 py-8 sm:gap-8 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
       <div className="space-y-6">
         <SectionHeading
           eyebrow={dictionary.me.eyebrow}
@@ -29,7 +29,7 @@ export default async function MyProfilePage({
           description={dictionary.me.description}
         />
 
-        <div className="card rounded-[2rem] p-6">
+        <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <div className="flex flex-wrap gap-3">
             <StatusBadge label={dictionary.common.statuses[profile.approvalStatus]} tone={profile.approvalStatus} />
             <StatusBadge label={dictionary.common.statuses[profile.paymentStatus]} tone={profile.paymentStatus} />
@@ -52,7 +52,7 @@ export default async function MyProfilePage({
           </dl>
         </div>
 
-        <div className="card rounded-[2rem] p-6 text-sm leading-7 text-muted">
+        <div className="card rounded-[1.6rem] p-4 text-sm leading-6 text-muted sm:rounded-[2rem] sm:p-6 sm:leading-7">
           {interpolate(dictionary.me.paymentHelp, { paymentEmail: env.paymentEmail })}
         </div>
 
@@ -64,9 +64,9 @@ export default async function MyProfilePage({
         </Link>
       </div>
 
-      <form action={updateProfileAction} className="card rounded-[2rem] p-6 sm:p-8">
+      <form action={updateProfileAction} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">
         <input type="hidden" name="locale" value={locale} />
-        <h2 className="text-2xl font-extrabold text-forest">{dictionary.me.updateTitle}</h2>
+        <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.me.updateTitle}</h2>
         <div className="mt-6 grid gap-5">
           <label className="grid gap-2">
             <span className="text-sm font-semibold text-ink">{dictionary.signUp.fields.displayName}</span>

@@ -18,11 +18,11 @@ export function BracketCard({
   const { t } = useI18n();
 
   return (
-    <article className="card rounded-[2rem] p-6">
+    <article className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="eyebrow text-sm text-accent">{t("brackets.cardEyebrow")}</p>
-          <h3 className="mt-2 text-2xl font-extrabold text-forest">{bracket.name}</h3>
+          <p className="eyebrow text-[0.78rem] text-accent sm:text-sm">{t("brackets.cardEyebrow")}</p>
+          <h3 className="mt-2 text-xl font-extrabold text-forest sm:text-2xl">{bracket.name}</h3>
           <p className="mt-1 text-sm text-muted">{bracket.format}</p>
         </div>
         <StatusBadge
@@ -31,15 +31,15 @@ export function BracketCard({
         />
       </div>
 
-      <div className="mt-6 grid gap-3">
+      <div className="mt-5 grid gap-2.5 sm:mt-6 sm:gap-3">
         {bracket.entries.length ? (
           bracket.entries.map((entry) => (
             <div
               key={entry.id}
-              className="flex items-center justify-between rounded-2xl border border-line bg-white/70 px-4 py-3"
+              className="flex items-center justify-between rounded-[1.1rem] border border-line bg-white/70 px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3"
             >
               <div>
-                <p className="font-semibold text-ink">{entry.profile.displayName}</p>
+                <p className="text-sm font-semibold text-ink sm:text-base">{entry.profile.displayName}</p>
                 <p className="text-sm text-muted">@{entry.profile.username}</p>
               </div>
               <div className="text-right">

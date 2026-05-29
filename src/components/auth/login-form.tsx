@@ -73,8 +73,8 @@ export function LoginForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[2rem] p-6 sm:p-8">
-      <div className="grid gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">
+      <div className="grid gap-4 sm:gap-5">
         {justRegistered && (
           <div className="rounded-2xl bg-forest-soft px-4 py-4 text-sm text-forest">
             {t("login.registeredMessage")}

@@ -20,7 +20,7 @@ export default async function AdminBracketsPage({
   ]);
 
   return (
-    <div className="page-shell py-10 sm:py-14">
+    <div className="page-shell py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.admin.brackets.eyebrow}
         title={dictionary.admin.brackets.title}
@@ -28,8 +28,8 @@ export default async function AdminBracketsPage({
       />
 
       <div className="mt-8 grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
-        <section className="card rounded-[2rem] p-6">
-          <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.brackets.createTitle}</h2>
+        <section className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.brackets.createTitle}</h2>
           <p className="mt-3 text-sm leading-6 text-muted">{dictionary.admin.brackets.createDescription}</p>
 
           <form action={saveBracketAction} className="mt-6 grid gap-5">
@@ -69,8 +69,8 @@ export default async function AdminBracketsPage({
           </form>
         </section>
 
-        <aside className="card rounded-[2rem] p-6">
-          <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.brackets.approvedPlayers}</h2>
+        <aside className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.brackets.approvedPlayers}</h2>
           <div className="mt-5 grid gap-3">
             {players.length ? (
               players.map((player) => (
@@ -95,8 +95,8 @@ export default async function AdminBracketsPage({
           brackets.map((bracket) => (
             <div key={bracket.id} className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
               <BracketCard bracket={bracket} adminView locale={locale} />
-              <div className="card rounded-[2rem] p-6">
-                <h3 className="text-xl font-extrabold text-forest">{dictionary.admin.brackets.publishingControls}</h3>
+              <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+                <h3 className="text-lg font-extrabold text-forest sm:text-xl">{dictionary.admin.brackets.publishingControls}</h3>
                 <p className="mt-3 text-sm leading-6 text-muted">{dictionary.admin.brackets.publishingDescription}</p>
 
                 <form action={toggleBracketPublishAction} className="mt-6">
@@ -120,7 +120,7 @@ export default async function AdminBracketsPage({
             </div>
           ))
         ) : (
-          <div className="card rounded-[2rem] p-8 text-muted">{dictionary.admin.brackets.empty}</div>
+          <div className="card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">{dictionary.admin.brackets.empty}</div>
         )}
       </div>
     </div>

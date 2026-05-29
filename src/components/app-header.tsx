@@ -17,14 +17,20 @@ export function AppHeader({
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-surface/85 backdrop-blur-xl">
       <div className="page-shell flex items-center justify-between gap-4 py-3">
-        <Link href={localizeHref(locale, "/")} className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent text-lg font-black text-white shadow-lg shadow-accent/20">
-            AO
+        <div className="flex flex-1 items-center justify-between gap-3 md:flex-none">
+          <Link href={localizeHref(locale, "/")} className="flex min-w-0 items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-lg font-black text-white shadow-lg shadow-accent/20">
+              AO
+            </div>
+            <div className="min-w-0">
+              <HeaderText />
+            </div>
+          </Link>
+
+          <div className="md:hidden">
+            <LanguageSwitcher />
           </div>
-          <div>
-            <HeaderText />
-          </div>
-        </Link>
+        </div>
 
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
@@ -34,13 +40,8 @@ export function AppHeader({
         </div>
       </div>
 
-      <div className="page-shell flex flex-col gap-3 pb-3 md:hidden">
-        <div className="flex justify-end">
-          <LanguageSwitcher />
-        </div>
-        <div className="flex items-center gap-2 overflow-x-auto">
-          <NavLinks locale={locale} viewer={viewer} mobile />
-        </div>
+      <div className="page-shell flex items-center gap-2 overflow-x-auto pb-3 md:hidden">
+        <NavLinks locale={locale} viewer={viewer} mobile />
       </div>
     </header>
   );

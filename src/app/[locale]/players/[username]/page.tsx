@@ -18,7 +18,7 @@ export default async function PlayerProfilePage({
   }
 
   return (
-    <div className="page-shell py-10 sm:py-14">
+    <div className="page-shell py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.playerProfile.eyebrow}
         title={profile.displayName}
@@ -26,11 +26,11 @@ export default async function PlayerProfilePage({
       />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <aside className="card rounded-[2rem] p-6">
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-forest text-4xl font-black text-white">
+        <aside className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-forest text-3xl font-black text-white sm:h-24 sm:w-24 sm:text-4xl">
             {profile.displayName.slice(0, 1)}
           </div>
-          <p className="mt-5 text-2xl font-extrabold text-forest">{profile.displayName}</p>
+          <p className="mt-4 text-xl font-extrabold text-forest sm:mt-5 sm:text-2xl">{profile.displayName}</p>
           <p className="mt-1 text-muted">@{profile.username}</p>
           <div className="mt-4">
             <StatusBadge
@@ -46,9 +46,9 @@ export default async function PlayerProfilePage({
           </dl>
         </aside>
 
-        <section className="card rounded-[2rem] p-6">
-          <h2 className="text-xl font-extrabold text-forest">{dictionary.playerProfile.about}</h2>
-          <p className="mt-4 leading-7 text-muted">{profile.bio ?? dictionary.playerProfile.emptyBio}</p>
+        <section className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <h2 className="text-lg font-extrabold text-forest sm:text-xl">{dictionary.playerProfile.about}</h2>
+          <p className="mt-4 text-sm leading-6 text-muted sm:text-base sm:leading-7">{profile.bio ?? dictionary.playerProfile.emptyBio}</p>
 
           <div className="mt-6">
             <Link

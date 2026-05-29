@@ -9,11 +9,11 @@ export function SectionHeading({
 }) {
   return (
     <div className="max-w-2xl space-y-3">
-      <p className="eyebrow text-sm text-accent">{eyebrow}</p>
-      <h2 className="font-heading text-4xl leading-none text-forest sm:text-5xl">
+      <p className="eyebrow text-[0.78rem] text-accent sm:text-sm">{eyebrow}</p>
+      <h2 className="font-heading text-3xl leading-none text-forest sm:text-5xl">
         {title}
       </h2>
-      <p className="text-base leading-7 text-muted sm:text-lg">{description}</p>
+      <p className="text-[0.95rem] leading-6 text-muted sm:text-lg sm:leading-7">{description}</p>
     </div>
   );
 }
