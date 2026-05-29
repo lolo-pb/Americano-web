@@ -79,6 +79,9 @@ $$;
 alter table public.registrations
 add column if not exists team_id uuid;
 
+drop policy if exists "users read own registrations" on public.registrations;
+drop policy if exists "admins manage registrations" on public.registrations;
+
 do $$
 begin
   if exists (
@@ -117,6 +120,9 @@ drop column if exists player_id;
 
 alter table public.bracket_entries
 add column if not exists team_id uuid;
+
+drop policy if exists "published or admin bracket entries are readable" on public.bracket_entries;
+drop policy if exists "admins manage bracket entries" on public.bracket_entries;
 
 do $$
 begin
@@ -291,7 +297,6 @@ create policy "admins manage teams"
   using (public.is_admin())
   with check (public.is_admin());
 
-drop policy if exists "users read own registrations" on public.registrations;
 create policy "users read own registrations"
   on public.registrations
   for select
@@ -305,14 +310,12 @@ create policy "users read own registrations"
     )
   );
 
-drop policy if exists "admins manage registrations" on public.registrations;
 create policy "admins manage registrations"
   on public.registrations
   for all
   using (public.is_admin())
   with check (public.is_admin());
 
-drop policy if exists "published or admin bracket entries are readable" on public.bracket_entries;
 create policy "published or admin bracket entries are readable"
   on public.bracket_entries
   for select
@@ -325,7 +328,6 @@ create policy "published or admin bracket entries are readable"
     )
   );
 
-drop policy if exists "admins manage bracket entries" on public.bracket_entries;
 create policy "admins manage bracket entries"
   on public.bracket_entries
   for all
