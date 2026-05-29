@@ -12,7 +12,6 @@ import { createClient } from "@/lib/supabase/browser";
 import { slugify } from "@/lib/utils";
 
 type SignUpValues = {
-  displayName: string;
   username: string;
   email: string;
   confirmEmail: string;
@@ -37,7 +36,6 @@ export function SignUpForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const signUpSchema = z
     .object({
-      displayName: z.string().min(2, t("signUp.errors.name")),
       username: z
         .string()
         .min(3, t("signUp.errors.usernameLength"))
@@ -87,7 +85,7 @@ export function SignUpForm({
         password: parsed.password,
         options: {
           data: {
-            display_name: parsed.displayName,
+            display_name: parsed.username,
             username: parsed.username,
             phone: parsed.phone,
             category: parsed.category,
@@ -115,16 +113,6 @@ export function SignUpForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-3.5 sm:rounded-[2rem] sm:p-8">
       <div className="grid gap-3 sm:gap-5">
-        <label className="grid gap-1.5 sm:gap-2">
-          <span className="text-sm font-semibold text-ink">{t("signUp.fields.displayName")}</span>
-          <input
-            {...register("displayName")}
-            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
-            placeholder={t("signUp.placeholders.displayName")}
-          />
-          {errors.displayName && <p className="text-sm text-danger">{errors.displayName.message}</p>}
-        </label>
-
         <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.username")}</span>
           <input

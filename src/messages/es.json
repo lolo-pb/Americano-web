@@ -101,7 +101,6 @@
       "category": "Categoría"
     },
     "placeholders": {
-      "displayName": "Sofia Rojas",
       "username": "sofi-topspin",
       "email": "vos@ejemplo.com",
       "confirmEmail": "Repetí tu email",
@@ -115,7 +114,6 @@
     "haveAccount": "¿Ya te inscribiste?",
     "loginLink": "Ingresá",
     "errors": {
-      "name": "Sumá tu nombre.",
       "usernameLength": "Elegí al menos 3 caracteres.",
       "usernameFormat": "Usá solo letras minúsculas, números y guiones.",
       "email": "Usá un email válido.",
