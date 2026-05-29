@@ -3,13 +3,20 @@ import { updatePlayerStatusAction } from "@/app/actions";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
 import { getAdminBrackets, getAdminPlayers, getTournament, requireAdmin } from "@/lib/data";
+import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
 
-export default async function AdminDashboardPage() {
+export default async function AdminDashboardPage({
+  params,
+}: {
+  params: Promise<unknown>;
+}) {
+  const { locale } = (await params) as { locale: Locale };
   await requireAdmin();
-  const [players, brackets, tournament] = await Promise.all([
+  const [players, brackets, tournament, dictionary] = await Promise.all([
     getAdminPlayers(),
     getAdminBrackets(),
     getTournament(),
+    getDictionary(locale),
   ]);
 
   const pendingPlayers = players.filter((profile) => profile.approvalStatus === "pending");
@@ -18,22 +25,22 @@ export default async function AdminDashboardPage() {
   return (
     <div className="page-shell py-10 sm:py-14">
       <SectionHeading
-        eyebrow="Admin dashboard"
-        title="Keep approvals and brackets moving."
-        description="The admin view focuses on the two bottlenecks that matter most in v1: confirming players and publishing the right bracket at the right time."
+        eyebrow={dictionary.admin.eyebrow}
+        title={dictionary.admin.title}
+        description={dictionary.admin.description}
       />
 
       <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <article className="card rounded-[1.8rem] p-6">
-          <p className="eyebrow text-sm text-accent">Pending approvals</p>
+          <p className="eyebrow text-sm text-accent">{dictionary.admin.pendingApprovals}</p>
           <p className="mt-3 text-4xl font-black text-forest">{pendingPlayers.length}</p>
         </article>
         <article className="card rounded-[1.8rem] p-6">
-          <p className="eyebrow text-sm text-accent">Published brackets</p>
+          <p className="eyebrow text-sm text-accent">{dictionary.admin.publishedBrackets}</p>
           <p className="mt-3 text-4xl font-black text-forest">{publishedBrackets.length}</p>
         </article>
         <article className="card rounded-[1.8rem] p-6">
-          <p className="eyebrow text-sm text-accent">Active tournament</p>
+          <p className="eyebrow text-sm text-accent">{dictionary.admin.activeTournament}</p>
           <p className="mt-3 text-xl font-black text-forest">{tournament.name}</p>
         </article>
       </div>
@@ -41,12 +48,12 @@ export default async function AdminDashboardPage() {
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
         <section className="card rounded-[2rem] p-6">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-extrabold text-forest">Pending players</h2>
+            <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.pendingPlayers}</h2>
             <Link
-              href="/admin/players"
+              href={localizeHref(locale, "/admin/players")}
               className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
             >
-              Full player list
+              {dictionary.admin.fullPlayerList}
             </Link>
           </div>
 
@@ -59,6 +66,7 @@ export default async function AdminDashboardPage() {
                   className="rounded-[1.5rem] border border-line bg-white/70 p-4"
                 >
                   <input type="hidden" name="profileId" value={player.id} />
+                  <input type="hidden" name="locale" value={locale} />
                   <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                     <div>
                       <p className="font-bold text-ink">{player.displayName}</p>
@@ -70,24 +78,24 @@ export default async function AdminDashboardPage() {
                         defaultValue={player.paymentStatus}
                         className="rounded-full border border-line bg-white px-4 py-2 text-sm"
                       >
-                        <option value="pending">Payment pending</option>
-                        <option value="confirmed">Payment confirmed</option>
-                        <option value="rejected">Payment rejected</option>
+                        <option value="pending">{dictionary.common.statuses.pending}</option>
+                        <option value="confirmed">{dictionary.common.statuses.confirmed}</option>
+                        <option value="rejected">{dictionary.common.statuses.rejected}</option>
                       </select>
                       <select
                         name="approvalStatus"
                         defaultValue={player.approvalStatus}
                         className="rounded-full border border-line bg-white px-4 py-2 text-sm"
                       >
-                        <option value="pending">Approval pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="rejected">Rejected</option>
+                        <option value="pending">{dictionary.common.statuses.pending}</option>
+                        <option value="approved">{dictionary.common.statuses.approved}</option>
+                        <option value="rejected">{dictionary.common.statuses.rejected}</option>
                       </select>
                       <button
                         type="submit"
                         className="rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white hover:bg-forest/90"
                       >
-                        Save
+                        {dictionary.common.actions.save}
                       </button>
                     </div>
                   </div>
@@ -95,14 +103,14 @@ export default async function AdminDashboardPage() {
               ))
             ) : (
               <p className="rounded-[1.5rem] border border-dashed border-line px-4 py-6 text-sm text-muted">
-                No pending players right now.
+                {dictionary.admin.noPendingPlayers}
               </p>
             )}
           </div>
         </section>
 
         <aside className="card rounded-[2rem] p-6">
-          <h2 className="text-2xl font-extrabold text-forest">Publishing state</h2>
+          <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.publishingState}</h2>
           <div className="mt-5 grid gap-4">
             {brackets.length ? (
               brackets.map((bracket) => (
@@ -110,10 +118,12 @@ export default async function AdminDashboardPage() {
                   <div className="flex items-center justify-between gap-3">
                     <div>
                       <p className="font-bold text-ink">{bracket.name}</p>
-                      <p className="text-sm text-muted">{bracket.entries.length} players assigned</p>
+                      <p className="text-sm text-muted">
+                        {interpolate(dictionary.admin.assignedPlayers, { count: bracket.entries.length })}
+                      </p>
                     </div>
                     <StatusBadge
-                      label={bracket.status}
+                      label={dictionary.common.statuses[bracket.status]}
                       tone={bracket.status === "published" ? "published" : "draft"}
                     />
                   </div>
@@ -121,15 +131,15 @@ export default async function AdminDashboardPage() {
               ))
             ) : (
               <p className="rounded-[1.5rem] border border-dashed border-line px-4 py-6 text-sm text-muted">
-                No brackets created yet.
+                {dictionary.admin.noBrackets}
               </p>
             )}
           </div>
           <Link
-            href="/admin/brackets"
+            href={localizeHref(locale, "/admin/brackets")}
             className="mt-6 inline-flex rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white hover:bg-accent-strong"
           >
-            Open bracket manager
+            {dictionary.admin.openBracketManager}
           </Link>
         </aside>
       </div>

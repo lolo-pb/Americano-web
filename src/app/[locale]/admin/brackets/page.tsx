@@ -2,55 +2,61 @@ import { saveBracketAction, toggleBracketPublishAction } from "@/app/actions";
 import { BracketCard } from "@/components/bracket-card";
 import { SectionHeading } from "@/components/section-heading";
 import { getAdminBrackets, getApprovedPlayers, getTournament, requireAdmin } from "@/lib/data";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
-export default async function AdminBracketsPage() {
+export default async function AdminBracketsPage({
+  params,
+}: {
+  params: Promise<unknown>;
+}) {
+  const { locale } = (await params) as { locale: Locale };
   await requireAdmin();
 
-  const [tournament, brackets, players] = await Promise.all([
+  const [tournament, brackets, players, dictionary] = await Promise.all([
     getTournament(),
     getAdminBrackets(),
     getApprovedPlayers(),
+    getDictionary(locale),
   ]);
 
   return (
     <div className="page-shell py-10 sm:py-14">
       <SectionHeading
-        eyebrow="Bracket manager"
-        title="Assign players and publish when ready."
-        description="V1 keeps bracket management explicit and manual: create a bracket, assign player usernames in order, then publish it for everyone."
+        eyebrow={dictionary.admin.brackets.eyebrow}
+        title={dictionary.admin.brackets.title}
+        description={dictionary.admin.brackets.description}
       />
 
       <div className="mt-8 grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
         <section className="card rounded-[2rem] p-6">
-          <h2 className="text-2xl font-extrabold text-forest">Create a bracket</h2>
-          <p className="mt-3 text-sm leading-6 text-muted">
-            Enter approved player usernames separated by commas in the order you want them assigned.
-          </p>
+          <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.brackets.createTitle}</h2>
+          <p className="mt-3 text-sm leading-6 text-muted">{dictionary.admin.brackets.createDescription}</p>
 
           <form action={saveBracketAction} className="mt-6 grid gap-5">
             <input type="hidden" name="tournamentId" value={tournament.id} />
+            <input type="hidden" name="locale" value={locale} />
             <label className="grid gap-2">
-              <span className="text-sm font-semibold text-ink">Bracket name</span>
+              <span className="text-sm font-semibold text-ink">{dictionary.admin.brackets.fields.name}</span>
               <input
                 name="name"
-                placeholder="Saturday Sunrise Draw"
+                placeholder={dictionary.admin.brackets.placeholders.name}
                 className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
               />
             </label>
             <label className="grid gap-2">
-              <span className="text-sm font-semibold text-ink">Format</span>
+              <span className="text-sm font-semibold text-ink">{dictionary.admin.brackets.fields.format}</span>
               <input
                 name="format"
-                defaultValue="Americano - 8 players"
+                defaultValue={dictionary.admin.brackets.placeholders.format}
                 className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
               />
             </label>
             <label className="grid gap-2">
-              <span className="text-sm font-semibold text-ink">Usernames in order</span>
+              <span className="text-sm font-semibold text-ink">{dictionary.admin.brackets.fields.usernames}</span>
               <textarea
                 name="usernames"
                 rows={5}
-                placeholder="sofi-topspin, mateo-volley"
+                placeholder={dictionary.admin.brackets.placeholders.usernames}
                 className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
               />
             </label>
@@ -58,26 +64,26 @@ export default async function AdminBracketsPage() {
               type="submit"
               className="rounded-full bg-accent px-5 py-3 font-semibold text-white hover:bg-accent-strong"
             >
-              Save bracket
+              {dictionary.admin.brackets.save}
             </button>
           </form>
         </section>
 
         <aside className="card rounded-[2rem] p-6">
-          <h2 className="text-2xl font-extrabold text-forest">Approved players</h2>
+          <h2 className="text-2xl font-extrabold text-forest">{dictionary.admin.brackets.approvedPlayers}</h2>
           <div className="mt-5 grid gap-3">
             {players.length ? (
               players.map((player) => (
                 <div key={player.id} className="rounded-[1.5rem] border border-line bg-white/70 px-4 py-3">
                   <p className="font-bold text-ink">{player.displayName}</p>
                   <p className="text-sm text-muted">
-                    @{player.username} · {player.category ?? "Open"}
+                    @{player.username} · {player.category ?? dictionary.common.levels.open}
                   </p>
                 </div>
               ))
             ) : (
               <p className="rounded-[1.5rem] border border-dashed border-line px-4 py-6 text-sm text-muted">
-                No approved players yet.
+                {dictionary.admin.brackets.noApprovedPlayers}
               </p>
             )}
           </div>
@@ -88,15 +94,14 @@ export default async function AdminBracketsPage() {
         {brackets.length ? (
           brackets.map((bracket) => (
             <div key={bracket.id} className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr]">
-              <BracketCard bracket={bracket} adminView />
+              <BracketCard bracket={bracket} adminView locale={locale} />
               <div className="card rounded-[2rem] p-6">
-                <h3 className="text-xl font-extrabold text-forest">Publishing controls</h3>
-                <p className="mt-3 text-sm leading-6 text-muted">
-                  Toggle visibility on the public brackets page. Draft brackets stay admin-only.
-                </p>
+                <h3 className="text-xl font-extrabold text-forest">{dictionary.admin.brackets.publishingControls}</h3>
+                <p className="mt-3 text-sm leading-6 text-muted">{dictionary.admin.brackets.publishingDescription}</p>
 
                 <form action={toggleBracketPublishAction} className="mt-6">
                   <input type="hidden" name="bracketId" value={bracket.id} />
+                  <input type="hidden" name="locale" value={locale} />
                   <input
                     type="hidden"
                     name="nextStatus"
@@ -106,16 +111,16 @@ export default async function AdminBracketsPage() {
                     type="submit"
                     className="rounded-full bg-forest px-5 py-3 font-semibold text-white hover:bg-forest/90"
                   >
-                    {bracket.status === "published" ? "Unpublish bracket" : "Publish bracket"}
+                    {bracket.status === "published"
+                      ? dictionary.admin.brackets.unpublish
+                      : dictionary.admin.brackets.publish}
                   </button>
                 </form>
               </div>
             </div>
           ))
         ) : (
-          <div className="card rounded-[2rem] p-8 text-muted">
-            No brackets created yet. Use the form above to create the first one.
-          </div>
+          <div className="card rounded-[2rem] p-8 text-muted">{dictionary.admin.brackets.empty}</div>
         )}
       </div>
     </div>

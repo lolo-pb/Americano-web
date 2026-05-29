@@ -3,14 +3,15 @@ import { notFound } from "next/navigation";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
 import { getPublicProfile } from "@/lib/data";
+import { getDictionary, localizeHref, type Locale } from "@/lib/i18n";
 
 export default async function PlayerProfilePage({
   params,
 }: {
-  params: Promise<{ username: string }>;
+  params: Promise<unknown>;
 }) {
-  const { username } = await params;
-  const profile = await getPublicProfile(username);
+  const { locale, username } = (await params) as { locale: Locale; username: string };
+  const [profile, dictionary] = await Promise.all([getPublicProfile(username), getDictionary(locale)]);
 
   if (!profile) {
     notFound();
@@ -19,9 +20,9 @@ export default async function PlayerProfilePage({
   return (
     <div className="page-shell py-10 sm:py-14">
       <SectionHeading
-        eyebrow="Player profile"
+        eyebrow={dictionary.playerProfile.eyebrow}
         title={profile.displayName}
-        description="Public profile details shown to other players and visitors."
+        description={dictionary.playerProfile.description}
       />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
@@ -32,28 +33,29 @@ export default async function PlayerProfilePage({
           <p className="mt-5 text-2xl font-extrabold text-forest">{profile.displayName}</p>
           <p className="mt-1 text-muted">@{profile.username}</p>
           <div className="mt-4">
-            <StatusBadge label={profile.approvalStatus} tone={profile.approvalStatus} />
+            <StatusBadge
+              label={dictionary.common.statuses[profile.approvalStatus]}
+              tone={profile.approvalStatus}
+            />
           </div>
           <dl className="mt-6 grid gap-4 text-sm">
             <div>
-              <dt className="font-semibold text-ink">Division</dt>
-              <dd className="text-muted">{profile.category ?? "Open"}</dd>
+              <dt className="font-semibold text-ink">{dictionary.playerProfile.division}</dt>
+              <dd className="text-muted">{profile.category ?? dictionary.common.levels.open}</dd>
             </div>
           </dl>
         </aside>
 
         <section className="card rounded-[2rem] p-6">
-          <h2 className="text-xl font-extrabold text-forest">About this player</h2>
-          <p className="mt-4 leading-7 text-muted">
-            {profile.bio ?? "This player has not added a bio yet."}
-          </p>
+          <h2 className="text-xl font-extrabold text-forest">{dictionary.playerProfile.about}</h2>
+          <p className="mt-4 leading-7 text-muted">{profile.bio ?? dictionary.playerProfile.emptyBio}</p>
 
           <div className="mt-6">
             <Link
-              href="/brackets"
+              href={localizeHref(locale, "/brackets")}
               className="rounded-full border border-line px-5 py-3 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
             >
-              Back to brackets
+              {dictionary.common.actions.backToBrackets}
             </Link>
           </div>
         </section>

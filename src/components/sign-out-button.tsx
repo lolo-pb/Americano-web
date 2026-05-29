@@ -1,16 +1,25 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { localizeHref, type Locale } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/browser";
+import { useI18n } from "@/components/i18n-provider";
 
-export function SignOutButton({ compact = false }: { compact?: boolean }) {
+export function SignOutButton({
+  compact = false,
+  locale,
+}: {
+  compact?: boolean;
+  locale: Locale;
+}) {
   const router = useRouter();
+  const { t } = useI18n();
 
   async function handleSignOut() {
     const supabase = createClient();
     await supabase.auth.signOut();
     router.refresh();
-    router.push("/");
+    router.push(localizeHref(locale, "/"));
   }
 
   return (
@@ -23,7 +32,7 @@ export function SignOutButton({ compact = false }: { compact?: boolean }) {
           : "rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink hover:border-forest hover:text-forest"
       }
     >
-      Sign out
+      {t("common.actions.logout")}
     </button>
   );
 }

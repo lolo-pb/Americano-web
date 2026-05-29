@@ -6,27 +6,33 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useI18n } from "@/components/i18n-provider";
+import { localizeHref, type Locale } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/browser";
-
-const loginSchema = z.object({
-  email: z.email("Use a valid email."),
-  password: z.string().min(8, "Password must be at least 8 characters."),
-});
-
-type LoginValues = z.infer<typeof loginSchema>;
+type LoginValues = {
+  email: string;
+  password: string;
+};
 
 export function LoginForm({
   defaultEmail,
   enabled,
   justRegistered,
+  locale,
 }: {
   defaultEmail?: string;
   enabled: boolean;
   justRegistered: boolean;
+  locale: Locale;
 }) {
   const router = useRouter();
+  const { t } = useI18n();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const loginSchema = z.object({
+    email: z.email(t("login.errors.email")),
+    password: z.string().min(8, t("login.errors.password")),
+  });
   const {
     register,
     handleSubmit,
@@ -40,7 +46,7 @@ export function LoginForm({
 
   async function onSubmit(values: LoginValues) {
     if (!enabled) {
-      setServerError("Supabase is not configured yet. Add the environment variables to enable login.");
+      setServerError(t("login.errors.supabase"));
       return;
     }
 
@@ -57,9 +63,9 @@ export function LoginForm({
       }
 
       router.refresh();
-      router.push("/me");
+      router.push(localizeHref(locale, "/me"));
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Login failed.";
+      const message = error instanceof Error ? error.message : t("login.errors.generic");
       setServerError(message);
     } finally {
       setIsSubmitting(false);
@@ -71,28 +77,28 @@ export function LoginForm({
       <div className="grid gap-5">
         {justRegistered && (
           <div className="rounded-2xl bg-forest-soft px-4 py-4 text-sm text-forest">
-            Account created. You can log in now and track your approval status from your profile page.
+            {t("login.registeredMessage")}
           </div>
         )}
 
         <label className="grid gap-2">
-          <span className="text-sm font-semibold text-ink">Email</span>
+          <span className="text-sm font-semibold text-ink">{t("login.fields.email")}</span>
           <input
             {...register("email")}
             type="email"
             className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
-            placeholder="you@example.com"
+            placeholder={t("login.placeholders.email")}
           />
           {errors.email && <p className="text-sm text-danger">{errors.email.message}</p>}
         </label>
 
         <label className="grid gap-2">
-          <span className="text-sm font-semibold text-ink">Password</span>
+          <span className="text-sm font-semibold text-ink">{t("login.fields.password")}</span>
           <input
             {...register("password")}
             type="password"
             className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
-            placeholder="Your password"
+            placeholder={t("login.placeholders.password")}
           />
           {errors.password && <p className="text-sm text-danger">{errors.password.message}</p>}
         </label>
@@ -104,13 +110,13 @@ export function LoginForm({
           disabled={isSubmitting}
           className="rounded-full bg-forest px-5 py-3 font-semibold text-white hover:bg-forest/90 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isSubmitting ? "Logging in..." : "Log in"}
+          {isSubmitting ? t("login.submitBusy") : t("login.submitIdle")}
         </button>
 
         <p className="text-sm text-muted">
-          Need an account?{" "}
-          <Link href="/sign-up" className="font-semibold text-forest hover:text-accent">
-            Sign up here
+          {t("login.needAccount")}{" "}
+          <Link href={localizeHref(locale, "/sign-up")} className="font-semibold text-forest hover:text-accent">
+            {t("login.signUpLink")}
           </Link>
         </p>
       </div>

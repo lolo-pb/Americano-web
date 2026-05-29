@@ -1,18 +1,32 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/components/i18n-provider";
 import { StatusBadge } from "@/components/status-badge";
+import { localizeHref, type Locale } from "@/lib/i18n";
 import type { Bracket } from "@/lib/types";
 
-export function BracketCard({ bracket, adminView = false }: { bracket: Bracket; adminView?: boolean }) {
+export function BracketCard({
+  bracket,
+  adminView = false,
+  locale,
+}: {
+  bracket: Bracket;
+  adminView?: boolean;
+  locale: Locale;
+}) {
+  const { t } = useI18n();
+
   return (
     <article className="card rounded-[2rem] p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="eyebrow text-sm text-accent">Bracket</p>
+          <p className="eyebrow text-sm text-accent">{t("brackets.cardEyebrow")}</p>
           <h3 className="mt-2 text-2xl font-extrabold text-forest">{bracket.name}</h3>
           <p className="mt-1 text-sm text-muted">{bracket.format}</p>
         </div>
         <StatusBadge
-          label={bracket.status}
+          label={t(`common.statuses.${bracket.status}`)}
           tone={bracket.status === "published" ? "published" : "draft"}
         />
       </div>
@@ -38,24 +52,24 @@ export function BracketCard({ bracket, adminView = false }: { bracket: Bracket; 
           ))
         ) : (
           <p className="rounded-2xl border border-dashed border-line px-4 py-6 text-sm text-muted">
-            No players assigned yet.
+            {t("brackets.emptyCard")}
           </p>
         )}
       </div>
 
       {adminView && (
         <p className="mt-4 text-xs uppercase tracking-[0.18em] text-muted">
-          Publish when assignments are final and payment confirmations are complete.
+          {t("brackets.publishHint")}
         </p>
       )}
 
       {!adminView && (
         <div className="mt-4 flex justify-end">
           <Link
-            href="/sign-up"
+            href={localizeHref(locale, "/sign-up")}
             className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
           >
-            Join next draw
+            {t("brackets.joinNext")}
           </Link>
         </div>
       )}

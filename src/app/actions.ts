@@ -3,10 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { hasSupabaseEnv } from "@/lib/env";
+import { defaultLocale, localizeHref } from "@/lib/i18n";
 import { requireAdmin, requireUser } from "@/lib/data";
 
 export async function updateProfileAction(formData: FormData) {
   const viewer = await requireUser();
+  const locale = String(formData.get("locale") ?? defaultLocale);
 
   if (viewer.demoMode || !viewer.profile || !hasSupabaseEnv()) {
     return;
@@ -24,11 +26,12 @@ export async function updateProfileAction(formData: FormData) {
     })
     .eq("id", viewer.profile.id);
 
-  revalidatePath("/me");
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/me"));
 }
 
 export async function updatePlayerStatusAction(formData: FormData) {
   const viewer = await requireAdmin();
+  const locale = String(formData.get("locale") ?? defaultLocale);
 
   if (viewer.demoMode || !hasSupabaseEnv()) {
     return;
@@ -48,13 +51,14 @@ export async function updatePlayerStatusAction(formData: FormData) {
     })
     .eq("id", profileId);
 
-  revalidatePath("/admin");
-  revalidatePath("/admin/players");
-  revalidatePath("/me");
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/players"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/me"));
 }
 
 export async function saveBracketAction(formData: FormData) {
   const viewer = await requireAdmin();
+  const locale = String(formData.get("locale") ?? defaultLocale);
 
   if (viewer.demoMode || !hasSupabaseEnv()) {
     return;
@@ -131,12 +135,13 @@ export async function saveBracketAction(formData: FormData) {
     }
   }
 
-  revalidatePath("/admin/brackets");
-  revalidatePath("/brackets");
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/brackets"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/brackets"));
 }
 
 export async function toggleBracketPublishAction(formData: FormData) {
   const viewer = await requireAdmin();
+  const locale = String(formData.get("locale") ?? defaultLocale);
 
   if (viewer.demoMode || !hasSupabaseEnv()) {
     return;
@@ -155,6 +160,6 @@ export async function toggleBracketPublishAction(formData: FormData) {
     })
     .eq("id", bracketId);
 
-  revalidatePath("/admin/brackets");
-  revalidatePath("/brackets");
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/brackets"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/brackets"));
 }

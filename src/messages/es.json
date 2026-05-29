@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "title": "Americano Open",
+    "description": "Plataforma mobile-first para inscripciones, aprobaciones y cuadros de torneo."
+  },
+  "common": {
+    "appName": "Americano Open",
+    "tagline": "Jugar. Confirmar. Publicar.",
+    "demoMode": "El modo demo está activo. Agregá `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` para conectar el backend real.",
+    "languages": {
+      "es": "ES",
+      "en": "EN"
+    },
+    "actions": {
+      "signUp": "Inscribirme",
+      "login": "Ingresar",
+      "logout": "Salir",
+      "save": "Guardar",
+      "viewBrackets": "Ver cuadros",
+      "openProfile": "Abrir mi perfil",
+      "backToBrackets": "Volver a cuadros"
+    },
+    "statuses": {
+      "pending": "Pendiente",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "confirmed": "Confirmado",
+      "published": "Publicado",
+      "draft": "Borrador",
+      "signupsOpen": "Inscripción abierta",
+      "closed": "Cerrado"
+    },
+    "levels": {
+      "select": "Seleccionar nivel",
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado",
+      "open": "Abierto"
+    }
+  },
+  "nav": {
+    "brackets": "Cuadros",
+    "profile": "Mi perfil",
+    "admin": "Admin",
+    "login": "Ingresar",
+    "signUp": "Inscribirme"
+  },
+  "home": {
+    "eyebrow": "Torneo de tenis mobile-first",
+    "title": "Tenis Americano, organizado sin caos.",
+    "description": "Inscripción, aprobación, seguimiento de pago, perfiles de jugadores y cuadros publicados en un flujo claro para jugadores y staff.",
+    "pitchEyebrow": "Propuesta del torneo",
+    "pitchSteps": [
+      "Creá tu cuenta y reservá tu lugar.",
+      "Mandá tu comprobante de pago al correo del torneo.",
+      "Recibí la aprobación del admin y esperá la publicación del cuadro."
+    ],
+    "location": "Ubicación",
+    "startDate": "Fecha de inicio",
+    "status": "Estado",
+    "playersEyebrow": "Lo que reciben los jugadores",
+    "playersTitle": "Un camino claro desde la inscripción hasta el primer saque.",
+    "playersDescription": "La experiencia pública y del jugador está pensada primero para teléfonos, para que el estado de inscripción y los cuadros publicados siempre sean fáciles de revisar.",
+    "featureCards": [
+      {
+        "title": "Inscripción rápida",
+        "body": "La creación de cuenta pide lo esencial y enseguida indica dónde enviar el comprobante de pago."
+      },
+      {
+        "title": "Estado claro",
+        "body": "Cada jugador ve si el pago está pendiente, confirmado o aprobado, sin perseguir al admin por chat."
+      },
+      {
+        "title": "Cuadros publicados",
+        "body": "Cuando el admin cierra el sorteo, la página de cuadros pasa a ser la fuente de verdad."
+      }
+    ],
+    "publishedEyebrow": "Cuadros publicados",
+    "publishedTitle": "Cuadros legibles de verdad en mobile.",
+    "publishedDescription": "Arrancamos con una lista simple y muy clara. Más adelante la podemos convertir en una vista de árbol más rica.",
+    "emptyBrackets": "Todavía no hay cuadros publicados. El admin los publicará cuando estén cerrados los pagos y las asignaciones."
+  },
+  "signUp": {
+    "eyebrow": "Inscripción",
+    "title": "Reservá tu lugar en el próximo cuadro.",
+    "description": "Creá tu cuenta, enviá el comprobante de pago por mail y el admin aprobará tu inscripción antes de publicar los cuadros.",
+    "nextTitle": "Qué pasa después",
+    "steps": [
+      "1. Creá tu cuenta con tus datos de jugador.",
+      "2. Enviá tu comprobante de pago a {paymentEmail}.",
+      "3. Esperá la confirmación del admin y seguí la publicación del cuadro."
+    ],
+    "fields": {
+      "displayName": "Nombre visible",
+      "username": "Usuario",
+      "email": "Email",
+      "password": "Contraseña",
+      "phone": "Teléfono",
+      "category": "Categoría"
+    },
+    "placeholders": {
+      "displayName": "Sofia Rojas",
+      "username": "sofi-topspin",
+      "email": "vos@ejemplo.com",
+      "password": "8+ caracteres",
+      "phone": "+54 11 ..."
+    },
+    "paymentNotice": "Después de inscribirte, enviá tu comprobante de pago a {paymentEmail}. Un admin lo confirmará y aprobará tu entrada.",
+    "submitIdle": "Crear cuenta",
+    "submitBusy": "Creando cuenta...",
+    "haveAccount": "¿Ya te inscribiste?",
+    "loginLink": "Ingresá",
+    "errors": {
+      "name": "Sumá tu nombre.",
+      "usernameLength": "Elegí al menos 3 caracteres.",
+      "usernameFormat": "Usá solo letras minúsculas, números y guiones.",
+      "email": "Usá un email válido.",
+      "password": "Usá al menos 8 caracteres.",
+      "supabase": "Supabase todavía no está configurado. Agregá las variables de entorno para habilitar inscripciones reales.",
+      "generic": "Falló la inscripción."
+    }
+  },
+  "login": {
+    "eyebrow": "Bienvenido de nuevo",
+    "title": "Seguí tu estado y los detalles del torneo.",
+    "description": "Los jugadores pueden ingresar para revisar aprobación, actualizar su perfil y confirmar cuándo se publicó su cuadro.",
+    "pendingInfo": "Los jugadores pendientes igual pueden ingresar. Tu perfil mostrará si el pago y la aprobación siguen esperando revisión del admin.",
+    "registeredMessage": "Cuenta creada. Ya podés ingresar y seguir tu estado de aprobación desde tu perfil.",
+    "fields": {
+      "email": "Email",
+      "password": "Contraseña"
+    },
+    "placeholders": {
+      "email": "vos@ejemplo.com",
+      "password": "Tu contraseña"
+    },
+    "submitIdle": "Ingresar",
+    "submitBusy": "Ingresando...",
+    "needAccount": "¿Necesitás una cuenta?",
+    "signUpLink": "Inscribite acá",
+    "errors": {
+      "email": "Usá un email válido.",
+      "password": "La contraseña debe tener al menos 8 caracteres.",
+      "supabase": "Supabase todavía no está configurado. Agregá las variables de entorno para habilitar el login.",
+      "generic": "Falló el ingreso."
+    }
+  },
+  "brackets": {
+    "eyebrow": "Cuadros publicados",
+    "titleSuffix": "cuadros",
+    "description": "Apenas el admin publica el último sorteo, aparece acá para todos los jugadores y visitantes.",
+    "empty": "Todavía no hay cuadros publicados.",
+    "cardEyebrow": "Cuadro",
+    "emptyCard": "Todavía no hay jugadores asignados.",
+    "publishHint": "Publicalo cuando las asignaciones y los pagos estén confirmados.",
+    "joinNext": "Sumarme al próximo cuadro"
+  },
+  "playerProfile": {
+    "eyebrow": "Perfil de jugador",
+    "description": "Datos públicos visibles para otros jugadores y visitantes.",
+    "division": "Nivel",
+    "about": "Sobre este jugador",
+    "emptyBio": "Este jugador todavía no agregó una biografía."
+  },
+  "me": {
+    "eyebrow": "Mi estado",
+    "description": "Esta página mantiene al jugador al tanto del pago, la aprobación y la información publicada del torneo.",
+    "tournament": "Torneo",
+    "paymentInbox": "Correo de pagos",
+    "bracketVisibility": "Visibilidad del cuadro",
+    "published": "Los cuadros publicados ya están en vivo.",
+    "notPublished": "Los cuadros todavía no están publicados.",
+    "paymentHelp": "Si tu pago sigue pendiente, enviá el comprobante a {paymentEmail}. Cuando el admin lo confirme, tu aprobación podrá avanzar y tu asignación al cuadro podrá publicarse.",
+    "updateTitle": "Actualizar perfil",
+    "bio": "Biografía"
+  },
+  "admin": {
+    "eyebrow": "Panel admin",
+    "title": "Mantené las aprobaciones y los cuadros en movimiento.",
+    "description": "La vista admin se concentra en los dos cuellos de botella principales del v1: confirmar jugadores y publicar el cuadro correcto en el momento correcto.",
+    "pendingApprovals": "Aprobaciones pendientes",
+    "publishedBrackets": "Cuadros publicados",
+    "activeTournament": "Torneo activo",
+    "pendingPlayers": "Jugadores pendientes",
+    "fullPlayerList": "Lista completa",
+    "noPendingPlayers": "No hay jugadores pendientes ahora mismo.",
+    "publishingState": "Estado de publicación",
+    "assignedPlayers": "{count} jugadores asignados",
+    "noBrackets": "Todavía no hay cuadros creados.",
+    "openBracketManager": "Abrir gestor de cuadros",
+    "players": {
+      "eyebrow": "Jugadores admin",
+      "title": "Aprobá jugadores y confirmá pagos.",
+      "description": "Esta pantalla está pensada para escritorio y operación: revisar datos, confirmar pago y mover al jugador a aprobado.",
+      "columns": {
+        "player": "Jugador",
+        "contact": "Contacto",
+        "payment": "Pago",
+        "approval": "Aprobación",
+        "save": "Guardar"
+      },
+      "noPhone": "Sin teléfono",
+      "noCategory": "Sin categoría"
+    },
+    "brackets": {
+      "eyebrow": "Gestor de cuadros",
+      "title": "Asigná jugadores y publicá cuando esté listo.",
+      "description": "El v1 mantiene la gestión de cuadros explícita y manual: creá un cuadro, asigná usuarios en orden y después publicalo para todos.",
+      "createTitle": "Crear un cuadro",
+      "createDescription": "Ingresá los usernames aprobados separados por comas en el orden en que querés asignarlos.",
+      "fields": {
+        "name": "Nombre del cuadro",
+        "format": "Formato",
+        "usernames": "Usernames en orden"
+      },
+      "placeholders": {
+        "name": "Cuadro Amanecer del Sábado",
+        "format": "Americano - 8 jugadores",
+        "usernames": "sofi-topspin, mateo-volley"
+      },
+      "save": "Guardar cuadro",
+      "approvedPlayers": "Jugadores aprobados",
+      "noApprovedPlayers": "Todavía no hay jugadores aprobados.",
+      "publishingControls": "Controles de publicación",
+      "publishingDescription": "Cambiá la visibilidad en la página pública de cuadros. Los cuadros en borrador quedan solo para admin.",
+      "unpublish": "Despublicar cuadro",
+      "publish": "Publicar cuadro",
+      "empty": "Todavía no hay cuadros creados. Usá el formulario de arriba para crear el primero."
+    }
+  }
+}

@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useI18n } from "@/components/i18n-provider";
 import { SignOutButton } from "@/components/sign-out-button";
+import { localizeHref, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import type { ViewerContext } from "@/lib/types";
 
@@ -19,50 +21,53 @@ function isActive(pathname: string, href: string) {
 }
 
 export function NavLinks({
+  locale,
   viewer,
   mobile = false,
 }: {
+  locale: Locale;
   viewer: ViewerContext;
   mobile?: boolean;
 }) {
   const pathname = usePathname();
+  const { t } = useI18n();
   const profile = viewer.profile;
 
   const linkClass = (href: string) =>
-    cn(baseLinkClass, isActive(pathname, href) && activeLinkClass);
+    cn(baseLinkClass, isActive(pathname, localizeHref(locale, href)) && activeLinkClass);
 
   return (
     <>
-      <Link href="/brackets" className={linkClass("/brackets")}>
-        Brackets
+      <Link href={localizeHref(locale, "/brackets")} className={linkClass("/brackets")}>
+        {t("nav.brackets")}
       </Link>
       {profile ? (
         <>
-          <Link href="/me" className={linkClass("/me")}>
-            My profile
+          <Link href={localizeHref(locale, "/me")} className={linkClass("/me")}>
+            {t("nav.profile")}
           </Link>
           {profile.role === "admin" && (
-            <Link href="/admin" className={linkClass("/admin")}>
-              Admin
+            <Link href={localizeHref(locale, "/admin")} className={linkClass("/admin")}>
+              {t("nav.admin")}
             </Link>
           )}
-          <SignOutButton compact={mobile} />
+          <SignOutButton compact={mobile} locale={locale} />
         </>
       ) : (
         <>
-          <Link href="/login" className={linkClass("/login")}>
-            Log in
+          <Link href={localizeHref(locale, "/login")} className={linkClass("/login")}>
+            {t("nav.login")}
           </Link>
           <Link
-            href="/sign-up"
+            href={localizeHref(locale, "/sign-up")}
             className={cn(
               "rounded-full px-4 py-2 text-sm font-semibold",
-              isActive(pathname, "/sign-up")
+              isActive(pathname, localizeHref(locale, "/sign-up"))
                 ? "bg-accent-strong text-white"
                 : "bg-accent text-white hover:bg-accent-strong",
             )}
           >
-            Sign up
+            {t("nav.signUp")}
           </Link>
         </>
       )}

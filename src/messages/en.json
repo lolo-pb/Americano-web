@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "title": "Americano Open",
+    "description": "Mobile-first platform for tournament signup, approvals, and bracket publishing."
+  },
+  "common": {
+    "appName": "Americano Open",
+    "tagline": "Play. Confirm. Publish.",
+    "demoMode": "Demo mode is active. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to connect the real backend.",
+    "languages": {
+      "es": "ES",
+      "en": "EN"
+    },
+    "actions": {
+      "signUp": "Sign up",
+      "login": "Log in",
+      "logout": "Sign out",
+      "save": "Save",
+      "viewBrackets": "View brackets",
+      "openProfile": "Open my profile",
+      "backToBrackets": "Back to brackets"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "confirmed": "Confirmed",
+      "published": "Published",
+      "draft": "Draft",
+      "signupsOpen": "Signups open",
+      "closed": "Closed"
+    },
+    "levels": {
+      "select": "Select level",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "open": "Open"
+    }
+  },
+  "nav": {
+    "brackets": "Brackets",
+    "profile": "My profile",
+    "admin": "Admin",
+    "login": "Log in",
+    "signUp": "Sign up"
+  },
+  "home": {
+    "eyebrow": "Mobile-first tennis tournament",
+    "title": "Americano tennis, organized with zero chaos.",
+    "description": "Registration, approval, payment follow-up, player profiles, and published brackets in one clean flow for players and staff.",
+    "pitchEyebrow": "Tournament pitch",
+    "pitchSteps": [
+      "Create your account and reserve your place.",
+      "Email your payment proof to the tournament inbox.",
+      "Get approved by the admin and wait for bracket publication."
+    ],
+    "location": "Location",
+    "startDate": "Start date",
+    "status": "Status",
+    "playersEyebrow": "What players get",
+    "playersTitle": "A clean path from signup to first serve.",
+    "playersDescription": "The public and player-facing experience is designed for phones first, so registration status and published draws are always easy to check.",
+    "featureCards": [
+      {
+        "title": "Fast signup",
+        "body": "Account creation captures the essentials, then immediately tells the player where to send payment proof."
+      },
+      {
+        "title": "Clear approval state",
+        "body": "Every player sees whether payment is pending, confirmed, or approved, without chasing admins over chat."
+      },
+      {
+        "title": "Published brackets",
+        "body": "Once the admin finalizes the draw, the live bracket page becomes the source of truth for everyone."
+      }
+    ],
+    "publishedEyebrow": "Published draws",
+    "publishedTitle": "Brackets players can actually read on mobile.",
+    "publishedDescription": "Start with a simple, highly legible bracket list now. We can always evolve this into a richer tree view later.",
+    "emptyBrackets": "No published brackets yet. The admin will publish them once payments and assignments are finalized."
+  },
+  "signUp": {
+    "eyebrow": "Registration",
+    "title": "Save your place in the next draw.",
+    "description": "Create your account, send payment proof by email, and the admin will approve your entry before bracket publication.",
+    "nextTitle": "What happens next",
+    "steps": [
+      "1. Create your account with your player details.",
+      "2. Send your payment proof to {paymentEmail}.",
+      "3. Wait for admin confirmation and watch the bracket publication."
+    ],
+    "fields": {
+      "displayName": "Display name",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone",
+      "category": "Category"
+    },
+    "placeholders": {
+      "displayName": "Sofia Rojas",
+      "username": "sofi-topspin",
+      "email": "you@example.com",
+      "password": "8+ characters",
+      "phone": "+54 11 ..."
+    },
+    "paymentNotice": "After signup, send your payment proof to {paymentEmail}. An admin will confirm it and approve your entry.",
+    "submitIdle": "Create account",
+    "submitBusy": "Creating account...",
+    "haveAccount": "Already signed up?",
+    "loginLink": "Log in",
+    "errors": {
+      "name": "Please add your name.",
+      "usernameLength": "Choose at least 3 characters.",
+      "usernameFormat": "Use lowercase letters, numbers, and dashes only.",
+      "email": "Use a valid email.",
+      "password": "Use at least 8 characters.",
+      "supabase": "Supabase is not configured yet. Add the environment variables to enable real signups.",
+      "generic": "Signup failed."
+    }
+  },
+  "login": {
+    "eyebrow": "Welcome back",
+    "title": "Track your status and tournament details.",
+    "description": "Players can log in to review approval status, update profile details, and confirm when their bracket has been published.",
+    "pendingInfo": "Pending players can still log in. Your profile page will show whether your payment and tournament approval are still awaiting admin review.",
+    "registeredMessage": "Account created. You can log in now and track your approval status from your profile page.",
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "Your password"
+    },
+    "submitIdle": "Log in",
+    "submitBusy": "Logging in...",
+    "needAccount": "Need an account?",
+    "signUpLink": "Sign up here",
+    "errors": {
+      "email": "Use a valid email.",
+      "password": "Password must be at least 8 characters.",
+      "supabase": "Supabase is not configured yet. Add the environment variables to enable login.",
+      "generic": "Login failed."
+    }
+  },
+  "brackets": {
+    "eyebrow": "Published brackets",
+    "titleSuffix": "draws",
+    "description": "As soon as the admin publishes the latest draw, it appears here for every player and visitor.",
+    "empty": "No brackets are published yet.",
+    "cardEyebrow": "Bracket",
+    "emptyCard": "No players assigned yet.",
+    "publishHint": "Publish when assignments are final and payments are confirmed.",
+    "joinNext": "Join next draw"
+  },
+  "playerProfile": {
+    "eyebrow": "Player profile",
+    "description": "Public profile details shown to other players and visitors.",
+    "division": "Division",
+    "about": "About this player",
+    "emptyBio": "This player has not added a bio yet."
+  },
+  "me": {
+    "eyebrow": "My status",
+    "description": "This page keeps the player informed about payment, approval, and published tournament information.",
+    "tournament": "Tournament",
+    "paymentInbox": "Payment inbox",
+    "bracketVisibility": "Bracket visibility",
+    "published": "Published brackets are live now.",
+    "notPublished": "Brackets are not published yet.",
+    "paymentHelp": "If your payment is still pending, email the proof to {paymentEmail}. Once the admin confirms it, your approval can move forward and your bracket assignment can be published.",
+    "updateTitle": "Update profile",
+    "bio": "Bio"
+  },
+  "admin": {
+    "eyebrow": "Admin dashboard",
+    "title": "Keep approvals and brackets moving.",
+    "description": "The admin view focuses on the two bottlenecks that matter most in v1: confirming players and publishing the right bracket at the right time.",
+    "pendingApprovals": "Pending approvals",
+    "publishedBrackets": "Published brackets",
+    "activeTournament": "Active tournament",
+    "pendingPlayers": "Pending players",
+    "fullPlayerList": "Full player list",
+    "noPendingPlayers": "No pending players right now.",
+    "publishingState": "Publishing state",
+    "assignedPlayers": "{count} players assigned",
+    "noBrackets": "No brackets created yet.",
+    "openBracketManager": "Open bracket manager",
+    "players": {
+      "eyebrow": "Admin players",
+      "title": "Approve players and confirm payments.",
+      "description": "This screen is intentionally desktop-friendly and operational: review player details, confirm payment, and move them into approved status.",
+      "columns": {
+        "player": "Player",
+        "contact": "Contact",
+        "payment": "Payment",
+        "approval": "Approval",
+        "save": "Save"
+      },
+      "noPhone": "No phone",
+      "noCategory": "No category"
+    },
+    "brackets": {
+      "eyebrow": "Bracket manager",
+      "title": "Assign players and publish when ready.",
+      "description": "V1 keeps bracket management explicit and manual: create a bracket, assign usernames in order, then publish it for everyone.",
+      "createTitle": "Create a bracket",
+      "createDescription": "Enter approved usernames separated by commas in the order you want them assigned.",
+      "fields": {
+        "name": "Bracket name",
+        "format": "Format",
+        "usernames": "Usernames in order"
+      },
+      "placeholders": {
+        "name": "Saturday Sunrise Draw",
+        "format": "Americano - 8 players",
+        "usernames": "sofi-topspin, mateo-volley"
+      },
+      "save": "Save bracket",
+      "approvedPlayers": "Approved players",
+      "noApprovedPlayers": "No approved players yet.",
+      "publishingControls": "Publishing controls",
+      "publishingDescription": "Toggle visibility on the public brackets page. Draft brackets stay admin-only.",
+      "unpublish": "Unpublish bracket",
+      "publish": "Publish bracket",
+      "empty": "No brackets created yet. Use the form above to create the first one."
+    }
+  }
+}
