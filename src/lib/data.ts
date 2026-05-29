@@ -2,39 +2,49 @@ import { cache } from "react";
 import { redirect } from "next/navigation";
 import { hasSupabaseEnv } from "@/lib/env";
 import { localizeHref, type Locale } from "@/lib/i18n";
-import { demoBrackets, demoProfiles, demoTournament } from "@/lib/mock-data";
+import { demoBrackets, demoTeams, demoTournament } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
-import type { Bracket, BracketEntry, Profile, PublicProfile, Tournament, ViewerContext } from "@/lib/types";
+import type { Bracket, BracketEntry, PublicTeam, Team, Tournament, ViewerContext } from "@/lib/types";
 
-function toPublicProfile(profile: Profile): PublicProfile {
+function buildTeamName(playerOneName: string, playerTwoName: string) {
+  return playerTwoName ? `${playerOneName} & ${playerTwoName}` : playerOneName;
+}
+
+function toPublicTeam(team: Team): PublicTeam {
   return {
-    id: profile.id,
-    username: profile.username,
-    displayName: profile.displayName,
-    avatarUrl: profile.avatarUrl,
-    category: profile.category,
-    approvalStatus: profile.approvalStatus,
-    bio: profile.bio,
+    id: team.id,
+    slug: team.slug,
+    playerOneName: team.playerOneName,
+    playerTwoName: team.playerTwoName,
+    teamName: team.teamName,
+    avatarUrl: team.avatarUrl,
+    category: team.category,
+    approvalStatus: team.approvalStatus,
+    bio: team.bio,
   };
 }
 
 function mapBracketEntry(entry: Record<string, unknown>): BracketEntry {
-  const player = entry.profile as Record<string, unknown>;
+  const team = entry.team as Record<string, unknown>;
+  const playerOneName = String(team.player_one_name ?? "");
+  const playerTwoName = String(team.player_two_name ?? "");
 
   return {
     id: String(entry.id),
     bracketId: String(entry.bracket_id),
-    playerId: String(entry.player_id),
+    teamId: String(entry.team_id),
     position: Number(entry.position),
     seed: entry.seed ? Number(entry.seed) : null,
-    profile: {
-      id: String(player.id),
-      username: String(player.username),
-      displayName: String(player.display_name),
-      avatarUrl: player.avatar_url ? String(player.avatar_url) : null,
-      category: player.category ? String(player.category) : null,
-      approvalStatus: String(player.approval_status) as Profile["approvalStatus"],
-      bio: player.bio ? String(player.bio) : null,
+    team: {
+      id: String(team.id),
+      slug: String(team.slug),
+      playerOneName,
+      playerTwoName,
+      teamName: buildTeamName(playerOneName, playerTwoName),
+      avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
+      category: team.category ? String(team.category) : null,
+      approvalStatus: String(team.approval_status) as Team["approvalStatus"],
+      bio: team.bio ? String(team.bio) : null,
     },
   };
 }
@@ -43,15 +53,15 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   if (!hasSupabaseEnv()) {
     return {
       demoMode: true,
-      profileMissing: false,
-      profile: null,
+      teamMissing: false,
+      team: null,
     };
   }
 
   const supabase = await createClient();
 
   if (!supabase) {
-    return { demoMode: true, profileMissing: false, profile: null };
+    return { demoMode: true, teamMissing: false, team: null };
   }
 
   const {
@@ -61,39 +71,46 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   if (!user) {
     return {
       demoMode: false,
-      profileMissing: false,
-      profile: null,
+      teamMissing: false,
+      team: null,
     };
   }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id, username, display_name, email, phone, role, approval_status, category, bio, avatar_url")
-    .eq("id", user.id)
+  const { data: team } = await supabase
+    .from("teams")
+    .select(
+      "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, category, bio, avatar_url",
+    )
+    .eq("owner_user_id", user.id)
     .single();
 
-  if (!profile) {
+  if (!team) {
     return {
       demoMode: false,
-      profileMissing: true,
-      profile: null,
+      teamMissing: true,
+      team: null,
     };
   }
+
+  const playerOneName = String(team.player_one_name ?? "");
+  const playerTwoName = String(team.player_two_name ?? "");
 
   return {
     demoMode: false,
-    profileMissing: false,
-    profile: {
-      id: String(profile.id),
-      username: String(profile.username),
-      displayName: String(profile.display_name),
-      email: String(profile.email),
-      phone: profile.phone ? String(profile.phone) : null,
-      role: String(profile.role) as Profile["role"],
-      approvalStatus: String(profile.approval_status) as Profile["approvalStatus"],
-      category: profile.category ? String(profile.category) : null,
-      bio: profile.bio ? String(profile.bio) : null,
-      avatarUrl: profile.avatar_url ? String(profile.avatar_url) : null,
+    teamMissing: false,
+    team: {
+      id: String(team.id),
+      slug: String(team.slug),
+      playerOneName,
+      playerTwoName,
+      teamName: buildTeamName(playerOneName, playerTwoName),
+      email: String(team.email),
+      phone: team.phone ? String(team.phone) : null,
+      role: String(team.role) as Team["role"],
+      approvalStatus: String(team.approval_status) as Team["approvalStatus"],
+      category: team.category ? String(team.category) : null,
+      bio: team.bio ? String(team.bio) : null,
+      avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
     },
   };
 });
@@ -101,7 +118,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
 export async function requireUser(locale: Locale) {
   const viewer = await getViewerContext();
 
-  if (!viewer.demoMode && !viewer.profile) {
+  if (!viewer.demoMode && !viewer.team) {
     redirect(localizeHref(locale, "/login"));
   }
 
@@ -111,11 +128,11 @@ export async function requireUser(locale: Locale) {
 export async function requireAdmin(locale: Locale) {
   const viewer = await getViewerContext();
 
-  if (!viewer.demoMode && !viewer.profile) {
+  if (!viewer.demoMode && !viewer.team) {
     redirect(localizeHref(locale, "/login"));
   }
 
-  if (!viewer.demoMode && viewer.profile?.role !== "admin") {
+  if (!viewer.demoMode && viewer.team?.role !== "admin") {
     redirect(localizeHref(locale, "/me"));
   }
 
@@ -168,13 +185,14 @@ export async function getPublishedBrackets(): Promise<Bracket[]> {
       bracket_entries (
         id,
         bracket_id,
-        player_id,
+        team_id,
         position,
         seed,
-        profile:public_player_profiles!player_id (
+        team:public_approved_teams!team_id (
           id,
-          username,
-          display_name,
+          slug,
+          player_one_name,
+          player_two_name,
           avatar_url,
           category,
           approval_status,
@@ -202,82 +220,103 @@ export async function getPublishedBrackets(): Promise<Bracket[]> {
   }));
 }
 
-export async function getPublicProfile(username: string): Promise<PublicProfile | null> {
+export async function getPublicTeam(slug: string): Promise<PublicTeam | null> {
   if (!hasSupabaseEnv()) {
-    const profile = demoProfiles.find((entry) => entry.username === username);
-    return profile ? toPublicProfile(profile) : null;
+    const team = demoTeams.find((entry) => entry.slug === slug);
+    return team ? toPublicTeam(team) : null;
   }
 
   const supabase = await createClient();
   const { data } = await supabase!
-    .from("public_player_profiles")
-    .select("id, username, display_name, avatar_url, category, approval_status, bio")
-    .eq("username", username)
+    .from("public_approved_teams")
+    .select("id, slug, player_one_name, player_two_name, avatar_url, category, approval_status, bio")
+    .eq("slug", slug)
     .single();
 
   if (!data) {
     return null;
   }
 
+  const playerOneName = String(data.player_one_name ?? "");
+  const playerTwoName = String(data.player_two_name ?? "");
+
   return {
     id: String(data.id),
-    username: String(data.username),
-    displayName: String(data.display_name),
+    slug: String(data.slug),
+    playerOneName,
+    playerTwoName,
+    teamName: buildTeamName(playerOneName, playerTwoName),
     avatarUrl: data.avatar_url ? String(data.avatar_url) : null,
     category: data.category ? String(data.category) : null,
-    approvalStatus: String(data.approval_status) as PublicProfile["approvalStatus"],
+    approvalStatus: String(data.approval_status) as PublicTeam["approvalStatus"],
     bio: data.bio ? String(data.bio) : null,
   };
 }
 
-export async function getApprovedPlayers(): Promise<PublicProfile[]> {
+export async function getApprovedTeams(): Promise<PublicTeam[]> {
   if (!hasSupabaseEnv()) {
-    return demoProfiles
-      .filter((profile) => profile.approvalStatus === "approved" && profile.role === "client")
-      .map(toPublicProfile);
+    return demoTeams
+      .filter((team) => team.approvalStatus === "approved" && team.role === "client")
+      .map(toPublicTeam);
   }
 
   const supabase = await createClient();
   const { data } = await supabase!
-    .from("public_player_profiles")
-    .select("id, username, display_name, avatar_url, category, approval_status, bio")
+    .from("public_approved_teams")
+    .select("id, slug, player_one_name, player_two_name, avatar_url, category, approval_status, bio")
     .eq("approval_status", "approved")
-    .order("display_name");
+    .order("player_one_name");
 
-  return (data ?? []).map((profile) => ({
-    id: String(profile.id),
-    username: String(profile.username),
-    displayName: String(profile.display_name),
-    avatarUrl: profile.avatar_url ? String(profile.avatar_url) : null,
-    category: profile.category ? String(profile.category) : null,
-    approvalStatus: String(profile.approval_status) as PublicProfile["approvalStatus"],
-    bio: profile.bio ? String(profile.bio) : null,
-  }));
+  return (data ?? []).map((team) => {
+    const playerOneName = String(team.player_one_name ?? "");
+    const playerTwoName = String(team.player_two_name ?? "");
+
+    return {
+      id: String(team.id),
+      slug: String(team.slug),
+      playerOneName,
+      playerTwoName,
+      teamName: buildTeamName(playerOneName, playerTwoName),
+      avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
+      category: team.category ? String(team.category) : null,
+      approvalStatus: String(team.approval_status) as PublicTeam["approvalStatus"],
+      bio: team.bio ? String(team.bio) : null,
+    };
+  });
 }
 
-export async function getAdminPlayers(): Promise<Profile[]> {
+export async function getAdminTeams(): Promise<Team[]> {
   if (!hasSupabaseEnv()) {
-    return demoProfiles.filter((profile) => profile.role === "client");
+    return demoTeams.filter((team) => team.role === "client");
   }
 
   const supabase = await createClient();
   const { data } = await supabase!
-    .from("profiles")
-    .select("id, username, display_name, email, phone, role, approval_status, category, bio, avatar_url")
+    .from("teams")
+    .select(
+      "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, category, bio, avatar_url",
+    )
     .order("created_at", { ascending: false });
 
-  return (data ?? []).map((profile) => ({
-    id: String(profile.id),
-    username: String(profile.username),
-    displayName: String(profile.display_name),
-    email: String(profile.email),
-    phone: profile.phone ? String(profile.phone) : null,
-    role: String(profile.role) as Profile["role"],
-    approvalStatus: String(profile.approval_status) as Profile["approvalStatus"],
-    category: profile.category ? String(profile.category) : null,
-    bio: profile.bio ? String(profile.bio) : null,
-    avatarUrl: profile.avatar_url ? String(profile.avatar_url) : null,
-  }));
+  return (data ?? []).map((team) => {
+    const playerOneName = String(team.player_one_name ?? "");
+    const playerTwoName = String(team.player_two_name ?? "");
+
+    return {
+      id: String(team.id),
+      slug: String(team.slug),
+      playerOneName,
+      playerTwoName,
+      teamName: buildTeamName(playerOneName, playerTwoName),
+      email: String(team.email),
+      phone: team.phone ? String(team.phone) : null,
+      role: String(team.role) as Team["role"],
+      approvalStatus: String(team.approval_status) as Team["approvalStatus"],
+      category: team.category ? String(team.category) : null,
+      bio: team.bio ? String(team.bio) : null,
+      avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
+    };
+  });
 }
 
 export async function getAdminBrackets(): Promise<Bracket[]> {
@@ -298,13 +337,14 @@ export async function getAdminBrackets(): Promise<Bracket[]> {
       bracket_entries (
         id,
         bracket_id,
-        player_id,
+        team_id,
         position,
         seed,
-        profile:public_player_profiles!player_id (
+        team:public_approved_teams!team_id (
           id,
-          username,
-          display_name,
+          slug,
+          player_one_name,
+          player_two_name,
           avatar_url,
           category,
           approval_status,

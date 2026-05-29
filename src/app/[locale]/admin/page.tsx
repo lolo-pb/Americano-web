@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { updatePlayerStatusAction } from "@/app/actions";
+import { updateTeamStatusAction } from "@/app/actions";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
-import { getAdminBrackets, getAdminPlayers, getTournament, requireAdmin } from "@/lib/data";
+import { getAdminBrackets, getAdminTeams, getTournament, requireAdmin } from "@/lib/data";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
 
 export default async function AdminDashboardPage({
@@ -12,14 +12,14 @@ export default async function AdminDashboardPage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   await requireAdmin(locale);
-  const [players, brackets, tournament, dictionary] = await Promise.all([
-    getAdminPlayers(),
+  const [teams, brackets, tournament, dictionary] = await Promise.all([
+    getAdminTeams(),
     getAdminBrackets(),
     getTournament(),
     getDictionary(locale),
   ]);
 
-  const pendingPlayers = players.filter((profile) => profile.approvalStatus === "pending");
+  const pendingTeams = teams.filter((team) => team.approvalStatus === "pending");
   const publishedBrackets = brackets.filter((bracket) => bracket.status === "published");
 
   return (
@@ -33,7 +33,7 @@ export default async function AdminDashboardPage({
       <div className="mt-8 grid gap-4 lg:grid-cols-3">
         <article className="card rounded-[1.8rem] p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.admin.pendingPlayers}</p>
-          <p className="mt-3 text-3xl font-black text-forest sm:text-4xl">{pendingPlayers.length}</p>
+          <p className="mt-3 text-3xl font-black text-forest sm:text-4xl">{pendingTeams.length}</p>
         </article>
         <article className="card rounded-[1.8rem] p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.admin.publishedBrackets}</p>
@@ -58,24 +58,27 @@ export default async function AdminDashboardPage({
           </div>
 
           <div className="mt-6 grid gap-4">
-            {pendingPlayers.length ? (
-              pendingPlayers.slice(0, 5).map((player) => (
+            {pendingTeams.length ? (
+              pendingTeams.slice(0, 5).map((team) => (
                 <form
-                  key={player.id}
-                  action={updatePlayerStatusAction}
+                  key={team.id}
+                  action={updateTeamStatusAction}
                   className="rounded-[1.5rem] border border-line bg-white/70 p-4"
                 >
-                  <input type="hidden" name="profileId" value={player.id} />
+                  <input type="hidden" name="teamId" value={team.id} />
                   <input type="hidden" name="locale" value={locale} />
                   <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                     <div>
-                      <p className="font-bold text-ink">{player.displayName}</p>
-                      <p className="text-sm text-muted">{player.email}</p>
+                      <p className="font-bold text-ink">{team.teamName}</p>
+                      <p className="text-sm text-muted">
+                        {team.playerOneName} + {team.playerTwoName}
+                      </p>
+                      <p className="text-sm text-muted">{team.email}</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-3">
                       <select
                         name="approvalStatus"
-                        defaultValue={player.approvalStatus}
+                        defaultValue={team.approvalStatus}
                         className="rounded-full border border-line bg-white px-4 py-2 text-sm"
                       >
                         <option value="pending">{dictionary.common.statuses.pending}</option>

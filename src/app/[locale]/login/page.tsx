@@ -16,7 +16,7 @@ export default async function LoginPage({
   const currentSearch = (await searchParams) as { registered?: string; email?: string };
   const [viewer, dictionary] = await Promise.all([getViewerContext(), getDictionary(locale)]);
 
-  if (viewer.profile) {
+  if (viewer.team) {
     redirect(localizeHref(locale, "/me"));
   }
 
@@ -31,9 +31,9 @@ export default async function LoginPage({
         <div className="card rounded-[1.6rem] p-4 text-sm leading-6 text-muted sm:rounded-[2rem] sm:p-6 sm:leading-7">
           {dictionary.login.pendingInfo}
         </div>
-        {viewer.profileMissing && (
+        {viewer.teamMissing && (
           <div className="card rounded-[1.6rem] border border-danger/30 bg-danger/8 p-4 text-sm leading-6 text-danger sm:rounded-[2rem] sm:p-6 sm:leading-7">
-            {dictionary.login.profileMissingMessage}
+            {dictionary.login.teamMissingMessage}
           </div>
         )}
       </div>

@@ -1,32 +1,33 @@
 {
   "meta": {
     "title": "Americano Open",
-    "description": "Plataforma mobile-first para inscripciones, aprobaciones y cuadros de torneo."
+    "description": "Plataforma mobile-first para inscripcion de duplas, aprobaciones y publicacion de cuadros."
   },
   "common": {
     "appName": "Americano Open",
     "tagline": "Jugar. Confirmar. Publicar.",
-    "demoMode": "El modo demo está activo. Agregá `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` para conectar el backend real.",
+    "demoMode": "El modo demo esta activo. Agrega `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` para conectar el backend real.",
     "languages": {
       "es": "ES",
       "en": "EN"
     },
     "actions": {
-      "signUp": "Inscribirme",
+      "signUp": "Inscribir dupla",
       "login": "Ingresar",
       "logout": "Salir",
       "save": "Guardar",
       "viewBrackets": "Ver cuadros",
-      "openProfile": "Abrir mi perfil",
+      "openProfile": "Abrir mi dupla",
+      "viewPublicTeam": "Ver pagina publica",
       "backToBrackets": "Volver a cuadros"
     },
     "statuses": {
       "pending": "Pendiente",
-      "approved": "Aprobado",
-      "rejected": "Rechazado",
+      "approved": "Aprobada",
+      "rejected": "Rechazada",
       "published": "Publicado",
       "draft": "Borrador",
-      "signupsOpen": "Inscripción abierta",
+      "signupsOpen": "Inscripcion abierta",
       "closed": "Cerrado"
     },
     "levels": {
@@ -39,198 +40,201 @@
   },
   "nav": {
     "brackets": "Cuadros",
-    "profile": "Mi perfil",
+    "profile": "Mi dupla",
     "admin": "Admin",
     "login": "Ingresar",
-    "signUp": "Inscribirme"
+    "signUp": "Inscribir dupla"
   },
   "home": {
     "eyebrow": "Torneo de tenis mobile-first",
     "title": "Tenis Americano, organizado sin caos.",
-    "description": "Inscripción, aprobación, seguimiento de pago, perfiles de jugadores y cuadros publicados en un flujo claro para jugadores y staff.",
+    "description": "Inscripcion de duplas, aprobaciones, pagina publica del equipo y cuadros publicados en un flujo claro para parejas y staff.",
     "pitchEyebrow": "Propuesta del torneo",
     "pitchSteps": [
-      "Creá tu cuenta y reservá tu lugar.",
-      "Mandá tu comprobante de pago al correo del torneo.",
-      "Recibí la aprobación del admin y esperá la publicación del cuadro."
+      "Crea una sola cuenta para tu dupla.",
+      "Manda tu comprobante de pago al correo del torneo.",
+      "Recibi la aprobacion del admin y espera la publicacion del cuadro."
     ],
-    "location": "Ubicación",
+    "location": "Ubicacion",
     "startDate": "Fecha de inicio",
     "status": "Estado",
-    "playersEyebrow": "Lo que reciben los jugadores",
-    "playersTitle": "Un camino claro desde la inscripción hasta el primer saque.",
-    "playersDescription": "La experiencia pública y del jugador está pensada primero para teléfonos, para que el estado de inscripción y los cuadros publicados siempre sean fáciles de revisar.",
+    "playersEyebrow": "Lo que reciben las duplas",
+    "playersTitle": "Un camino claro desde la inscripcion hasta el primer saque.",
+    "playersDescription": "La experiencia publica y de la dupla esta pensada primero para telefonos, para que el estado de inscripcion y los cuadros publicados siempre sean faciles de revisar.",
     "featureCards": [
       {
-        "title": "Inscripción rápida",
-        "body": "La creación de cuenta pide lo esencial y enseguida indica dónde enviar el comprobante de pago."
+        "title": "Inscripcion rapida",
+        "body": "Una sola cuenta captura los dos nombres y enseguida indica donde enviar el comprobante de pago."
       },
       {
         "title": "Estado claro",
-        "body": "Cada jugador ve si su inscripción está pendiente, aprobada o rechazada, sin perseguir al admin por chat."
+        "body": "Cada dupla ve si su inscripcion esta pendiente, aprobada o rechazada, sin perseguir al admin por chat."
       },
       {
         "title": "Cuadros publicados",
-        "body": "Cuando el admin cierra el sorteo, la página de cuadros pasa a ser la fuente de verdad."
+        "body": "Cuando el admin cierra el sorteo, la pagina de cuadros pasa a ser la fuente de verdad."
       }
     ],
     "publishedEyebrow": "Cuadros publicados",
     "publishedTitle": "Cuadros legibles de verdad en mobile.",
-    "publishedDescription": "Arrancamos con una lista simple y muy clara. Más adelante la podemos convertir en una vista de árbol más rica.",
-    "emptyBrackets": "Todavía no hay cuadros publicados. El admin los publicará cuando estén cerrados los pagos y las asignaciones."
+    "publishedDescription": "Arrancamos con una lista simple y muy clara. Mas adelante la podemos convertir en una vista de arbol mas rica.",
+    "emptyBrackets": "Todavia no hay cuadros publicados. El admin los publicara cuando las asignaciones esten cerradas."
   },
   "signUp": {
-    "eyebrow": "Inscripción",
-    "title": "Reservá tu lugar en el próximo cuadro.",
-    "description": "Creá tu cuenta, enviá el comprobante de pago por mail y el admin aprobará tu inscripción antes de publicar los cuadros.",
-    "nextTitle": "Qué pasa después",
+    "eyebrow": "Inscripcion",
+    "title": "Reserva un lugar para tu dupla en el proximo cuadro.",
+    "description": "Crea una cuenta para la pareja, envia el comprobante por mail y el admin aprobara a la dupla antes de publicar los cuadros.",
+    "nextTitle": "Que pasa despues",
     "steps": [
-      "1. Creá tu cuenta con tus datos de jugador.",
-      "2. Enviá tu comprobante de pago a {paymentEmail}.",
-      "3. Esperá la confirmación del admin y seguí la publicación del cuadro."
+      "1. Crea una sola cuenta para tu dupla.",
+      "2. Envia tu comprobante de pago a {paymentEmail}.",
+      "3. Espera la aprobacion del admin y segui la publicacion del cuadro."
     ],
     "fields": {
-      "displayName": "Nombre visible",
-      "username": "Usuario",
+      "playerOneName": "Nombre del jugador 1",
+      "playerTwoName": "Nombre del jugador 2",
       "email": "Email",
       "confirmEmail": "Repetir email",
-      "password": "Contraseña",
-      "confirmPassword": "Repetir contraseña",
-      "phone": "Teléfono (opcional)",
-      "category": "Categoría"
+      "password": "Contrasena",
+      "confirmPassword": "Repetir contrasena",
+      "phone": "Telefono (opcional)",
+      "category": "Categoria"
     },
     "placeholders": {
-      "username": "sofi-topspin",
+      "playerOneName": "Sofia Rojas",
+      "playerTwoName": "Mateo Acosta",
       "email": "vos@ejemplo.com",
-      "confirmEmail": "Repetí tu email",
+      "confirmEmail": "Repeti tu email",
       "password": "8+ caracteres",
-      "confirmPassword": "Repetí tu contraseña",
+      "confirmPassword": "Repeti tu contrasena",
       "phone": "+54 11 ..."
     },
-    "paymentNotice": "Después de inscribirte, enviá tu comprobante de pago a {paymentEmail}. Un admin lo confirmará y aprobará tu entrada.",
+    "paymentNotice": "Despues de inscribirte, envia tu comprobante de pago a {paymentEmail}. Cuando se acepte, tu dupla quedara aprobada para el torneo.",
     "important": "Importante",
     "submitIdle": "Crear cuenta",
     "submitBusy": "Creando cuenta...",
-    "haveAccount": "¿Ya te inscribiste?",
-    "loginLink": "Ingresá",
+    "haveAccount": "Ya te inscribiste?",
+    "loginLink": "Ingresa",
     "errors": {
-      "usernameLength": "Elegí al menos 3 caracteres.",
-      "usernameFormat": "Usá solo letras minúsculas, números y guiones.",
-      "email": "Usá un email válido.",
+      "nameLength": "Usa al menos 2 caracteres.",
+      "email": "Usa un email valido.",
       "emailMatch": "Los emails no coinciden.",
-      "password": "Usá al menos 8 caracteres.",
-      "passwordMatch": "Las contraseñas no coinciden.",
-      "supabase": "Supabase todavía no está configurado. Agregá las variables de entorno para habilitar inscripciones reales.",
-      "generic": "Falló la inscripción."
+      "password": "Usa al menos 8 caracteres.",
+      "passwordMatch": "Las contrasenas no coinciden.",
+      "supabase": "Supabase todavia no esta configurado. Agrega las variables de entorno para habilitar inscripciones reales.",
+      "generic": "Fallo la inscripcion."
     }
   },
   "login": {
     "eyebrow": "Bienvenido de nuevo",
-    "title": "Seguí tu estado y los detalles del torneo.",
-    "description": "Los jugadores pueden ingresar para revisar aprobación, actualizar su perfil y confirmar cuándo se publicó su cuadro.",
-    "pendingInfo": "Los jugadores pendientes igual pueden ingresar. Tu perfil mostrará si el pago y la aprobación siguen esperando revisión del admin.",
-    "profileMissingMessage": "Tu cuenta de acceso existe, pero falta la fila del perfil en la base. Eso suele pasar cuando no corrió bien el trigger de Supabase que crea `profiles` al registrarse.",
-    "registeredMessage": "Cuenta creada. Ya podés ingresar y seguir tu estado de aprobación desde tu perfil.",
+    "title": "Segui el estado de tu dupla y los detalles del torneo.",
+    "description": "Las duplas pueden ingresar para revisar aprobacion, actualizar sus datos y confirmar cuando ya se publico su cuadro.",
+    "pendingInfo": "Las duplas pendientes igual pueden ingresar. Tu pagina mostrara si la inscripcion sigue esperando revision del admin.",
+    "teamMissingMessage": "Tu cuenta de acceso existe, pero falta la fila de la dupla en la base. Eso suele pasar cuando no corrio bien el trigger de Supabase que crea `teams` al registrarse.",
+    "registeredMessage": "Cuenta creada. Ya podes ingresar y seguir el estado de aprobacion de tu dupla.",
     "fields": {
       "email": "Email",
-      "password": "Contraseña"
+      "password": "Contrasena"
     },
     "placeholders": {
       "email": "vos@ejemplo.com",
-      "password": "Tu contraseña"
+      "password": "Tu contrasena"
     },
     "submitIdle": "Ingresar",
     "submitBusy": "Ingresando...",
-    "needAccount": "¿Necesitás una cuenta?",
-    "signUpLink": "Inscribite acá",
+    "needAccount": "Necesitas una cuenta?",
+    "signUpLink": "Inscribite aca",
     "errors": {
-      "email": "Usá un email válido.",
-      "password": "La contraseña debe tener al menos 8 caracteres.",
-      "profileMissing": "El login funcionó, pero tu perfil no existe en la base. Revisá el trigger `handle_new_user` o creá la fila en `profiles` para este usuario.",
-      "supabase": "Supabase todavía no está configurado. Agregá las variables de entorno para habilitar el login.",
-      "generic": "Falló el ingreso."
+      "email": "Usa un email valido.",
+      "password": "La contrasena debe tener al menos 8 caracteres.",
+      "teamMissing": "El login funciono, pero tu fila en `teams` no existe en la base. Revisa el trigger `handle_new_user` o crea la fila manualmente para este usuario.",
+      "supabase": "Supabase todavia no esta configurado. Agrega las variables de entorno para habilitar el login.",
+      "generic": "Fallo el ingreso."
     }
   },
   "brackets": {
     "eyebrow": "Cuadros publicados",
     "titleSuffix": "cuadros",
-    "description": "Apenas el admin publica el último sorteo, aparece acá para todos los jugadores y visitantes.",
-    "empty": "Todavía no hay cuadros publicados.",
+    "description": "Apenas el admin publica el ultimo sorteo, aparece aca para todas las duplas y visitantes.",
+    "empty": "Todavia no hay cuadros publicados.",
     "cardEyebrow": "Cuadro",
-    "emptyCard": "Todavía no hay jugadores asignados.",
-    "publishHint": "Publicalo cuando las asignaciones y los jugadores aceptados ya estén definidos.",
-    "joinNext": "Sumarme al próximo cuadro"
+    "emptyCard": "Todavia no hay duplas asignadas.",
+    "publishHint": "Publicalo cuando las asignaciones y las duplas aceptadas ya esten definidas.",
+    "joinNext": "Inscribir una dupla"
   },
   "playerProfile": {
-    "eyebrow": "Perfil de jugador",
-    "description": "Datos públicos visibles para otros jugadores y visitantes.",
+    "eyebrow": "Perfil de dupla",
+    "description": "Datos publicos visibles para otros jugadores y visitantes.",
+    "players": "Integrantes",
     "division": "Nivel",
-    "about": "Sobre este jugador",
-    "emptyBio": "Este jugador todavía no agregó una biografía."
+    "about": "Sobre esta dupla",
+    "emptyBio": "Esta dupla todavia no agrego una biografia."
   },
   "me": {
-    "eyebrow": "Mi estado",
-    "description": "Esta página mantiene al jugador al tanto del estado de su inscripción y la información publicada del torneo.",
+    "eyebrow": "Mi dupla",
+    "description": "Esta pagina mantiene a la dupla al tanto del estado de su inscripcion y la informacion publicada del torneo.",
+    "teamSlug": "Slug de la dupla",
     "tournament": "Torneo",
     "paymentInbox": "Correo de pagos",
     "bracketVisibility": "Visibilidad del cuadro",
-    "published": "Los cuadros publicados ya están en vivo.",
-    "notPublished": "Los cuadros todavía no están publicados.",
-    "paymentHelp": "Si tu inscripción sigue pendiente, enviá tu comprobante a {paymentEmail}. Cuando el admin la confirme, vas a quedar aceptado y tu asignación al cuadro podrá publicarse.",
-    "updateTitle": "Actualizar perfil",
-    "bio": "Biografía"
+    "published": "Los cuadros publicados ya estan en vivo.",
+    "notPublished": "Los cuadros todavia no estan publicados.",
+    "paymentHelp": "Si tu inscripcion sigue pendiente, envia tu comprobante a {paymentEmail}. Cuando el admin lo acepte, tu dupla podra ser asignada y publicada en un cuadro.",
+    "updateTitle": "Actualizar dupla",
+    "bio": "Biografia"
   },
   "admin": {
     "eyebrow": "Panel admin",
-    "title": "Mantené las aprobaciones y los cuadros en movimiento.",
-    "description": "La vista admin se concentra en los dos cuellos de botella principales del v1: confirmar jugadores y publicar el cuadro correcto en el momento correcto.",
+    "title": "Mantene las aprobaciones y los cuadros en movimiento.",
+    "description": "La vista admin se concentra en los dos cuellos de botella principales del v1: confirmar duplas y publicar el cuadro correcto en el momento correcto.",
     "publishedBrackets": "Cuadros publicados",
     "activeTournament": "Torneo activo",
-    "pendingPlayers": "Jugadores pendientes",
+    "pendingPlayers": "Duplas pendientes",
     "fullPlayerList": "Lista completa",
-    "noPendingPlayers": "No hay jugadores pendientes ahora mismo.",
-    "publishingState": "Estado de publicación",
-    "assignedPlayers": "{count} jugadores asignados",
-    "noBrackets": "Todavía no hay cuadros creados.",
+    "noPendingPlayers": "No hay duplas pendientes ahora mismo.",
+    "publishingState": "Estado de publicacion",
+    "assignedPlayers": "{count} duplas asignadas",
+    "noBrackets": "Todavia no hay cuadros creados.",
     "openBracketManager": "Abrir gestor de cuadros",
     "players": {
-      "eyebrow": "Jugadores admin",
-      "title": "Aceptá jugadores al torneo.",
-      "description": "Esta pantalla está pensada para escritorio y operación: revisar datos del jugador y marcar si la inscripción queda pendiente, aprobada o rechazada.",
+      "eyebrow": "Duplas admin",
+      "title": "Acepta duplas al torneo.",
+      "description": "Esta pantalla esta pensada para escritorio y operacion: revisa datos de la dupla y marca si la inscripcion queda pendiente, aprobada o rechazada.",
       "approveAction": "Guardar estado",
       "columns": {
-        "player": "Jugador",
+        "player": "Dupla",
         "contact": "Contacto",
         "status": "Estado",
         "save": "Guardar"
       },
-      "noPhone": "Sin teléfono",
-      "noCategory": "Sin categoría"
+      "noPhone": "Sin telefono",
+      "noCategory": "Sin categoria"
     },
     "brackets": {
       "eyebrow": "Gestor de cuadros",
-      "title": "Asigná jugadores y publicá cuando esté listo.",
-      "description": "El v1 mantiene la gestión de cuadros explícita y manual: creá un cuadro, asigná usuarios aprobados en orden y después publicalo para todos.",
+      "title": "Asigna duplas y publica cuando este listo.",
+      "description": "El v1 mantiene la gestion de cuadros explicita y manual: crea un cuadro, asigna duplas aprobadas en orden y despues publicalo para todos.",
       "createTitle": "Crear un cuadro",
-      "createDescription": "Ingresá los usernames aprobados separados por comas en el orden en que querés asignarlos.",
+      "createDescription": "Elige duplas aprobadas y dales una posicion. Usa 0 para dejar una dupla afuera de este cuadro.",
       "fields": {
         "name": "Nombre del cuadro",
         "format": "Formato",
-        "usernames": "Usernames en orden"
+        "teams": "Duplas aprobadas"
       },
       "placeholders": {
-        "name": "Cuadro Amanecer del Sábado",
-        "format": "Americano - 8 jugadores",
-        "usernames": "sofi-topspin, mateo-volley"
+        "name": "Cuadro Amanecer del Sabado",
+        "format": "Americano - 8 duplas"
       },
       "save": "Guardar cuadro",
-      "approvedPlayers": "Jugadores aceptados",
-      "noApprovedPlayers": "Todavía no hay jugadores aprobados.",
-      "publishingControls": "Controles de publicación",
-      "publishingDescription": "Cambiá la visibilidad en la página pública de cuadros. Los cuadros en borrador quedan solo para admin.",
+      "approvedPlayers": "Duplas aceptadas",
+      "noApprovedPlayers": "Todavia no hay duplas aprobadas.",
+      "positionLabel": "Posicion",
+      "selectionHelp": "Cada dupla aprobada aparece en esta lista. Deja un numero positivo para incluirla en el cuadro, o usa 0 para omitirla.",
+      "publishingControls": "Controles de publicacion",
+      "publishingDescription": "Cambia la visibilidad en la pagina publica de cuadros. Los cuadros en borrador quedan solo para admin.",
       "unpublish": "Despublicar cuadro",
       "publish": "Publicar cuadro",
-      "empty": "Todavía no hay cuadros creados. Usá el formulario de arriba para crear el primero."
+      "empty": "Todavia no hay cuadros creados. Usa el formulario de arriba para crear el primero."
     }
   }
 }

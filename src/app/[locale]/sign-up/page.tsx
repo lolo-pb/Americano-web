@@ -13,7 +13,7 @@ export default async function SignUpPage({
   const { locale } = (await params) as { locale: Locale };
   const [viewer, dictionary] = await Promise.all([getViewerContext(), getDictionary(locale)]);
 
-  if (viewer.profile) {
+  if (viewer.team) {
     redirect(localizeHref(locale, "/me"));
   }
 

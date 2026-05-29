@@ -6,30 +6,32 @@ import { hasSupabaseEnv } from "@/lib/env";
 import { defaultLocale, localizeHref } from "@/lib/i18n";
 import { requireAdmin, requireUser } from "@/lib/data";
 
-export async function updateProfileAction(formData: FormData) {
+export async function updateTeamAction(formData: FormData) {
   const locale = String(formData.get("locale") ?? defaultLocale);
   const viewer = await requireUser(locale as typeof defaultLocale);
 
-  if (viewer.demoMode || !viewer.profile || !hasSupabaseEnv()) {
+  if (viewer.demoMode || !viewer.team || !hasSupabaseEnv()) {
     return;
   }
 
   const supabase = await createClient();
 
   await supabase!
-    .from("profiles")
+    .from("teams")
     .update({
-      display_name: String(formData.get("displayName") ?? ""),
+      player_one_name: String(formData.get("playerOneName") ?? ""),
+      player_two_name: String(formData.get("playerTwoName") ?? ""),
       phone: String(formData.get("phone") ?? ""),
       category: String(formData.get("category") ?? ""),
       bio: String(formData.get("bio") ?? ""),
     })
-    .eq("id", viewer.profile.id);
+    .eq("id", viewer.team.id);
 
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/me"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, `/teams/${viewer.team.slug}`));
 }
 
-export async function updatePlayerStatusAction(formData: FormData) {
+export async function updateTeamStatusAction(formData: FormData) {
   const locale = String(formData.get("locale") ?? defaultLocale);
   const viewer = await requireAdmin(locale as typeof defaultLocale);
 
@@ -37,21 +39,21 @@ export async function updatePlayerStatusAction(formData: FormData) {
     return;
   }
 
-  const profileId = String(formData.get("profileId"));
+  const teamId = String(formData.get("teamId"));
   const approvalStatus = String(formData.get("approvalStatus"));
 
   const supabase = await createClient();
 
   await supabase!
-    .from("profiles")
+    .from("teams")
     .update({
       approval_status: approvalStatus,
     })
-    .eq("id", profileId);
+    .eq("id", teamId);
 
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/players"));
-  revalidatePath(localizeHref(locale as typeof defaultLocale, "/me"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/brackets"));
 }
 
 export async function saveBracketAction(formData: FormData) {
@@ -67,10 +69,16 @@ export async function saveBracketAction(formData: FormData) {
   const tournamentId = String(formData.get("tournamentId"));
   const name = String(formData.get("name"));
   const format = String(formData.get("format"));
-  const usernames = String(formData.get("usernames") ?? "")
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean);
+  const selectedTeamIds = formData.getAll("teamId").map(String);
+  const positionValues = formData.getAll("position").map((value) => Number(value));
+
+  const selectedEntries = selectedTeamIds
+    .map((teamId, index) => ({
+      teamId,
+      position: positionValues[index],
+    }))
+    .filter((entry) => entry.teamId && Number.isInteger(entry.position) && entry.position > 0)
+    .sort((a, b) => a.position - b.position);
 
   let currentBracketId = bracketId;
 
@@ -95,38 +103,32 @@ export async function saveBracketAction(formData: FormData) {
     currentBracketId = String(data?.id ?? "");
   }
 
-  if (currentBracketId && usernames.length) {
-    const { data: players } = await supabase!
-      .from("profiles")
-      .select("id, username")
-      .in("username", usernames);
+  if (currentBracketId && selectedEntries.length) {
+    const uniqueTeamIds = [...new Set(selectedEntries.map((entry) => entry.teamId))];
+    const { data: teams } = await supabase!
+      .from("teams")
+      .select("id")
+      .in("id", uniqueTeamIds)
+      .eq("approval_status", "approved");
 
-    const playerMap = new Map((players ?? []).map((player) => [String(player.username), String(player.id)]));
-    const entries = usernames
-      .map((username, index) => {
-        const playerId = playerMap.get(username);
+    const validTeamIds = new Set((teams ?? []).map((team) => String(team.id)));
+    const usedPositions = new Set<number>();
 
-        if (!playerId) {
-          return null;
+    const entries = selectedEntries
+      .filter((entry) => {
+        if (!validTeamIds.has(entry.teamId) || usedPositions.has(entry.position)) {
+          return false;
         }
 
-        return {
-          bracket_id: currentBracketId,
-          player_id: playerId,
-          position: index + 1,
-          seed: index + 1,
-        };
+        usedPositions.add(entry.position);
+        return true;
       })
-      .filter(
-        (
-          entry,
-        ): entry is {
-          bracket_id: string;
-          player_id: string;
-          position: number;
-          seed: number;
-        } => entry !== null,
-      );
+      .map((entry, index) => ({
+        bracket_id: currentBracketId,
+        team_id: entry.teamId,
+        position: entry.position,
+        seed: index + 1,
+      }));
 
     if (entries.length) {
       await supabase!.from("bracket_entries").insert(entries);
@@ -134,6 +136,7 @@ export async function saveBracketAction(formData: FormData) {
   }
 
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/brackets"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/brackets"));
 }
 
@@ -159,5 +162,6 @@ export async function toggleBracketPublishAction(formData: FormData) {
     .eq("id", bracketId);
 
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/brackets"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/brackets"));
 }

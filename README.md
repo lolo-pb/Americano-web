@@ -2,10 +2,10 @@
 
 Americano Web is a mobile-first tennis tournament app built with `Next.js`, `Supabase`, and `Vercel` in mind. It includes:
 
-- Public landing, signup, bracket, and player profile pages
-- Player login and personal status page
-- Admin dashboard for player approvals and bracket publishing
-- Supabase SQL schema with auth-triggered profile creation and row-level security
+- Public landing, signup, bracket, and team profile pages
+- Team login and private status page
+- Admin dashboard for team approvals and bracket publishing
+- Supabase SQL schema with auth-triggered team creation and row-level security
 - Demo mode fallback so the UI can be explored before backend env vars are connected
 
 ## Stack
@@ -41,12 +41,12 @@ npm run dev
 ## Supabase setup
 
 1. Create a Supabase project.
-2. Run the SQL in [supabase/migrations/20260529130000_init_americano.sql](/C:/lolo/dev/Americano-web/supabase/migrations/20260529130000_init_americano.sql).
-3. Promote one profile row to admin by setting `role = 'admin'` in `public.profiles`.
+2. Run the SQL migrations in `supabase/migrations`, or use `npx supabase db push`.
+3. Promote one team row to admin by setting `role = 'admin'` in `public.teams`.
 4. Make sure your active tournament row is present and `is_active = true`.
 
 ## Notes
 
 - Without Supabase env vars, the app runs in demo mode with seeded mock content.
-- Signup stores user metadata in Supabase Auth and relies on the SQL trigger to create the corresponding profile and registration row.
-- Bracket assignment is manual in v1: admin enters player usernames in order and publishes the bracket when ready.
+- Signup stores user metadata in Supabase Auth and relies on the SQL trigger to create the corresponding team and registration row.
+- Bracket assignment is manual in v1: admin assigns approved teams by position and publishes the bracket when ready.

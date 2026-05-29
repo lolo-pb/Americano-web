@@ -5,7 +5,7 @@
 This project is a web app for managing a tennis tournament with:
 
 - public landing and bracket pages
-- player signup and login
+- team signup and login
 - admin approval after payment confirmation
 - manual bracket creation and publishing
 
@@ -39,13 +39,13 @@ This is a good pairing for this app because:
 Main route files live in [src/app](/C:/lolo/dev/Americano-web/src/app).
 
 - `/` landing page
-- `/sign-up` player registration
+- `/sign-up` team registration
 - `/login` email/password login
 - `/brackets` public published brackets
-- `/players/[username]` public player profile
-- `/me` logged-in user profile and status page
+- `/teams/[slug]` public team profile
+- `/me` logged-in team profile and status page
 - `/admin` admin dashboard
-- `/admin/players` player approval and payment management
+- `/admin/players` team approval management
 - `/admin/brackets` bracket creation and publishing
 
 ### Shared UI
@@ -69,7 +69,7 @@ Important files:
 - [src/lib/data.ts](/C:/lolo/dev/Americano-web/src/lib/data.ts)
   Central data-access layer. This is the most important file to understand before changing app behavior.
 - [src/lib/types.ts](/C:/lolo/dev/Americano-web/src/lib/types.ts)
-  Main domain types for profiles, tournaments, and brackets.
+  Main domain types for teams, tournaments, and brackets.
 - [src/lib/mock-data.ts](/C:/lolo/dev/Americano-web/src/lib/mock-data.ts)
   Demo-mode fallback data.
 - [src/lib/env.ts](/C:/lolo/dev/Americano-web/src/lib/env.ts)
@@ -87,8 +87,8 @@ Server actions live in [src/app/actions.ts](/C:/lolo/dev/Americano-web/src/app/a
 
 Current actions:
 
-- update player profile fields
-- update player approval/payment status
+- update team profile fields
+- update team approval status
 - save bracket definitions
 - publish or unpublish brackets
 
@@ -99,7 +99,7 @@ Supabase SQL lives in [supabase/migrations/20260529130000_init_americano.sql](/C
 Core tables:
 
 - `tournaments`
-- `profiles`
+- `teams`
 - `registrations`
 - `brackets`
 - `bracket_entries`
@@ -113,9 +113,9 @@ Enums:
 Important backend behavior:
 
 - new auth users trigger `handle_new_user()`
-- that function creates a `profiles` row automatically
+- that function creates a `teams` row automatically
 - it also creates a `registrations` row for the active tournament when one exists
-- public player data is exposed through the `public_player_profiles` view
+- public team data is exposed through the `public_approved_teams` view
 
 ## Auth and permissions
 
