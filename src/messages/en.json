@@ -109,6 +109,7 @@
       "phone": "+54 11 ..."
     },
     "paymentNotice": "After signup, send your payment proof to {paymentEmail}. An admin will confirm it and approve your entry.",
+    "important": "Important",
     "submitIdle": "Create account",
     "submitBusy": "Creating account...",
     "haveAccount": "Already signed up?",

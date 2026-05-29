@@ -193,7 +193,17 @@ export function SignUpForm({
         </div>
 
         <div className="rounded-[1.15rem] bg-forest-soft px-3.5 py-3 text-sm leading-5.5 text-forest sm:rounded-2xl sm:px-4 sm:py-4 sm:leading-6">
-          {t("signUp.paymentNotice", { paymentEmail })}{" "}
+          <div className="flex items-start gap-2.5">
+            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest text-[0.7rem] font-black text-white">
+              !
+            </div>
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">
+                {t("signUp.important")}
+              </p>
+              <p className="mt-1">{t("signUp.paymentNotice", { paymentEmail })}</p>
+            </div>
+          </div>
         </div>
 
         {serverError && <p className="text-sm text-danger">{serverError}</p>}

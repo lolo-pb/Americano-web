@@ -109,6 +109,7 @@
       "phone": "+54 11 ..."
     },
     "paymentNotice": "Después de inscribirte, enviá tu comprobante de pago a {paymentEmail}. Un admin lo confirmará y aprobará tu entrada.",
+    "important": "Importante",
     "submitIdle": "Crear cuenta",
     "submitBusy": "Creando cuenta...",
     "haveAccount": "¿Ya te inscribiste?",
