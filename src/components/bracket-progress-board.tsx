@@ -29,8 +29,8 @@ export function BracketProgressBoard({
     openLevel: string;
   };
 }) {
-  const slotHeight = adminView ? 104 : 88;
-  const rowPitch = adminView ? 112 : 96;
+  const slotHeight = adminView ? 118 : 100;
+  const rowPitch = adminView ? 126 : 108;
   const boardHeight = (BASE_SLOT_COUNT - 1) * rowPitch + slotHeight;
 
   return (
