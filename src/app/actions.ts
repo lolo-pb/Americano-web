@@ -15,15 +15,17 @@ export async function updateTeamAction(formData: FormData) {
   }
 
   const supabase = await createClient();
+  const playerOneName = String(formData.get("playerOneName") ?? "").trim();
+  const playerTwoName = String(formData.get("playerTwoName") ?? "").trim();
 
   await supabase!
     .from("teams")
     .update({
-      player_one_name: String(formData.get("playerOneName") ?? ""),
-      player_two_name: String(formData.get("playerTwoName") ?? ""),
-      phone: String(formData.get("phone") ?? ""),
-      category: String(formData.get("category") ?? ""),
-      bio: String(formData.get("bio") ?? ""),
+      player_one_name: playerOneName.length >= 2 ? playerOneName : viewer.team.playerOneName,
+      player_two_name: playerTwoName.length >= 2 ? playerTwoName : viewer.team.playerTwoName,
+      phone: String(formData.get("phone") ?? "").trim(),
+      category: String(formData.get("category") ?? "").trim(),
+      bio: String(formData.get("bio") ?? "").trim(),
     })
     .eq("id", viewer.team.id);
 
@@ -113,14 +115,20 @@ export async function saveBracketAction(formData: FormData) {
 
     const validTeamIds = new Set((teams ?? []).map((team) => String(team.id)));
     const usedPositions = new Set<number>();
+    const usedTeamIds = new Set<string>();
 
     const entries = selectedEntries
       .filter((entry) => {
-        if (!validTeamIds.has(entry.teamId) || usedPositions.has(entry.position)) {
+        if (
+          !validTeamIds.has(entry.teamId) ||
+          usedPositions.has(entry.position) ||
+          usedTeamIds.has(entry.teamId)
+        ) {
           return false;
         }
 
         usedPositions.add(entry.position);
+        usedTeamIds.add(entry.teamId);
         return true;
       })
       .map((entry, index) => ({
