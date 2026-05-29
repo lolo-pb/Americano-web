@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f3e8;
+  --foreground: #15281d;
+  --surface: #fffaf0;
+  --surface-strong: #f2e4c8;
+  --line: rgba(21, 40, 29, 0.12);
+  --accent: #cb6d2e;
+  --accent-strong: #9d4a18;
+  --forest: #1f5a44;
+  --forest-soft: #d8eadf;
+  --gold: #f2bc4d;
+  --danger: #9f2f2f;
+  --muted: #5e6d63;
+  --font-body: "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-heading: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-canvas: var(--background);
+  --color-ink: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-forest: var(--forest);
+  --color-forest-soft: var(--forest-soft);
+  --color-gold: var(--gold);
+  --color-danger: var(--danger);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.84)),
+    linear-gradient(135deg, #f7efdc, #f8f3e8 48%, #ecf4ec);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+::selection {
+  background: rgba(203, 109, 46, 0.24);
+}
+
+.page-shell {
+  margin-inline: auto;
+  width: min(1120px, calc(100% - 1.5rem));
+}
+
+.card {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 92%, white);
+  box-shadow:
+    0 12px 40px rgba(35, 39, 37, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.eyebrow {
+  font-family: var(--font-heading), sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.court-lines {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 100% 5rem, 5rem 100%;
+  background-position: center;
+}
