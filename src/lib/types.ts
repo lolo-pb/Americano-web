@@ -12,17 +12,19 @@ export type Tournament = {
   description: string;
 };
 
-export type PublicProfile = {
+export type PublicTeam = {
   id: string;
-  username: string;
-  displayName: string;
+  slug: string;
+  playerOneName: string;
+  playerTwoName: string;
+  teamName: string;
   avatarUrl?: string | null;
   category?: string | null;
   approvalStatus: ApprovalStatus;
   bio?: string | null;
 };
 
-export type Profile = PublicProfile & {
+export type Team = PublicTeam & {
   email: string;
   phone?: string | null;
   role: Role;
@@ -31,7 +33,7 @@ export type Profile = PublicProfile & {
 export type Registration = {
   id: string;
   tournamentId: string;
-  playerId: string;
+  teamId: string;
   createdAt: string;
   notes?: string | null;
 };
@@ -39,10 +41,10 @@ export type Registration = {
 export type BracketEntry = {
   id: string;
   bracketId: string;
-  playerId: string;
+  teamId: string;
   position: number;
   seed?: number | null;
-  profile: PublicProfile;
+  team: PublicTeam;
 };
 
 export type Bracket = {
@@ -57,6 +59,6 @@ export type Bracket = {
 
 export type ViewerContext = {
   demoMode: boolean;
-  profileMissing?: boolean;
-  profile: Profile | null;
+  teamMissing?: boolean;
+  team: Team | null;
 };

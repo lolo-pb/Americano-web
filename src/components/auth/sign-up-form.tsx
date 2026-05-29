@@ -9,10 +9,10 @@ import { z } from "zod";
 import { useI18n } from "@/components/i18n-provider";
 import { localizeHref, type Locale } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/browser";
-import { slugify } from "@/lib/utils";
 
 type SignUpValues = {
-  username: string;
+  playerOneName: string;
+  playerTwoName: string;
   email: string;
   confirmEmail: string;
   password: string;
@@ -36,10 +36,8 @@ export function SignUpForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const signUpSchema = z
     .object({
-      username: z
-        .string()
-        .min(3, t("signUp.errors.usernameLength"))
-        .regex(/^[a-z0-9-]+$/, t("signUp.errors.usernameFormat")),
+      playerOneName: z.string().min(2, t("signUp.errors.nameLength")),
+      playerTwoName: z.string().min(2, t("signUp.errors.nameLength")),
       email: z.email(t("signUp.errors.email")),
       confirmEmail: z.email(t("signUp.errors.email")),
       password: z.string().min(8, t("signUp.errors.password")),
@@ -54,11 +52,7 @@ export function SignUpForm({
     .refine((data) => data.password === data.confirmPassword, {
       message: t("signUp.errors.passwordMatch"),
       path: ["confirmPassword"],
-    })
-    .transform((data) => ({
-      ...data,
-      username: slugify(data.username),
-    }));
+    });
   const {
     register,
     handleSubmit,
@@ -85,8 +79,8 @@ export function SignUpForm({
         password: parsed.password,
         options: {
           data: {
-            display_name: parsed.username,
-            username: parsed.username,
+            player_one_name: parsed.playerOneName.trim(),
+            player_two_name: parsed.playerTwoName.trim(),
             phone: parsed.phone,
             category: parsed.category,
           },
@@ -114,13 +108,23 @@ export function SignUpForm({
     <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-3.5 sm:rounded-[2rem] sm:p-8">
       <div className="grid gap-3 sm:gap-5">
         <label className="grid gap-1.5 sm:gap-2">
-          <span className="text-sm font-semibold text-ink">{t("signUp.fields.username")}</span>
+          <span className="text-sm font-semibold text-ink">{t("signUp.fields.playerOneName")}</span>
           <input
-            {...register("username")}
+            {...register("playerOneName")}
             className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
-            placeholder={t("signUp.placeholders.username")}
+            placeholder={t("signUp.placeholders.playerOneName")}
           />
-          {errors.username && <p className="text-sm text-danger">{errors.username.message}</p>}
+          {errors.playerOneName && <p className="text-sm text-danger">{errors.playerOneName.message}</p>}
+        </label>
+
+        <label className="grid gap-1.5 sm:gap-2">
+          <span className="text-sm font-semibold text-ink">{t("signUp.fields.playerTwoName")}</span>
+          <input
+            {...register("playerTwoName")}
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
+            placeholder={t("signUp.placeholders.playerTwoName")}
+          />
+          {errors.playerTwoName && <p className="text-sm text-danger">{errors.playerTwoName.message}</p>}
         </label>
 
         <label className="grid gap-1.5 sm:gap-2">
@@ -169,7 +173,7 @@ export function SignUpForm({
           )}
         </label>
 
-        <div className="grid gap-3 sm:gap-5 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-5">
           <label className="grid gap-1.5 sm:gap-2">
             <span className="text-sm font-semibold text-ink">{t("signUp.fields.phone")}</span>
             <input

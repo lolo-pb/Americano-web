@@ -31,7 +31,7 @@ export function NavLinks({
 }) {
   const pathname = usePathname();
   const { t } = useI18n();
-  const profile = viewer.profile;
+  const team = viewer.team;
 
   const linkClass = (href: string) =>
     cn(baseLinkClass, isActive(pathname, localizeHref(locale, href)) && activeLinkClass);
@@ -41,12 +41,12 @@ export function NavLinks({
       <Link href={localizeHref(locale, "/brackets")} className={linkClass("/brackets")}>
         {t("nav.brackets")}
       </Link>
-      {profile ? (
+      {team ? (
         <>
           <Link href={localizeHref(locale, "/me")} className={linkClass("/me")}>
             {t("nav.profile")}
           </Link>
-          {profile.role === "admin" && (
+          {team.role === "admin" && (
             <Link href={localizeHref(locale, "/admin")} className={linkClass("/admin")}>
               {t("nav.admin")}
             </Link>

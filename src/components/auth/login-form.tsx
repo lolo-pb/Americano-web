@@ -69,14 +69,14 @@ export function LoginForm({
         return;
       }
 
-      const { data: profile } = await supabase
-        .from("profiles")
+      const { data: team } = await supabase
+        .from("teams")
         .select("id")
-        .eq("id", userId)
+        .eq("owner_user_id", userId)
         .maybeSingle();
 
-      if (!profile) {
-        setServerError(t("login.errors.profileMissing"));
+      if (!team) {
+        setServerError(t("login.errors.teamMissing"));
         return;
       }
 

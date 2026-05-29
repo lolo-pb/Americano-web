@@ -1,20 +1,10 @@
-create extension if not exists "pgcrypto";
-
-create type public.user_role as enum ('client', 'admin');
-create type public.approval_status as enum ('pending', 'approved', 'rejected');
-create type public.bracket_status as enum ('draft', 'published');
-
-create table if not exists public.tournaments (
-  id uuid primary key default gen_random_uuid(),
-  name text not null,
-  location text not null,
-  start_date date not null,
-  signup_open boolean not null default true,
-  brackets_published boolean not null default false,
-  is_active boolean not null default false,
-  description text not null default '',
-  created_at timestamptz not null default timezone('utc', now())
-);
+create or replace function public.normalize_slug_part(raw_value text)
+returns text
+language sql
+immutable
+as $$
+  select trim(both '-' from lower(regexp_replace(coalesce(raw_value, ''), '[^a-z0-9]+', '-', 'g')));
+$$;
 
 create table if not exists public.teams (
   id uuid primary key references auth.users (id) on delete cascade,
@@ -33,46 +23,136 @@ create table if not exists public.teams (
   updated_at timestamptz not null default timezone('utc', now())
 );
 
-create table if not exists public.registrations (
-  id uuid primary key default gen_random_uuid(),
-  tournament_id uuid not null references public.tournaments (id) on delete cascade,
-  team_id uuid not null references public.teams (id) on delete cascade,
-  notes text,
-  created_at timestamptz not null default timezone('utc', now()),
-  unique (tournament_id, team_id)
-);
-
-create table if not exists public.brackets (
-  id uuid primary key default gen_random_uuid(),
-  tournament_id uuid not null references public.tournaments (id) on delete cascade,
-  name text not null,
-  format text not null,
-  status public.bracket_status not null default 'draft',
-  published_at timestamptz,
-  created_at timestamptz not null default timezone('utc', now()),
-  updated_at timestamptz not null default timezone('utc', now())
-);
-
-create table if not exists public.bracket_entries (
-  id uuid primary key default gen_random_uuid(),
-  bracket_id uuid not null references public.brackets (id) on delete cascade,
-  team_id uuid not null references public.teams (id) on delete cascade,
-  position integer not null check (position > 0),
-  seed integer,
-  created_at timestamptz not null default timezone('utc', now()),
-  unique (bracket_id, team_id),
-  unique (bracket_id, position)
-);
-
-create or replace function public.set_updated_at()
-returns trigger
-language plpgsql
-as $$
+do $$
 begin
-  new.updated_at = timezone('utc', now());
-  return new;
-end;
+  if exists (
+    select 1
+    from information_schema.tables
+    where table_schema = 'public'
+      and table_name = 'profiles'
+  ) then
+    insert into public.teams (
+      id,
+      owner_user_id,
+      email,
+      slug,
+      player_one_name,
+      player_two_name,
+      phone,
+      avatar_url,
+      category,
+      bio,
+      role,
+      approval_status,
+      created_at,
+      updated_at
+    )
+    select
+      p.id,
+      p.id,
+      p.email,
+      coalesce(nullif(public.normalize_slug_part(p.username), ''), 'team-' || substr(replace(p.id::text, '-', ''), 1, 6)),
+      coalesce(p.display_name, split_part(p.email, '@', 1)),
+      '',
+      p.phone,
+      p.avatar_url,
+      p.category,
+      p.bio,
+      p.role,
+      p.approval_status,
+      p.created_at,
+      p.updated_at
+    from public.profiles p
+    on conflict (id) do update
+      set email = excluded.email,
+          phone = excluded.phone,
+          avatar_url = excluded.avatar_url,
+          category = excluded.category,
+          bio = excluded.bio,
+          role = excluded.role,
+          approval_status = excluded.approval_status,
+          updated_at = excluded.updated_at;
+  end if;
+end
 $$;
+
+alter table public.registrations
+add column if not exists team_id uuid;
+
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'registrations'
+      and column_name = 'player_id'
+  ) then
+    execute 'update public.registrations set team_id = player_id where team_id is null';
+  end if;
+end
+$$;
+
+alter table public.registrations
+drop constraint if exists registrations_team_id_fkey;
+
+alter table public.registrations
+add constraint registrations_team_id_fkey
+foreign key (team_id) references public.teams (id) on delete cascade;
+
+alter table public.registrations
+alter column team_id set not null;
+
+alter table public.registrations
+drop constraint if exists registrations_tournament_id_player_id_key;
+
+alter table public.registrations
+drop constraint if exists registrations_tournament_id_team_id_key;
+
+alter table public.registrations
+add constraint registrations_tournament_id_team_id_key unique (tournament_id, team_id);
+
+alter table public.registrations
+drop column if exists player_id;
+
+alter table public.bracket_entries
+add column if not exists team_id uuid;
+
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'bracket_entries'
+      and column_name = 'player_id'
+  ) then
+    execute 'update public.bracket_entries set team_id = player_id where team_id is null';
+  end if;
+end
+$$;
+
+alter table public.bracket_entries
+drop constraint if exists bracket_entries_team_id_fkey;
+
+alter table public.bracket_entries
+add constraint bracket_entries_team_id_fkey
+foreign key (team_id) references public.teams (id) on delete cascade;
+
+alter table public.bracket_entries
+alter column team_id set not null;
+
+alter table public.bracket_entries
+drop constraint if exists bracket_entries_bracket_id_player_id_key;
+
+alter table public.bracket_entries
+drop constraint if exists bracket_entries_bracket_id_team_id_key;
+
+alter table public.bracket_entries
+add constraint bracket_entries_bracket_id_team_id_key unique (bracket_id, team_id);
+
+alter table public.bracket_entries
+drop column if exists player_id;
 
 create or replace function public.is_admin()
 returns boolean
@@ -84,14 +164,6 @@ as $$
     from public.teams
     where owner_user_id = auth.uid() and role = 'admin'
   );
-$$;
-
-create or replace function public.normalize_slug_part(raw_value text)
-returns text
-language sql
-immutable
-as $$
-  select trim(both '-' from lower(regexp_replace(coalesce(raw_value, ''), '[^a-z0-9]+', '-', 'g')));
 $$;
 
 create or replace function public.generate_team_slug(raw_meta jsonb, fallback_email text)
@@ -136,7 +208,6 @@ set search_path = public
 as $$
 declare
   active_tournament_id uuid;
-  created_team_id uuid;
   player_one text;
   player_two text;
   generated_slug text;
@@ -169,7 +240,7 @@ begin
     'client',
     'pending'
   )
-  returning id into created_team_id;
+  on conflict (id) do nothing;
 
   select id
   into active_tournament_id
@@ -180,7 +251,7 @@ begin
 
   if active_tournament_id is not null then
     insert into public.registrations (tournament_id, team_id)
-    values (active_tournament_id, created_team_id)
+    values (active_tournament_id, new.id)
     on conflict do nothing;
   end if;
 
@@ -193,50 +264,34 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
+alter table public.teams enable row level security;
+
 drop trigger if exists teams_set_updated_at on public.teams;
 create trigger teams_set_updated_at
   before update on public.teams
   for each row execute procedure public.set_updated_at();
 
-drop trigger if exists brackets_set_updated_at on public.brackets;
-create trigger brackets_set_updated_at
-  before update on public.brackets
-  for each row execute procedure public.set_updated_at();
-
-alter table public.tournaments enable row level security;
-alter table public.teams enable row level security;
-alter table public.registrations enable row level security;
-alter table public.brackets enable row level security;
-alter table public.bracket_entries enable row level security;
-
-create policy "tournaments are publicly readable"
-  on public.tournaments
-  for select
-  using (true);
-
-create policy "admins manage tournaments"
-  on public.tournaments
-  for all
-  using (public.is_admin())
-  with check (public.is_admin());
-
+drop policy if exists "users read own team" on public.teams;
 create policy "users read own team"
   on public.teams
   for select
   using (owner_user_id = auth.uid() or public.is_admin());
 
+drop policy if exists "users update own team" on public.teams;
 create policy "users update own team"
   on public.teams
   for update
   using (owner_user_id = auth.uid() or public.is_admin())
   with check (owner_user_id = auth.uid() or public.is_admin());
 
+drop policy if exists "admins manage teams" on public.teams;
 create policy "admins manage teams"
   on public.teams
   for all
   using (public.is_admin())
   with check (public.is_admin());
 
+drop policy if exists "users read own registrations" on public.registrations;
 create policy "users read own registrations"
   on public.registrations
   for select
@@ -250,23 +305,14 @@ create policy "users read own registrations"
     )
   );
 
+drop policy if exists "admins manage registrations" on public.registrations;
 create policy "admins manage registrations"
   on public.registrations
   for all
   using (public.is_admin())
   with check (public.is_admin());
 
-create policy "published or admin brackets are readable"
-  on public.brackets
-  for select
-  using (status = 'published' or public.is_admin());
-
-create policy "admins manage brackets"
-  on public.brackets
-  for all
-  using (public.is_admin())
-  with check (public.is_admin());
-
+drop policy if exists "published or admin bracket entries are readable" on public.bracket_entries;
 create policy "published or admin bracket entries are readable"
   on public.bracket_entries
   for select
@@ -279,6 +325,7 @@ create policy "published or admin bracket entries are readable"
     )
   );
 
+drop policy if exists "admins manage bracket entries" on public.bracket_entries;
 create policy "admins manage bracket entries"
   on public.bracket_entries
   for all
@@ -301,23 +348,3 @@ where approval_status = 'approved'
   and role = 'client';
 
 grant select on public.public_approved_teams to anon, authenticated;
-
-insert into public.tournaments (
-  name,
-  location,
-  start_date,
-  signup_open,
-  brackets_published,
-  is_active,
-  description
-)
-values (
-  'Americano Open 2026',
-  'Buenos Aires Lawn Club',
-  '2026-08-14',
-  true,
-  false,
-  true,
-  'A weekend Americano-style tennis event with curated doubles brackets, team approvals, and a mobile-first team experience.'
-)
-on conflict do nothing;

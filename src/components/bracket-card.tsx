@@ -39,13 +39,20 @@ export function BracketCard({
               className="flex items-center justify-between rounded-[1.1rem] border border-line bg-white/70 px-3 py-2.5 sm:rounded-2xl sm:px-4 sm:py-3"
             >
               <div>
-                <p className="text-sm font-semibold text-ink sm:text-base">{entry.profile.displayName}</p>
-                <p className="text-sm text-muted">@{entry.profile.username}</p>
+                <Link
+                  href={localizeHref(locale, `/teams/${entry.team.slug}`)}
+                  className="text-sm font-semibold text-ink hover:text-forest sm:text-base"
+                >
+                  {entry.team.teamName}
+                </Link>
+                <p className="text-sm text-muted">
+                  {entry.team.playerOneName} + {entry.team.playerTwoName}
+                </p>
               </div>
               <div className="text-right">
                 <p className="text-sm font-bold text-forest">#{entry.position}</p>
                 <p className="text-xs uppercase tracking-[0.2em] text-muted">
-                  {entry.profile.category ?? "Open"}
+                  {entry.team.category ?? "Open"}
                 </p>
               </div>
             </div>

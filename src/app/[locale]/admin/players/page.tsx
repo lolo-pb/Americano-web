@@ -1,7 +1,7 @@
-import { updatePlayerStatusAction } from "@/app/actions";
+import { updateTeamStatusAction } from "@/app/actions";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
-import { getAdminPlayers, requireAdmin } from "@/lib/data";
+import { getAdminTeams, requireAdmin } from "@/lib/data";
 import { getDictionary, type Locale } from "@/lib/i18n";
 
 export default async function AdminPlayersPage({
@@ -11,7 +11,7 @@ export default async function AdminPlayersPage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   await requireAdmin(locale);
-  const [players, dictionary] = await Promise.all([getAdminPlayers(), getDictionary(locale)]);
+  const [teams, dictionary] = await Promise.all([getAdminTeams(), getDictionary(locale)]);
 
   return (
     <div className="page-shell py-8 sm:py-14">
@@ -30,29 +30,32 @@ export default async function AdminPlayersPage({
         </div>
 
         <div className="grid">
-          {players.map((player) => (
+          {teams.map((team) => (
             <form
-              key={player.id}
-              action={updatePlayerStatusAction}
+              key={team.id}
+              action={updateTeamStatusAction}
               className="grid gap-4 border-b border-line/80 px-6 py-5 last:border-b-0 lg:grid-cols-[1.2fr_1fr_1fr_0.7fr] lg:items-center"
             >
-              <input type="hidden" name="profileId" value={player.id} />
+              <input type="hidden" name="teamId" value={team.id} />
               <input type="hidden" name="locale" value={locale} />
               <div>
-                <p className="font-bold text-ink">{player.displayName}</p>
-                <p className="text-sm text-muted">@{player.username}</p>
+                <p className="font-bold text-ink">{team.teamName}</p>
+                <p className="text-sm text-muted">
+                  {team.playerOneName} + {team.playerTwoName}
+                </p>
+                <p className="text-sm text-muted">{team.slug}</p>
                 <div className="mt-2">
-                  <StatusBadge label={dictionary.common.statuses[player.approvalStatus]} tone={player.approvalStatus} />
+                  <StatusBadge label={dictionary.common.statuses[team.approvalStatus]} tone={team.approvalStatus} />
                 </div>
               </div>
               <div className="text-sm text-muted">
-                <p>{player.email}</p>
-                <p>{player.phone ?? dictionary.admin.players.noPhone}</p>
-                <p>{player.category ?? dictionary.admin.players.noCategory}</p>
+                <p>{team.email}</p>
+                <p>{team.phone ?? dictionary.admin.players.noPhone}</p>
+                <p>{team.category ?? dictionary.admin.players.noCategory}</p>
               </div>
               <select
                 name="approvalStatus"
-                defaultValue={player.approvalStatus}
+                defaultValue={team.approvalStatus}
                 className="rounded-2xl border border-line bg-white px-4 py-3 text-sm"
               >
                 <option value="pending">{dictionary.common.statuses.pending}</option>

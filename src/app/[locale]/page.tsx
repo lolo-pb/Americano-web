@@ -32,10 +32,10 @@ export default async function HomePage({
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href={viewer.profile ? localizeHref(locale, "/me") : localizeHref(locale, "/sign-up")}
+              href={viewer.team ? localizeHref(locale, "/me") : localizeHref(locale, "/sign-up")}
               className="rounded-full bg-accent px-6 py-3 text-center font-semibold text-white hover:bg-accent-strong"
             >
-              {viewer.profile ? dictionary.common.actions.openProfile : dictionary.common.actions.signUp}
+              {viewer.team ? dictionary.common.actions.openProfile : dictionary.common.actions.signUp}
             </Link>
             <Link
               href={localizeHref(locale, "/brackets")}

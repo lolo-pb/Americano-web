@@ -1,7 +1,7 @@
 import { saveBracketAction, toggleBracketPublishAction } from "@/app/actions";
 import { BracketCard } from "@/components/bracket-card";
 import { SectionHeading } from "@/components/section-heading";
-import { getAdminBrackets, getApprovedPlayers, getTournament, requireAdmin } from "@/lib/data";
+import { getAdminBrackets, getApprovedTeams, getTournament, requireAdmin } from "@/lib/data";
 import { getDictionary, type Locale } from "@/lib/i18n";
 
 export default async function AdminBracketsPage({
@@ -12,10 +12,10 @@ export default async function AdminBracketsPage({
   const { locale } = (await params) as { locale: Locale };
   await requireAdmin(locale);
 
-  const [tournament, brackets, players, dictionary] = await Promise.all([
+  const [tournament, brackets, teams, dictionary] = await Promise.all([
     getTournament(),
     getAdminBrackets(),
-    getApprovedPlayers(),
+    getApprovedTeams(),
     getDictionary(locale),
   ]);
 
@@ -27,7 +27,7 @@ export default async function AdminBracketsPage({
         description={dictionary.admin.brackets.description}
       />
 
-      <div className="mt-8 grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+      <div className="mt-8 grid gap-8 xl:grid-cols-[1fr_1fr]">
         <section className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.brackets.createTitle}</h2>
           <p className="mt-3 text-sm leading-6 text-muted">{dictionary.admin.brackets.createDescription}</p>
@@ -51,15 +51,43 @@ export default async function AdminBracketsPage({
                 className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
               />
             </label>
-            <label className="grid gap-2">
-              <span className="text-sm font-semibold text-ink">{dictionary.admin.brackets.fields.usernames}</span>
-              <textarea
-                name="usernames"
-                rows={5}
-                placeholder={dictionary.admin.brackets.placeholders.usernames}
-                className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
-              />
-            </label>
+
+            <div className="grid gap-3">
+              <span className="text-sm font-semibold text-ink">{dictionary.admin.brackets.fields.teams}</span>
+              {teams.length ? (
+                teams.map((team, index) => (
+                  <div
+                    key={team.id}
+                    className="grid gap-3 rounded-[1.3rem] border border-line bg-white/80 px-4 py-3 md:grid-cols-[1fr_90px]"
+                  >
+                    <input type="hidden" name="teamId" value={team.id} />
+                    <div>
+                      <p className="font-bold text-ink">{team.teamName}</p>
+                      <p className="text-sm text-muted">
+                        {team.slug} · {team.category ?? dictionary.common.levels.open}
+                      </p>
+                    </div>
+                    <label className="grid gap-1">
+                      <span className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                        {dictionary.admin.brackets.positionLabel}
+                      </span>
+                      <input
+                        name="position"
+                        type="number"
+                        min="0"
+                        defaultValue={index + 1}
+                        className="rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-forest"
+                      />
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <p className="rounded-[1.5rem] border border-dashed border-line px-4 py-6 text-sm text-muted">
+                  {dictionary.admin.brackets.noApprovedPlayers}
+                </p>
+              )}
+            </div>
+
             <button
               type="submit"
               className="rounded-full bg-accent px-5 py-3 font-semibold text-white hover:bg-accent-strong"
@@ -71,13 +99,17 @@ export default async function AdminBracketsPage({
 
         <aside className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.brackets.approvedPlayers}</h2>
+          <p className="mt-3 text-sm leading-6 text-muted">{dictionary.admin.brackets.selectionHelp}</p>
           <div className="mt-5 grid gap-3">
-            {players.length ? (
-              players.map((player) => (
-                <div key={player.id} className="rounded-[1.5rem] border border-line bg-white/70 px-4 py-3">
-                  <p className="font-bold text-ink">{player.displayName}</p>
+            {teams.length ? (
+              teams.map((team) => (
+                <div key={team.id} className="rounded-[1.5rem] border border-line bg-white/70 px-4 py-3">
+                  <p className="font-bold text-ink">{team.teamName}</p>
                   <p className="text-sm text-muted">
-                    @{player.username} · {player.category ?? dictionary.common.levels.open}
+                    {team.playerOneName} + {team.playerTwoName}
+                  </p>
+                  <p className="text-sm text-muted">
+                    {team.slug} · {team.category ?? dictionary.common.levels.open}
                   </p>
                 </div>
               ))
