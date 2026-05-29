@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { localizeHref, type Locale } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/browser";
 import { useI18n } from "@/components/i18n-provider";
@@ -12,14 +11,12 @@ export function SignOutButton({
   compact?: boolean;
   locale: Locale;
 }) {
-  const router = useRouter();
   const { t } = useI18n();
 
   async function handleSignOut() {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.refresh();
-    router.push(localizeHref(locale, "/"));
+    window.location.assign(localizeHref(locale, "/"));
   }
 
   return (
