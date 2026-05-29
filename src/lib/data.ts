@@ -25,9 +25,10 @@ function toPublicTeam(team: Team): PublicTeam {
 }
 
 function mapBracketEntry(entry: Record<string, unknown>): BracketEntry {
-  const team = entry.team as Record<string, unknown>;
-  const playerOneName = String(team.player_one_name ?? "");
+  const team = (entry.team as Record<string, unknown> | null) ?? {};
+  const playerOneName = String(team.player_one_name ?? "Unknown");
   const playerTwoName = String(team.player_two_name ?? "");
+  const hasTeam = Object.keys(team).length > 0;
 
   return {
     id: String(entry.id),
@@ -36,14 +37,14 @@ function mapBracketEntry(entry: Record<string, unknown>): BracketEntry {
     position: Number(entry.position),
     seed: entry.seed ? Number(entry.seed) : null,
     team: {
-      id: String(team.id),
-      slug: String(team.slug),
+      id: String(team.id ?? entry.team_id),
+      slug: team.slug ? String(team.slug) : "",
       playerOneName,
       playerTwoName,
-      teamName: buildTeamName(playerOneName, playerTwoName),
+      teamName: hasTeam ? buildTeamName(playerOneName, playerTwoName) : "Deleted Team",
       avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
       category: team.category ? String(team.category) : null,
-      approvalStatus: String(team.approval_status) as Team["approvalStatus"],
+      approvalStatus: hasTeam ? (String(team.approval_status) as Team["approvalStatus"]) : "rejected",
       bio: team.bio ? String(team.bio) : null,
     },
   };
@@ -82,7 +83,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
       "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, category, bio, avatar_url",
     )
     .eq("owner_user_id", user.id)
-    .single();
+    .maybeSingle();
 
   if (!team) {
     return {
