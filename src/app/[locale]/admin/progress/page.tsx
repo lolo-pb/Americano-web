@@ -16,7 +16,7 @@ export default async function AdminProgressPage({
 
   if (!bracket || !bracket.setupLocked) {
     return (
-      <div className="page-shell py-8 sm:py-14">
+      <div className="page-shell-wide py-8 sm:py-14">
         <SectionHeading
           eyebrow={dictionary.admin.progress.eyebrow}
           title={dictionary.admin.progress.title}
@@ -39,7 +39,7 @@ export default async function AdminProgressPage({
   const columns = await getBracketProgress(bracket.id);
 
   return (
-    <div className="page-shell py-8 sm:py-14">
+    <div className="page-shell-wide py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.admin.progress.eyebrow}
         title={dictionary.admin.progress.title}

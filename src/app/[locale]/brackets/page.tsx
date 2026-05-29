@@ -16,7 +16,7 @@ export default async function BracketsPage({
   ]);
 
   return (
-    <div className="page-shell py-8 sm:py-14">
+    <div className="page-shell-wide py-8 sm:py-14">
       <SectionHeading
         eyebrow={dictionary.brackets.eyebrow}
         title={`${tournament.name} ${dictionary.brackets.titleSuffix}`}

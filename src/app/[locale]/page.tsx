@@ -86,7 +86,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="page-shell py-7 sm:py-14">
+      <section className="page-shell-wide py-7 sm:py-14">
         <SectionHeading
           eyebrow={dictionary.home.playersEyebrow}
           title={dictionary.home.playersTitle}
