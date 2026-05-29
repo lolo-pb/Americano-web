@@ -73,31 +73,31 @@ export function LoginForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">
-      <div className="grid gap-4 sm:gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-3.5 sm:rounded-[2rem] sm:p-8">
+      <div className="grid gap-3 sm:gap-5">
         {justRegistered && (
-          <div className="rounded-2xl bg-forest-soft px-4 py-4 text-sm text-forest">
+          <div className="rounded-[1.15rem] bg-forest-soft px-3.5 py-3 text-sm text-forest sm:rounded-2xl sm:px-4 sm:py-4">
             {t("login.registeredMessage")}
           </div>
         )}
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("login.fields.email")}</span>
           <input
             {...register("email")}
             type="email"
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("login.placeholders.email")}
           />
           {errors.email && <p className="text-sm text-danger">{errors.email.message}</p>}
         </label>
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("login.fields.password")}</span>
           <input
             {...register("password")}
             type="password"
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("login.placeholders.password")}
           />
           {errors.password && <p className="text-sm text-danger">{errors.password.message}</p>}
@@ -108,7 +108,7 @@ export function LoginForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-full bg-forest px-5 py-3 font-semibold text-white hover:bg-forest/90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-full bg-forest px-4 py-2.5 text-sm font-semibold text-white hover:bg-forest/90 disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:py-3 sm:text-base"
         >
           {isSubmitting ? t("login.submitBusy") : t("login.submitIdle")}
         </button>

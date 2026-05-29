@@ -113,67 +113,67 @@ export function SignUpForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">
-      <div className="grid gap-4 sm:gap-5">
-        <label className="grid gap-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="card rounded-[1.6rem] p-3.5 sm:rounded-[2rem] sm:p-8">
+      <div className="grid gap-3 sm:gap-5">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.displayName")}</span>
           <input
             {...register("displayName")}
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("signUp.placeholders.displayName")}
           />
           {errors.displayName && <p className="text-sm text-danger">{errors.displayName.message}</p>}
         </label>
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.username")}</span>
           <input
             {...register("username")}
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("signUp.placeholders.username")}
           />
           {errors.username && <p className="text-sm text-danger">{errors.username.message}</p>}
         </label>
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.email")}</span>
           <input
             {...register("email")}
             type="email"
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("signUp.placeholders.email")}
           />
           {errors.email && <p className="text-sm text-danger">{errors.email.message}</p>}
         </label>
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.confirmEmail")}</span>
           <input
             {...register("confirmEmail")}
             type="email"
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("signUp.placeholders.confirmEmail")}
           />
           {errors.confirmEmail && <p className="text-sm text-danger">{errors.confirmEmail.message}</p>}
         </label>
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.password")}</span>
           <input
             {...register("password")}
             type="password"
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("signUp.placeholders.password")}
           />
           {errors.password && <p className="text-sm text-danger">{errors.password.message}</p>}
         </label>
 
-        <label className="grid gap-2">
+        <label className="grid gap-1.5 sm:gap-2">
           <span className="text-sm font-semibold text-ink">{t("signUp.fields.confirmPassword")}</span>
           <input
             {...register("confirmPassword")}
             type="password"
-            className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+            className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             placeholder={t("signUp.placeholders.confirmPassword")}
           />
           {errors.confirmPassword && (
@@ -181,20 +181,20 @@ export function SignUpForm({
           )}
         </label>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <label className="grid gap-2">
+        <div className="grid gap-3 sm:gap-5 sm:grid-cols-2">
+          <label className="grid gap-1.5 sm:gap-2">
             <span className="text-sm font-semibold text-ink">{t("signUp.fields.phone")}</span>
             <input
               {...register("phone")}
-              className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+              className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
               placeholder={t("signUp.placeholders.phone")}
             />
           </label>
-          <label className="grid gap-2">
+          <label className="grid gap-1.5 sm:gap-2">
             <span className="text-sm font-semibold text-ink">{t("signUp.fields.category")}</span>
             <select
               {...register("category")}
-              className="rounded-2xl border border-line bg-white px-4 py-3 outline-none focus:border-forest"
+              className="rounded-[1.15rem] border border-line bg-white px-3.5 py-2 text-sm outline-none focus:border-forest sm:rounded-2xl sm:px-4 sm:py-3 sm:text-base"
             >
               <option value="">{t("common.levels.select")}</option>
               <option value="Beginner">{t("common.levels.beginner")}</option>
@@ -204,7 +204,7 @@ export function SignUpForm({
           </label>
         </div>
 
-        <div className="rounded-2xl bg-forest-soft px-4 py-4 text-sm leading-6 text-forest">
+        <div className="rounded-[1.15rem] bg-forest-soft px-3.5 py-3 text-sm leading-5.5 text-forest sm:rounded-2xl sm:px-4 sm:py-4 sm:leading-6">
           {t("signUp.paymentNotice", { paymentEmail })}{" "}
         </div>
 
@@ -213,7 +213,7 @@ export function SignUpForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-full bg-accent px-5 py-3 font-semibold text-white hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:py-3 sm:text-base"
         >
           {isSubmitting ? t("signUp.submitBusy") : t("signUp.submitIdle")}
         </button>
