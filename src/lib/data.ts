@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { hasSupabaseEnv } from "@/lib/env";
+import { localizeHref, type Locale } from "@/lib/i18n";
 import { demoBrackets, demoProfiles, demoTournament } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
 import type { Bracket, BracketEntry, Profile, PublicProfile, Tournament, ViewerContext } from "@/lib/types";
@@ -42,6 +43,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   if (!hasSupabaseEnv()) {
     return {
       demoMode: true,
+      profileMissing: false,
       profile: null,
     };
   }
@@ -49,7 +51,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   const supabase = await createClient();
 
   if (!supabase) {
-    return { demoMode: true, profile: null };
+    return { demoMode: true, profileMissing: false, profile: null };
   }
 
   const {
@@ -59,6 +61,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   if (!user) {
     return {
       demoMode: false,
+      profileMissing: false,
       profile: null,
     };
   }
@@ -72,12 +75,14 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   if (!profile) {
     return {
       demoMode: false,
+      profileMissing: true,
       profile: null,
     };
   }
 
   return {
     demoMode: false,
+    profileMissing: false,
     profile: {
       id: String(profile.id),
       username: String(profile.username),
@@ -94,25 +99,25 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   };
 });
 
-export async function requireUser() {
+export async function requireUser(locale: Locale) {
   const viewer = await getViewerContext();
 
   if (!viewer.demoMode && !viewer.profile) {
-    redirect("/login");
+    redirect(localizeHref(locale, "/login"));
   }
 
   return viewer;
 }
 
-export async function requireAdmin() {
+export async function requireAdmin(locale: Locale) {
   const viewer = await getViewerContext();
 
   if (!viewer.demoMode && !viewer.profile) {
-    redirect("/login");
+    redirect(localizeHref(locale, "/login"));
   }
 
   if (!viewer.demoMode && viewer.profile?.role !== "admin") {
-    redirect("/me");
+    redirect(localizeHref(locale, "/me"));
   }
 
   return viewer;

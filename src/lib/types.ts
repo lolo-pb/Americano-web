@@ -59,5 +59,6 @@ export type Bracket = {
 
 export type ViewerContext = {
   demoMode: boolean;
+  profileMissing?: boolean;
   profile: Profile | null;
 };

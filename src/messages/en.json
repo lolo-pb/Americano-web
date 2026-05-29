@@ -130,6 +130,7 @@
     "title": "Track your status and tournament details.",
     "description": "Players can log in to review approval status, update profile details, and confirm when their bracket has been published.",
     "pendingInfo": "Pending players can still log in. Your profile page will show whether your payment and tournament approval are still awaiting admin review.",
+    "profileMissingMessage": "Your auth account exists, but the profile row is missing in the database. That usually means the Supabase trigger that creates `profiles` did not run correctly at signup.",
     "registeredMessage": "Account created. You can log in now and track your approval status from your profile page.",
     "fields": {
       "email": "Email",
@@ -146,6 +147,7 @@
     "errors": {
       "email": "Use a valid email.",
       "password": "Password must be at least 8 characters.",
+      "profileMissing": "Login succeeded, but your profile row is missing from the database. Check the `handle_new_user` trigger or create the `profiles` row for this user.",
       "supabase": "Supabase is not configured yet. Add the environment variables to enable login.",
       "generic": "Login failed."
     }

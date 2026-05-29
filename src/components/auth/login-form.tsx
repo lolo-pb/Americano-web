@@ -55,10 +55,28 @@ export function LoginForm({
 
     try {
       const supabase = createClient();
-      const { error } = await supabase.auth.signInWithPassword(values);
+      const { data, error } = await supabase.auth.signInWithPassword(values);
 
       if (error) {
         setServerError(error.message);
+        return;
+      }
+
+      const userId = data.user?.id;
+
+      if (!userId) {
+        setServerError(t("login.errors.generic"));
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("id", userId)
+        .maybeSingle();
+
+      if (!profile) {
+        setServerError(t("login.errors.profileMissing"));
         return;
       }
 

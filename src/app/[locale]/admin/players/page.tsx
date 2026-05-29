@@ -10,7 +10,7 @@ export default async function AdminPlayersPage({
   params: Promise<unknown>;
 }) {
   const { locale } = (await params) as { locale: Locale };
-  await requireAdmin();
+  await requireAdmin(locale);
   const [players, dictionary] = await Promise.all([getAdminPlayers(), getDictionary(locale)]);
 
   return (

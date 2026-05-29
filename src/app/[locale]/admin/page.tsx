@@ -11,7 +11,7 @@ export default async function AdminDashboardPage({
   params: Promise<unknown>;
 }) {
   const { locale } = (await params) as { locale: Locale };
-  await requireAdmin();
+  await requireAdmin(locale);
   const [players, brackets, tournament, dictionary] = await Promise.all([
     getAdminPlayers(),
     getAdminBrackets(),

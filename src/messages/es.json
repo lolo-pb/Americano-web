@@ -130,6 +130,7 @@
     "title": "Seguí tu estado y los detalles del torneo.",
     "description": "Los jugadores pueden ingresar para revisar aprobación, actualizar su perfil y confirmar cuándo se publicó su cuadro.",
     "pendingInfo": "Los jugadores pendientes igual pueden ingresar. Tu perfil mostrará si el pago y la aprobación siguen esperando revisión del admin.",
+    "profileMissingMessage": "Tu cuenta de acceso existe, pero falta la fila del perfil en la base. Eso suele pasar cuando no corrió bien el trigger de Supabase que crea `profiles` al registrarse.",
     "registeredMessage": "Cuenta creada. Ya podés ingresar y seguir tu estado de aprobación desde tu perfil.",
     "fields": {
       "email": "Email",
@@ -146,6 +147,7 @@
     "errors": {
       "email": "Usá un email válido.",
       "password": "La contraseña debe tener al menos 8 caracteres.",
+      "profileMissing": "El login funcionó, pero tu perfil no existe en la base. Revisá el trigger `handle_new_user` o creá la fila en `profiles` para este usuario.",
       "supabase": "Supabase todavía no está configurado. Agregá las variables de entorno para habilitar el login.",
       "generic": "Falló el ingreso."
     }

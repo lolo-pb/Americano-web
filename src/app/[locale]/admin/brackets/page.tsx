@@ -10,7 +10,7 @@ export default async function AdminBracketsPage({
   params: Promise<unknown>;
 }) {
   const { locale } = (await params) as { locale: Locale };
-  await requireAdmin();
+  await requireAdmin(locale);
 
   const [tournament, brackets, players, dictionary] = await Promise.all([
     getTournament(),

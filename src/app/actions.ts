@@ -7,8 +7,8 @@ import { defaultLocale, localizeHref } from "@/lib/i18n";
 import { requireAdmin, requireUser } from "@/lib/data";
 
 export async function updateProfileAction(formData: FormData) {
-  const viewer = await requireUser();
   const locale = String(formData.get("locale") ?? defaultLocale);
+  const viewer = await requireUser(locale as typeof defaultLocale);
 
   if (viewer.demoMode || !viewer.profile || !hasSupabaseEnv()) {
     return;
@@ -30,8 +30,8 @@ export async function updateProfileAction(formData: FormData) {
 }
 
 export async function updatePlayerStatusAction(formData: FormData) {
-  const viewer = await requireAdmin();
   const locale = String(formData.get("locale") ?? defaultLocale);
+  const viewer = await requireAdmin(locale as typeof defaultLocale);
 
   if (viewer.demoMode || !hasSupabaseEnv()) {
     return;
@@ -57,8 +57,8 @@ export async function updatePlayerStatusAction(formData: FormData) {
 }
 
 export async function saveBracketAction(formData: FormData) {
-  const viewer = await requireAdmin();
   const locale = String(formData.get("locale") ?? defaultLocale);
+  const viewer = await requireAdmin(locale as typeof defaultLocale);
 
   if (viewer.demoMode || !hasSupabaseEnv()) {
     return;
@@ -140,8 +140,8 @@ export async function saveBracketAction(formData: FormData) {
 }
 
 export async function toggleBracketPublishAction(formData: FormData) {
-  const viewer = await requireAdmin();
   const locale = String(formData.get("locale") ?? defaultLocale);
+  const viewer = await requireAdmin(locale as typeof defaultLocale);
 
   if (viewer.demoMode || !hasSupabaseEnv()) {
     return;

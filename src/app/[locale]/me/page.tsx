@@ -14,7 +14,7 @@ export default async function MyProfilePage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   const [viewer, tournament, dictionary] = await Promise.all([
-    requireUser(),
+    requireUser(locale),
     getTournament(),
     getDictionary(locale),
   ]);

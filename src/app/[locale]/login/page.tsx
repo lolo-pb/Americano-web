@@ -31,6 +31,11 @@ export default async function LoginPage({
         <div className="card rounded-[1.6rem] p-4 text-sm leading-6 text-muted sm:rounded-[2rem] sm:p-6 sm:leading-7">
           {dictionary.login.pendingInfo}
         </div>
+        {viewer.profileMissing && (
+          <div className="card rounded-[1.6rem] border border-danger/30 bg-danger/8 p-4 text-sm leading-6 text-danger sm:rounded-[2rem] sm:p-6 sm:leading-7">
+            {dictionary.login.profileMissingMessage}
+          </div>
+        )}
       </div>
 
       <LoginForm
