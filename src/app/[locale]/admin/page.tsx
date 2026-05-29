@@ -135,6 +135,12 @@ export default async function AdminDashboardPage({
           >
             {dictionary.admin.openBracketManager}
           </Link>
+          <Link
+            href={localizeHref(locale, "/admin/progress")}
+            className="mt-3 inline-flex rounded-full border border-line px-5 py-3 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
+          >
+            {dictionary.admin.openProgressManager}
+          </Link>
         </aside>
       </div>
     </div>

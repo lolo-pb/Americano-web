@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Americano Open",
-    "description": "Plataforma mobile-first para inscripcion de duplas, aprobaciones y publicacion de cuadros."
+    "description": "Plataforma mobile-first para inscripcion de duplas, aprobaciones y cuadro en vivo."
   },
   "common": {
     "appName": "Americano Open",
@@ -48,19 +48,19 @@
   "home": {
     "eyebrow": "Torneo de tenis mobile-first",
     "title": "Tenis Americano, organizado sin caos.",
-    "description": "Inscripcion de duplas, aprobaciones, pagina publica del equipo y cuadros publicados en un flujo claro para parejas y staff.",
+    "description": "Inscripcion de duplas, aprobaciones, pagina publica del equipo y cuadro en vivo en un flujo claro para parejas y staff.",
     "pitchEyebrow": "Propuesta del torneo",
     "pitchSteps": [
       "Crea una sola cuenta para tu dupla.",
       "Manda tu comprobante de pago al correo del torneo.",
-      "Recibi la aprobacion del admin y espera la publicacion del cuadro."
+      "Recibi la aprobacion del admin y espera el bloqueo del cuadro."
     ],
     "location": "Ubicacion",
     "startDate": "Fecha de inicio",
     "status": "Estado",
     "playersEyebrow": "Lo que reciben las duplas",
     "playersTitle": "Un camino claro desde la inscripcion hasta el primer saque.",
-    "playersDescription": "La experiencia publica y de la dupla esta pensada primero para telefonos, para que el estado de inscripcion y los cuadros publicados siempre sean faciles de revisar.",
+    "playersDescription": "La experiencia publica y de la dupla esta pensada primero para telefonos, para que el estado de inscripcion y el cuadro en vivo siempre sean faciles de revisar.",
     "featureCards": [
       {
         "title": "Inscripcion rapida",
@@ -71,24 +71,24 @@
         "body": "Cada dupla ve si su inscripcion esta pendiente, aprobada o rechazada, sin perseguir al admin por chat."
       },
       {
-        "title": "Cuadros publicados",
-        "body": "Cuando el admin cierra el sorteo, la pagina de cuadros pasa a ser la fuente de verdad."
+        "title": "Cuadro en vivo",
+        "body": "Cuando el admin aprueba el armado inicial, el cuadro en vivo pasa a ser la fuente de verdad."
       }
     ],
-    "publishedEyebrow": "Cuadros publicados",
-    "publishedTitle": "Cuadros legibles de verdad en mobile.",
-    "publishedDescription": "Arrancamos con una lista simple y muy clara. Mas adelante la podemos convertir en una vista de arbol mas rica.",
-    "emptyBrackets": "Todavia no hay cuadros publicados. El admin los publicara cuando las asignaciones esten cerradas."
+    "publishedEyebrow": "Cuadro en vivo",
+    "publishedTitle": "Progreso legible de verdad en mobile.",
+    "publishedDescription": "El cuadro se actualiza a medida que avanzan los ganadores, asi que los jugadores siempre tienen un lugar claro para seguir el torneo.",
+    "emptyBrackets": "Todavia no hay cuadro en vivo. El admin lo aprobara cuando las 32 duplas esten confirmadas."
   },
   "signUp": {
     "eyebrow": "Inscripcion",
     "title": "Reserva un lugar para tu dupla en el proximo cuadro.",
-    "description": "Crea una cuenta para la pareja, envia el comprobante por mail y el admin aprobara a la dupla antes de publicar los cuadros.",
+    "description": "Crea una cuenta para la pareja, envia el comprobante por mail y el admin aprobara a la dupla antes de bloquear el cuadro.",
     "nextTitle": "Que pasa despues",
     "steps": [
       "1. Crea una sola cuenta para tu dupla.",
       "2. Envia tu comprobante de pago a {paymentEmail}.",
-      "3. Espera la aprobacion del admin y segui la publicacion del cuadro."
+      "3. Espera la aprobacion del admin y segui el cuadro en vivo."
     ],
     "fields": {
       "playerOneName": "Nombre del jugador 1",
@@ -128,7 +128,7 @@
   "login": {
     "eyebrow": "Bienvenido de nuevo",
     "title": "Segui el estado de tu dupla y los detalles del torneo.",
-    "description": "Las duplas pueden ingresar para revisar aprobacion, actualizar sus datos y confirmar cuando ya se publico su cuadro.",
+    "description": "Las duplas pueden ingresar para revisar aprobacion, actualizar sus datos y confirmar como avanza el cuadro en vivo.",
     "pendingInfo": "Las duplas pendientes igual pueden ingresar. Tu pagina mostrara si la inscripcion sigue esperando revision del admin.",
     "teamMissingMessage": "Tu cuenta de acceso existe, pero falta la fila de la dupla en la base. Eso suele pasar cuando no corrio bien el trigger de Supabase que crea `teams` al registrarse.",
     "registeredMessage": "Cuenta creada. Ya podes ingresar y seguir el estado de aprobacion de tu dupla.",
@@ -153,14 +153,18 @@
     }
   },
   "brackets": {
-    "eyebrow": "Cuadros publicados",
-    "titleSuffix": "cuadros",
-    "description": "Apenas el admin publica el ultimo sorteo, aparece aca para todas las duplas y visitantes.",
-    "empty": "Todavia no hay cuadros publicados.",
+    "eyebrow": "Cuadro en vivo",
+    "titleSuffix": "cuadro principal",
+    "description": "Apenas el admin bloquea el armado inicial, el cuadro en vivo aparece aca para todas las duplas y visitantes.",
+    "empty": "Todavia no hay cuadro en vivo publicado.",
     "cardEyebrow": "Cuadro",
     "emptyCard": "Todavia no hay duplas asignadas.",
     "publishHint": "Publicalo cuando las asignaciones y las duplas aceptadas ya esten definidas.",
-    "joinNext": "Inscribir una dupla"
+    "joinNext": "Inscribir una dupla",
+    "slotLabel": "Slot",
+    "emptySlot": "Slot vacio",
+    "wonAction": "Ganó",
+    "roundTitles": ["Ronda de 32", "Ronda de 16", "Cuartos", "Semifinales", "Final", "Campeon"]
   },
   "playerProfile": {
     "eyebrow": "Perfil de dupla",
@@ -177,25 +181,26 @@
     "tournament": "Torneo",
     "paymentInbox": "Correo de pagos",
     "bracketVisibility": "Visibilidad del cuadro",
-    "published": "Los cuadros publicados ya estan en vivo.",
-    "notPublished": "Los cuadros todavia no estan publicados.",
-    "paymentHelp": "Si tu inscripcion sigue pendiente, envia tu comprobante a {paymentEmail}. Cuando el admin lo acepte, tu dupla podra ser asignada y publicada en un cuadro.",
+    "published": "El cuadro en vivo ya esta disponible.",
+    "notPublished": "El cuadro todavia no esta bloqueado.",
+    "paymentHelp": "Si tu inscripcion sigue pendiente, envia tu comprobante a {paymentEmail}. Cuando el admin lo acepte, tu dupla podra entrar al cuadro principal.",
     "updateTitle": "Actualizar dupla",
     "bio": "Biografia"
   },
   "admin": {
     "eyebrow": "Panel admin",
     "title": "Mantene las aprobaciones y los cuadros en movimiento.",
-    "description": "La vista admin se concentra en los dos cuellos de botella principales del v1: confirmar duplas y publicar el cuadro correcto en el momento correcto.",
-    "publishedBrackets": "Cuadros publicados",
+    "description": "La vista admin se concentra en lo importante: confirmar duplas, bloquear el armado y avanzar ganadores en vivo.",
+    "publishedBrackets": "Cuadros en vivo",
     "activeTournament": "Torneo activo",
     "pendingPlayers": "Duplas pendientes",
     "fullPlayerList": "Lista completa",
     "noPendingPlayers": "No hay duplas pendientes ahora mismo.",
-    "publishingState": "Estado de publicacion",
+    "publishingState": "Estado del cuadro",
     "assignedPlayers": "{count} duplas asignadas",
     "noBrackets": "Todavia no hay cuadros creados.",
-    "openBracketManager": "Abrir gestor de cuadros",
+    "openBracketManager": "Abrir armado del cuadro",
+    "openProgressManager": "Abrir progreso del torneo",
     "players": {
       "eyebrow": "Duplas admin",
       "title": "Acepta duplas al torneo.",
@@ -211,30 +216,62 @@
       "noCategory": "Sin categoria"
     },
     "brackets": {
-      "eyebrow": "Gestor de cuadros",
-      "title": "Asigna duplas y publica cuando este listo.",
-      "description": "El v1 mantiene la gestion de cuadros explicita y manual: crea un cuadro, asigna duplas aprobadas en orden y despues publicalo para todos.",
-      "createTitle": "Crear un cuadro",
-      "createDescription": "Elige duplas aprobadas y dales una posicion. Usa 0 para dejar una dupla afuera de este cuadro.",
+      "eyebrow": "Armado del cuadro",
+      "title": "Construye el orden inicial y bloquea el cuadro principal.",
+      "description": "Define el orden exacto de las 32 duplas. La posicion 0 juega con la 1, la 2 con la 3 y asi sucesivamente. Una vez aprobado, el armado queda solo lectura y el dashboard de progreso toma el control.",
+      "createTitle": "Dashboard de armado",
+      "createDescription": "Arrastra duplas confirmadas a la lista ordenada de la derecha. Ese orden exacto se guarda en la base como el punto de partida del torneo.",
       "fields": {
         "name": "Nombre del cuadro",
         "format": "Formato",
         "teams": "Duplas aprobadas"
       },
       "placeholders": {
-        "name": "Cuadro Amanecer del Sabado",
-        "format": "Americano - 8 duplas"
+        "name": "Cuadro Principal",
+        "format": "Americano - 32 duplas"
       },
-      "save": "Guardar cuadro",
+      "save": "Guardar armado",
       "approvedPlayers": "Duplas aceptadas",
       "noApprovedPlayers": "Todavia no hay duplas aprobadas.",
       "positionLabel": "Posicion",
-      "selectionHelp": "Cada dupla aprobada aparece en esta lista. Deja un numero positivo para incluirla en el cuadro, o usa 0 para omitirla.",
+      "selectionHelp": "Construye el orden de la derecha exactamente como queres que arranque el torneo.",
       "publishingControls": "Controles de publicacion",
-      "publishingDescription": "Cambia la visibilidad en la pagina publica de cuadros. Los cuadros en borrador quedan solo para admin.",
+      "publishingDescription": "La visibilidad publica depende de la aprobacion del armado en este modo de torneo.",
       "unpublish": "Despublicar cuadro",
       "publish": "Publicar cuadro",
-      "empty": "Todavia no hay cuadros creados. Usa el formulario de arriba para crear el primero."
+      "empty": "Todavia no hay cuadro creado.",
+      "availableTitle": "Duplas confirmadas",
+      "availableDescription": "Arrastra duplas a la lista de armado, o devuelvelas aca para quitarlas.",
+      "selectedTitle": "Orden inicial",
+      "selectedDescription": "Este orden exacto se guarda en la base. Los cruces son 0 vs 1, 2 vs 3 y asi sucesivamente.",
+      "noAvailableTeams": "Todas las duplas confirmadas ya estan en el orden inicial.",
+      "emptySelection": "Todavia no hay duplas seleccionadas. Construye el orden inicial aca.",
+      "addAction": "Agregar",
+      "removeAction": "Quitar",
+      "startingSlot": "Slot inicial",
+      "pairingHelp": "Los cruces se arman automaticamente desde el orden guardado: 0 vs 1, 2 vs 3, 4 vs 5 y asi sucesivamente.",
+      "sizeLabel": "Tamano del cuadro",
+      "sizeValue": "Fijo en 32 duplas y 6 columnas de progreso.",
+      "approvalTitle": "Aprobar y bloquear armado",
+      "approvalDescription": "Aprobar el cuadro valida el armado, bloquea el orden, siembra la primera columna en la tabla de progreso y abre el dashboard del torneo.",
+      "approve": "Aprobar cuadro",
+      "openProgress": "Abrir dashboard de progreso",
+      "confirmedCount": "Duplas confirmadas",
+      "assignedCount": "Duplas asignadas",
+      "lockState": "Estado del armado",
+      "locked": "Bloqueado",
+      "unlocked": "Borrador"
+    },
+    "progress": {
+      "eyebrow": "Progreso del torneo",
+      "title": "Avanza ganadores a traves del cuadro en vivo.",
+      "description": "Usa el boton Won en cualquier slot ocupado para mover esa dupla a la siguiente columna en floor(i / 2).",
+      "lockedOnly": "Esta pagina solo se activa despues de aprobar y bloquear el armado inicial.",
+      "backToSetup": "Volver al armado",
+      "slotLabel": "Slot",
+      "emptySlot": "Slot vacio",
+      "wonAction": "Ganó",
+      "roundTitles": ["Orden inicial", "Ronda 2", "Cuartos", "Semifinales", "Final", "Campeon"]
     }
   }
 }

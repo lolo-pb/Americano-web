@@ -48,6 +48,8 @@ create table if not exists public.brackets (
   name text not null,
   format text not null,
   status public.bracket_status not null default 'draft',
+  setup_locked boolean not null default false,
+  bracket_size integer not null default 32,
   published_at timestamptz,
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
@@ -57,11 +59,22 @@ create table if not exists public.bracket_entries (
   id uuid primary key default gen_random_uuid(),
   bracket_id uuid not null references public.brackets (id) on delete cascade,
   team_id uuid not null references public.teams (id) on delete cascade,
-  position integer not null check (position > 0),
+  position integer not null check (position >= 0),
   seed integer,
   created_at timestamptz not null default timezone('utc', now()),
   unique (bracket_id, team_id),
   unique (bracket_id, position)
+);
+
+create table if not exists public.bracket_progress (
+  id uuid primary key default gen_random_uuid(),
+  bracket_id uuid not null references public.brackets (id) on delete cascade,
+  round_index integer not null check (round_index >= 0 and round_index < 6),
+  slot_index integer not null check (slot_index >= 0 and slot_index < 32),
+  team_id uuid references public.teams (id) on delete set null,
+  created_at timestamptz not null default timezone('utc', now()),
+  updated_at timestamptz not null default timezone('utc', now()),
+  unique (bracket_id, round_index, slot_index)
 );
 
 create or replace function public.set_updated_at()
@@ -205,11 +218,17 @@ create trigger brackets_set_updated_at
   before update on public.brackets
   for each row execute procedure public.set_updated_at();
 
+drop trigger if exists bracket_progress_set_updated_at on public.bracket_progress;
+create trigger bracket_progress_set_updated_at
+  before update on public.bracket_progress
+  for each row execute procedure public.set_updated_at();
+
 alter table public.tournaments enable row level security;
 alter table public.teams enable row level security;
 alter table public.registrations enable row level security;
 alter table public.brackets enable row level security;
 alter table public.bracket_entries enable row level security;
+alter table public.bracket_progress enable row level security;
 
 create policy "tournaments are publicly readable"
   on public.tournaments
@@ -283,6 +302,24 @@ create policy "published or admin bracket entries are readable"
 
 create policy "admins manage bracket entries"
   on public.bracket_entries
+  for all
+  using (public.is_admin())
+  with check (public.is_admin());
+
+create policy "published or admin bracket progress is readable"
+  on public.bracket_progress
+  for select
+  using (
+    exists (
+      select 1
+      from public.brackets
+      where public.brackets.id = bracket_progress.bracket_id
+        and (public.brackets.status = 'published' or public.is_admin())
+    )
+  );
+
+create policy "admins manage bracket progress"
+  on public.bracket_progress
   for all
   using (public.is_admin())
   with check (public.is_admin());

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { BracketCard } from "@/components/bracket-card";
+import { BracketProgressBoard } from "@/components/bracket-progress-board";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
-import { getPublishedBrackets, getTournament, getViewerContext } from "@/lib/data";
+import { getPublicBracketView, getTournament, getViewerContext } from "@/lib/data";
 import { getDictionary, localizeHref, type Locale } from "@/lib/i18n";
 
 export default async function HomePage({
@@ -11,9 +11,9 @@ export default async function HomePage({
   params: Promise<unknown>;
 }) {
   const { locale } = (await params) as { locale: Locale };
-  const [tournament, brackets, viewer, dictionary] = await Promise.all([
+  const [tournament, bracketView, viewer, dictionary] = await Promise.all([
     getTournament(),
-    getPublishedBrackets(),
+    getPublicBracketView(),
     getViewerContext(),
     getDictionary(locale),
   ]);
@@ -110,13 +110,30 @@ export default async function HomePage({
           description={dictionary.home.publishedDescription}
         />
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
-          {brackets.length ? (
-            brackets.map((bracket) => <BracketCard key={bracket.id} bracket={bracket} locale={locale} />)
-          ) : (
-            <div className="card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">{dictionary.home.emptyBrackets}</div>
-          )}
-        </div>
+        {bracketView ? (
+          <div className="mt-8 card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+            <h3 className="text-xl font-extrabold text-forest sm:text-2xl">{bracketView.bracket.name}</h3>
+            <p className="mt-1 text-sm text-muted">{bracketView.bracket.format}</p>
+            <div className="mt-6">
+              <BracketProgressBoard
+                bracket={bracketView.bracket}
+                columns={bracketView.columns}
+                locale={locale}
+                titles={dictionary.brackets.roundTitles}
+                labels={{
+                  slot: dictionary.brackets.slotLabel,
+                  empty: dictionary.brackets.emptySlot,
+                  won: dictionary.brackets.wonAction,
+                  openLevel: dictionary.common.levels.open,
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="mt-8 card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">
+            {dictionary.home.emptyBrackets}
+          </div>
+        )}
       </section>
     </div>
   );

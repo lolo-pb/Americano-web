@@ -1,4 +1,22 @@
-import type { Bracket, Team, Tournament } from "@/lib/types";
+import type { Bracket, BracketProgressSlot, PublicTeam, Team, Tournament } from "@/lib/types";
+
+function buildTeamName(playerOneName: string, playerTwoName: string) {
+  return `${playerOneName} & ${playerTwoName}`;
+}
+
+function toPublicTeam(team: Team): PublicTeam {
+  return {
+    id: team.id,
+    slug: team.slug,
+    playerOneName: team.playerOneName,
+    playerTwoName: team.playerTwoName,
+    teamName: team.teamName,
+    avatarUrl: team.avatarUrl,
+    category: team.category,
+    approvalStatus: team.approvalStatus,
+    bio: team.bio,
+  };
+}
 
 export const demoTournament: Tournament = {
   id: "demo-tournament",
@@ -8,7 +26,7 @@ export const demoTournament: Tournament = {
   signupOpen: true,
   bracketsPublished: true,
   description:
-    "A weekend Americano-style tennis event with curated team brackets, live updates, and a duo-first mobile experience.",
+    "A weekend Americano-style tennis event with curated doubles brackets, live updates, and a team-first mobile experience.",
 };
 
 export const demoTeams: Team[] = [
@@ -23,78 +41,85 @@ export const demoTeams: Team[] = [
     role: "admin",
     approvalStatus: "approved",
     category: "Tournament Director",
-    bio: "Oversees check-in, approvals, and bracket publishing.",
+    bio: "Oversees check-in, approvals, bracket setup, and tournament progress.",
     avatarUrl: null,
   },
-  {
-    id: "team-1",
-    slug: "sofia-mateo",
-    playerOneName: "Sofia Rojas",
-    playerTwoName: "Mateo Acosta",
-    teamName: "Sofia Rojas & Mateo Acosta",
-    email: "sofia.mateo@example.com",
-    phone: "+54 11 5555-0002",
-    role: "client",
-    approvalStatus: "approved",
-    category: "Intermediate",
-    bio: "Balanced duo with heavy topspin from the baseline and fast hands at the net.",
-    avatarUrl: null,
-  },
-  {
-    id: "team-2",
-    slug: "clara-julieta",
-    playerOneName: "Clara Benitez",
-    playerTwoName: "Julieta Pardo",
-    teamName: "Clara Benitez & Julieta Pardo",
-    email: "clara.julieta@example.com",
-    phone: "+54 11 5555-0003",
-    role: "client",
-    approvalStatus: "approved",
-    category: "Advanced",
-    bio: "Big serving pair that likes to close points early and stay aggressive.",
-    avatarUrl: null,
-  },
-  {
-    id: "team-3",
-    slug: "paula-lara",
-    playerOneName: "Paula Diaz",
-    playerTwoName: "Lara Quiroga",
-    teamName: "Paula Diaz & Lara Quiroga",
-    email: "paula.lara@example.com",
-    phone: "+54 11 5555-0004",
-    role: "client",
-    approvalStatus: "pending",
-    category: "Beginner",
-    bio: "First tournament together and still waiting for approval.",
-    avatarUrl: null,
-  },
+  ...Array.from({ length: 32 }, (_, index) => {
+    const teamNumber = index + 1;
+    const playerOneName = `Player ${teamNumber}A`;
+    const playerTwoName = `Player ${teamNumber}B`;
+
+    return {
+      id: `team-${teamNumber}`,
+      slug: `team-${teamNumber}`,
+      playerOneName,
+      playerTwoName,
+      teamName: buildTeamName(playerOneName, playerTwoName),
+      email: `team${teamNumber}@example.com`,
+      phone: `+54 11 5555-${String(1000 + teamNumber)}`,
+      role: "client" as const,
+      approvalStatus: "approved" as const,
+      category: teamNumber % 3 === 0 ? "Advanced" : teamNumber % 2 === 0 ? "Intermediate" : "Beginner",
+      bio: `Demo team ${teamNumber} ready for the Americano draw.`,
+      avatarUrl: null,
+    };
+  }),
 ];
 
-export const demoBrackets: Bracket[] = [
-  {
-    id: "bracket-1",
-    tournamentId: demoTournament.id,
-    name: "Saturday Sunrise Draw",
-    format: "Americano - 4 teams",
-    status: "published",
-    publishedAt: "2026-08-10T14:00:00.000Z",
-    entries: [demoTeams[1], demoTeams[2]].map((team, index) => ({
-      id: `entry-${index + 1}`,
-      bracketId: "bracket-1",
-      teamId: team.id,
-      position: index + 1,
-      seed: index + 1,
-      team: {
-        id: team.id,
-        slug: team.slug,
-        playerOneName: team.playerOneName,
-        playerTwoName: team.playerTwoName,
-        teamName: team.teamName,
-        avatarUrl: team.avatarUrl,
-        category: team.category,
-        approvalStatus: team.approvalStatus,
-        bio: team.bio,
-      },
-    })),
-  },
+const demoClientTeams = demoTeams.filter((team) => team.role === "client");
+
+export const demoBracket: Bracket = {
+  id: "bracket-1",
+  tournamentId: demoTournament.id,
+  name: "Main Draw",
+  format: "Americano - 32 teams",
+  status: "published",
+  setupLocked: true,
+  bracketSize: 32,
+  publishedAt: "2026-08-10T14:00:00.000Z",
+  entries: demoClientTeams.slice(0, 32).map((team, index) => ({
+    id: `entry-${index + 1}`,
+    bracketId: "bracket-1",
+    teamId: team.id,
+    position: index,
+    seed: index + 1,
+    team: toPublicTeam(team),
+  })),
+};
+
+export const demoBrackets: Bracket[] = [demoBracket];
+
+export const demoBracketProgress: BracketProgressSlot[] = [
+  ...demoBracket.entries.map((entry) => ({
+    id: `progress-r0-${entry.position}`,
+    bracketId: demoBracket.id,
+    roundIndex: 0,
+    slotIndex: entry.position,
+    teamId: entry.teamId,
+    team: entry.team,
+  })),
+  ...Array.from({ length: 8 }, (_, index) => {
+    const winningEntry = demoBracket.entries[index * 2];
+
+    return {
+      id: `progress-r1-${index}`,
+      bracketId: demoBracket.id,
+      roundIndex: 1,
+      slotIndex: index,
+      teamId: winningEntry.teamId,
+      team: winningEntry.team,
+    };
+  }),
+  ...Array.from({ length: 4 }, (_, index) => {
+    const winningEntry = demoBracket.entries[index * 4];
+
+    return {
+      id: `progress-r2-${index}`,
+      bracketId: demoBracket.id,
+      roundIndex: 2,
+      slotIndex: index,
+      teamId: winningEntry.teamId,
+      team: winningEntry.team,
+    };
+  }),
 ];
