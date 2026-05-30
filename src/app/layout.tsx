@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Americano Open",
-  description: "Mobile-first tennis tournament registration and bracket platform.",
+  title: "Americano Belgrano Tenis",
+  description: "Doubles Americano at Belgrano Tenis on August 14, 2026 starting at 13:00.",
 };
 
 export default async function RootLayout({

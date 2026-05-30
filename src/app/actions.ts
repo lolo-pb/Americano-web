@@ -70,8 +70,8 @@ export async function saveBracketAction(formData: FormData) {
   const activeBracket = await getActiveAdminBracket();
   const bracketId = String(formData.get("bracketId") ?? activeBracket?.id ?? "");
   const tournamentId = String(formData.get("tournamentId"));
-  const name = String(formData.get("name") ?? "").trim() || "Main Draw";
-  const format = String(formData.get("format") ?? "").trim() || "Americano - 32 teams";
+  const name = String(formData.get("name") ?? "").trim() || "Cuadro Americano";
+  const format = String(formData.get("format") ?? "").trim() || "Americano - 32 duplas";
   const selectedTeamIds = formData.getAll("selectedTeamId").map(String).filter(Boolean);
   const uniqueTeamIds = [...new Set(selectedTeamIds)];
 

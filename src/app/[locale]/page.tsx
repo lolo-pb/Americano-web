@@ -5,6 +5,21 @@ import { StatusBadge } from "@/components/status-badge";
 import { getPublicBracketView, getTournament, getViewerContext } from "@/lib/data";
 import { getDictionary, localizeHref, type Locale } from "@/lib/i18n";
 
+function formatTournamentSchedule(startDate: string, locale: Locale) {
+  const parsedDate = new Date(`${startDate}T00:00:00Z`);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return `${startDate} · 13:00`;
+  }
+
+  const formattedDate = new Intl.DateTimeFormat(locale === "es" ? "es-AR" : "en-US", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(parsedDate);
+
+  return `${formattedDate} · 13:00`;
+}
+
 export default async function HomePage({
   params,
 }: {
@@ -17,6 +32,7 @@ export default async function HomePage({
     getViewerContext(),
     getDictionary(locale),
   ]);
+  const tournamentSchedule = formatTournamentSchedule(tournament.startDate, locale);
 
   return (
     <div className="pb-16">
@@ -28,6 +44,9 @@ export default async function HomePage({
               {dictionary.home.title}
             </h1>
             <p className="max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">{dictionary.home.description}</p>
+            <p className="max-w-xl text-base font-bold leading-7 text-accent sm:text-lg sm:leading-8">
+              {dictionary.home.deadlineNotice}
+            </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -52,7 +71,7 @@ export default async function HomePage({
             </div>
             <div className="card rounded-[1.75rem] p-5">
               <p className="eyebrow text-sm text-accent">{dictionary.home.startDate}</p>
-              <p className="mt-2 text-lg font-bold text-ink">{tournament.startDate}</p>
+              <p className="mt-2 text-lg font-bold text-ink">{tournamentSchedule}</p>
             </div>
             <div className="card rounded-[1.75rem] p-5">
               <p className="eyebrow text-sm text-accent">{dictionary.home.status}</p>

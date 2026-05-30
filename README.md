@@ -29,7 +29,7 @@ npm install
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-NEXT_PUBLIC_PAYMENT_EMAIL=payments@americanoopen.com
+NEXT_PUBLIC_PAYMENT_EMAIL=mili.lera.2006
 ```
 
 3. Run the app:

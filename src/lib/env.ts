@@ -4,7 +4,7 @@ const publicSupabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 export const env = {
   publicSupabaseUrl,
   publicSupabaseAnonKey,
-  paymentEmail: process.env.NEXT_PUBLIC_PAYMENT_EMAIL ?? "payments@americanoopen.com",
+  paymentEmail: process.env.NEXT_PUBLIC_PAYMENT_EMAIL ?? "mili.lera.2006",
 };
 
 export function hasSupabaseEnv() {

@@ -36,8 +36,8 @@ export function BracketSetupEditor({
   locale: string;
 }) {
   const { t } = useI18n();
-  const [name, setName] = useState(bracket?.name ?? "Main Draw");
-  const [format, setFormat] = useState(bracket?.format ?? "Americano - 32 teams");
+  const [name, setName] = useState(bracket?.name ?? t("admin.brackets.placeholders.name"));
+  const [format, setFormat] = useState(bracket?.format ?? t("admin.brackets.placeholders.format"));
   const [selectedTeamIds, setSelectedTeamIds] = useState<string[]>(bracket?.entries.map((entry) => entry.teamId) ?? []);
   const [draggedTeamId, setDraggedTeamId] = useState<string | null>(null);
   const locked = Boolean(bracket?.setupLocked);

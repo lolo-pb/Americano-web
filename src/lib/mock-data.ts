@@ -20,13 +20,13 @@ function toPublicTeam(team: Team): PublicTeam {
 
 export const demoTournament: Tournament = {
   id: "demo-tournament",
-  name: "Americano Open 2026",
-  location: "Buenos Aires Lawn Club",
+  name: "Americano Belgrano Tenis",
+  location: "Belgrano Tenis",
   startDate: "2026-08-14",
   signupOpen: true,
   bracketsPublished: true,
   description:
-    "A weekend Americano-style tennis event with curated doubles brackets, live updates, and a team-first mobile experience.",
+    "Americano de duplas en Belgrano Tenis, con vinito, picadita y musica al cierre del evento.",
 };
 
 export const demoTeams: Team[] = [
@@ -36,12 +36,12 @@ export const demoTeams: Team[] = [
     playerOneName: "Lucas",
     playerTwoName: "Admin",
     teamName: "Lucas & Admin",
-    email: "lucas@americanoopen.com",
+    email: "admin@belgranotenis.test",
     phone: "+54 11 5555-0001",
     role: "admin",
     approvalStatus: "approved",
-    category: "Tournament Director",
-    bio: "Oversees check-in, approvals, bracket setup, and tournament progress.",
+    category: "Organizacion",
+    bio: "Administra aprobaciones, orden inicial y avance del cuadro del torneo.",
     avatarUrl: null,
   },
   ...Array.from({ length: 32 }, (_, index) => {
@@ -59,8 +59,8 @@ export const demoTeams: Team[] = [
       phone: `+54 11 5555-${String(1000 + teamNumber)}`,
       role: "client" as const,
       approvalStatus: "approved" as const,
-      category: teamNumber % 3 === 0 ? "Advanced" : teamNumber % 2 === 0 ? "Intermediate" : "Beginner",
-      bio: `Demo team ${teamNumber} ready for the Americano draw.`,
+      category: "Open",
+      bio: "Dupla lista para el Americano en Belgrano Tenis.",
       avatarUrl: null,
     };
   }),
@@ -71,12 +71,12 @@ const demoClientTeams = demoTeams.filter((team) => team.role === "client");
 export const demoBracket: Bracket = {
   id: "bracket-1",
   tournamentId: demoTournament.id,
-  name: "Main Draw",
-  format: "Americano - 32 teams",
+  name: "Cuadro Americano",
+  format: "Americano - 32 duplas",
   status: "published",
   setupLocked: true,
   bracketSize: 32,
-  publishedAt: "2026-08-10T14:00:00.000Z",
+  publishedAt: "2026-06-20T14:00:00.000Z",
   entries: demoClientTeams.slice(0, 32).map((team, index) => ({
     id: `entry-${index + 1}`,
     bracketId: "bracket-1",

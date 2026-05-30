@@ -351,12 +351,12 @@ insert into public.tournaments (
   description
 )
 values (
-  'Americano Open 2026',
-  'Buenos Aires Lawn Club',
+  'Americano Belgrano Tenis',
+  'Belgrano Tenis',
   '2026-08-14',
   true,
   false,
   true,
-  'A weekend Americano-style tennis event with curated doubles brackets, team approvals, and a mobile-first team experience.'
+  'Doubles Americano at Belgrano Tenis on August 14, 2026 starting at 13:00.'
 )
 on conflict do nothing;
