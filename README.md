@@ -29,7 +29,8 @@ npm install
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-NEXT_PUBLIC_PAYMENT_EMAIL=mili.lera.2006
+NEXT_PUBLIC_CONTACT_EMAIL=milagroslera59@gmail.com
+NEXT_PUBLIC_PAYMENT_ALIAS=mili.lera.2006
 ```
 
 3. Run the app:

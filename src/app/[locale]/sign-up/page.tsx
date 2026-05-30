@@ -29,13 +29,23 @@ export default async function SignUpPage({
           <h3 className="text-lg font-bold text-forest sm:text-xl">{dictionary.signUp.nextTitle}</h3>
           <ol className="mt-4 grid gap-3 text-sm leading-7 text-muted">
             {dictionary.signUp.steps.map((step) => (
-              <li key={step}>{interpolate(step, { paymentEmail: env.paymentEmail })}</li>
+              <li key={step}>
+                {interpolate(step, {
+                  paymentAlias: env.paymentAlias,
+                  contactEmail: env.contactEmail,
+                })}
+              </li>
             ))}
           </ol>
         </div>
       </div>
 
-      <SignUpForm paymentEmail={env.paymentEmail} enabled={hasSupabaseEnv()} locale={locale} />
+      <SignUpForm
+        paymentAlias={env.paymentAlias}
+        contactEmail={env.contactEmail}
+        enabled={hasSupabaseEnv()}
+        locale={locale}
+      />
     </div>
   );
 }

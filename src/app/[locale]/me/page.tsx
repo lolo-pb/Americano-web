@@ -44,7 +44,7 @@ export default async function MyProfilePage({
             </div>
             <div>
               <dt className="font-semibold text-ink">{dictionary.me.paymentInbox}</dt>
-              <dd className="text-muted">{env.paymentEmail}</dd>
+              <dd className="text-muted">{env.paymentAlias}</dd>
             </div>
             <div>
               <dt className="font-semibold text-ink">{dictionary.me.bracketVisibility}</dt>
@@ -56,7 +56,10 @@ export default async function MyProfilePage({
         </div>
 
         <div className="card rounded-[1.6rem] p-4 text-sm leading-6 text-muted sm:rounded-[2rem] sm:p-6 sm:leading-7">
-          {interpolate(dictionary.me.paymentHelp, { paymentEmail: env.paymentEmail })}
+          {interpolate(dictionary.me.paymentHelp, {
+            paymentAlias: env.paymentAlias,
+            contactEmail: env.contactEmail,
+          })}
         </div>
 
         <div className="flex flex-wrap gap-3">

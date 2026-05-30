@@ -22,11 +22,13 @@ type SignUpValues = {
 };
 
 export function SignUpForm({
-  paymentEmail,
+  paymentAlias,
+  contactEmail,
   enabled,
   locale,
 }: {
-  paymentEmail: string;
+  paymentAlias: string;
+  contactEmail: string;
   enabled: boolean;
   locale: Locale;
 }) {
@@ -205,7 +207,7 @@ export function SignUpForm({
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">
                 {t("signUp.important")}
               </p>
-              <p className="mt-1">{t("signUp.paymentNotice", { paymentEmail })}</p>
+              <p className="mt-1">{t("signUp.paymentNotice", { paymentAlias, contactEmail })}</p>
             </div>
           </div>
         </div>

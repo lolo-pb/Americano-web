@@ -3,7 +3,8 @@ import { BracketProgressBoard } from "@/components/bracket-progress-board";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
 import { getPublicBracketView, getTournament, getViewerContext } from "@/lib/data";
-import { getDictionary, localizeHref, type Locale } from "@/lib/i18n";
+import { env } from "@/lib/env";
+import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
 
 function formatTournamentSchedule(startDate: string, locale: Locale) {
   const parsedDate = new Date(`${startDate}T00:00:00Z`);
@@ -97,7 +98,10 @@ export default async function HomePage({
             <div className="mt-6 grid gap-3">
               {dictionary.home.pitchSteps.map((item) => (
                 <div key={item} className="rounded-2xl bg-forest px-4 py-3 text-sm font-medium text-white">
-                  {item}
+                  {interpolate(item, {
+                    paymentAlias: env.paymentAlias,
+                    contactEmail: env.contactEmail,
+                  })}
                 </div>
               ))}
             </div>

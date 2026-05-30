@@ -105,11 +105,11 @@ textarea {
 
 @media (max-width: 767px) {
   .page-shell {
-    width: min(1120px, calc(100% - 1rem));
+    width: min(1120px, calc(100% - 3rem));
   }
 
   .page-shell-wide {
-    width: min(1320px, calc(100% - 1rem));
+    width: min(1320px, calc(100% - 3rem));
   }
 
   .card {

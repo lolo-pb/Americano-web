@@ -53,7 +53,8 @@
     "pitchEyebrow": "Antes de venir",
     "pitchSteps": [
       "Inscribite hasta el domingo 14 a las 23.59hs.",
-      "Transferi al alias mili.lera.2006 para reservar el lugar.",
+      "Transferi al alias {paymentAlias} para reservar el lugar",
+      "Consultas o comprobante a {contactEmail}",
       "Cada jugador debe llevar su equipamiento y sus pelotas."
     ],
     "location": "Ubicacion",
@@ -88,8 +89,9 @@
     "nextTitle": "Que pasa despues",
     "steps": [
       "1. Crea una sola cuenta para tu dupla.",
-      "2. Transferi al alias {paymentEmail}.",
-      "3. Espera la aprobacion del admin y segui el cuadro en vivo."
+      "2. Transferi al alias {paymentAlias}",
+      "3. Si necesitas ayuda o enviar el comprobante, escribe a {contactEmail}",
+      "4. Espera la aprobacion del admin y segui el cuadro en vivo."
     ],
     "fields": {
       "playerOneName": "Nombre del jugador 1",
@@ -110,7 +112,7 @@
       "confirmPassword": "Repeti tu contrasena",
       "phone": "+54 11 ..."
     },
-    "paymentNotice": "Despues de inscribirte, realiza la transferencia al alias {paymentEmail}. Cuando el pago quede validado, tu dupla quedara aprobada para el torneo.",
+    "paymentNotice": "Despues de inscribirte, realiza la transferencia al alias {paymentAlias} y si necesitas ayuda o enviar el comprobante escribe a {contactEmail}",
     "important": "Importante",
     "submitIdle": "Crear cuenta",
     "submitBusy": "Creando cuenta...",
@@ -184,7 +186,7 @@
     "bracketVisibility": "Visibilidad del cuadro",
     "published": "El cuadro en vivo ya esta disponible.",
     "notPublished": "El cuadro todavia no esta bloqueado.",
-    "paymentHelp": "Si tu inscripcion sigue pendiente, revisa que el pago este hecho al alias {paymentEmail}. Cuando el admin lo apruebe, tu dupla podra entrar al cuadro principal.",
+    "paymentHelp": "Si tu inscripcion sigue pendiente, revisa que el pago este hecho al alias {paymentAlias} y si necesitas ayuda o enviar el comprobante escribe a {contactEmail}. Cuando el admin lo apruebe, tu dupla podra entrar al cuadro principal.",
     "updateTitle": "Actualizar dupla",
     "bio": "Biografia"
   },
