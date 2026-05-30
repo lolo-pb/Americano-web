@@ -17,6 +17,8 @@
       "logout": "Salir",
       "save": "Guardar",
       "viewBrackets": "Ver cuadros",
+      "viewMap": "Ver mapa",
+      "instagram": "Instagram",
       "openProfile": "Abrir mi dupla",
       "viewPublicTeam": "Ver pagina publica",
       "backToBrackets": "Volver a cuadros"
@@ -63,6 +65,8 @@
     "playersEyebrow": "Datos del evento",
     "playersTitle": "Formato corto, punto de oro y cierre con post evento.",
     "playersDescription": "La app muestra el estado de la dupla, el cuadro en vivo y toda la info clave del evento que puedan necesitar.",
+    "contactEyebrow": "Contacto",
+    "contactTitle": "Contactanos",
     "featureCards": [
       {
         "title": "Reglamento",

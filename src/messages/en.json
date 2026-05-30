@@ -17,6 +17,8 @@
       "logout": "Sign out",
       "save": "Save",
       "viewBrackets": "View brackets",
+      "viewMap": "Open map",
+      "instagram": "Instagram",
       "openProfile": "Open my team",
       "viewPublicTeam": "View public team page",
       "backToBrackets": "Back to brackets"
@@ -63,6 +65,8 @@
     "playersEyebrow": "Event details",
     "playersTitle": "Short sets, golden point, and a post-event finish.",
     "playersDescription": "The app shows team status, the live bracket, and all the key event information teams may need.",
+    "contactEyebrow": "Contact",
+    "contactTitle": "Contact us",
     "featureCards": [
       {
         "title": "Rules",

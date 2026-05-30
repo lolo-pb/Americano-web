@@ -34,6 +34,13 @@ export default async function HomePage({
     getDictionary(locale),
   ]);
   const tournamentSchedule = formatTournamentSchedule(tournament.startDate, locale);
+  const instagramUrl = "https://www.instagram.com/tus_americanos/?utm_source=ig_web_button_share_sheet";
+  const mapUrl = "https://maps.app.goo.gl/CqRLfQAob9PsTzuD9?g_st=iw";
+  const contactEmails = [
+    "lpizzutobeltran@gmail.com",
+    "homerogarcialorenzo937@gmail.com",
+    "milagroslera59@gmail.com",
+  ];
 
   return (
     <div className="pb-16">
@@ -69,6 +76,14 @@ export default async function HomePage({
             <div className="card rounded-[1.75rem] p-5">
               <p className="eyebrow text-sm text-accent">{dictionary.home.location}</p>
               <p className="mt-2 text-lg font-bold text-ink">{tournament.location}</p>
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex text-sm font-semibold text-forest hover:text-accent"
+              >
+                {dictionary.common.actions.viewMap}
+              </a>
             </div>
             <div className="card rounded-[1.75rem] p-5">
               <p className="eyebrow text-sm text-accent">{dictionary.home.startDate}</p>
@@ -104,6 +119,75 @@ export default async function HomePage({
                   })}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="page-shell py-2 sm:py-4">
+        <div className="grid gap-4 lg:grid-cols-[0.42fr_0.58fr]">
+          <div className="card overflow-hidden rounded-[1.75rem]">
+            <iframe
+              title={dictionary.common.actions.viewMap}
+              src="https://www.google.com/maps?q=Belgrano%20Tenis&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="h-[260px] w-full border-0"
+            />
+            <div className="flex items-center justify-between gap-3 border-t border-line bg-white/80 px-5 py-4">
+              <div>
+                <p className="eyebrow text-xs text-accent">{dictionary.home.location}</p>
+                <p className="mt-1 font-bold text-ink">{tournament.location}</p>
+              </div>
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
+              >
+                {dictionary.common.actions.viewMap}
+              </a>
+            </div>
+          </div>
+
+          <div className="card rounded-[1.75rem] px-5 py-5">
+            <p className="eyebrow text-sm text-accent">{dictionary.home.contactEyebrow}</p>
+            <p className="mt-2 text-lg font-bold text-ink">{dictionary.home.contactTitle}</p>
+            <div className="mt-4 grid gap-3">
+              {contactEmails.map((email) => (
+                <a
+                  key={email}
+                  href={`mailto:${email}`}
+                  className="flex items-center gap-3 rounded-[1.1rem] border border-line bg-white/70 px-4 py-3 text-sm text-forest hover:border-forest hover:bg-forest hover:text-white"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-forest text-xs font-black text-white">
+                    @
+                  </span>
+                  <span className="break-all font-semibold">{email}</span>
+                </a>
+              ))}
+            </div>
+            <div className="mt-4 flex justify-start">
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={dictionary.common.actions.instagram}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white hover:bg-accent-strong"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5 fill-none stroke-current"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
