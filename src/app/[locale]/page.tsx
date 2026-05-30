@@ -126,13 +126,13 @@ export default async function HomePage({
 
       <section className="page-shell py-2 sm:py-4">
         <div className="grid gap-4 lg:grid-cols-[0.42fr_0.58fr]">
-          <div className="card overflow-hidden rounded-[1.75rem]">
+          <div className="card flex h-full flex-col overflow-hidden rounded-[1.75rem]">
             <iframe
               title={dictionary.common.actions.viewMap}
               src="https://www.google.com/maps?q=Belgrano%20Tenis&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="h-[260px] w-full border-0"
+              className="h-[260px] w-full border-0 lg:min-h-[260px] lg:flex-1"
             />
             <div className="flex items-center justify-between gap-3 border-t border-line bg-white/80 px-5 py-4">
               <div>
@@ -167,7 +167,7 @@ export default async function HomePage({
                 </a>
               ))}
             </div>
-            <div className="mt-4 flex justify-start">
+            <div className="mt-4 flex justify-center">
               <a
                 href={instagramUrl}
                 target="_blank"
