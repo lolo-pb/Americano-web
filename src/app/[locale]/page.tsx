@@ -10,7 +10,7 @@ function formatTournamentSchedule(startDate: string, locale: Locale) {
   const parsedDate = new Date(`${startDate}T00:00:00Z`);
 
   if (Number.isNaN(parsedDate.getTime())) {
-    return `${startDate} · 13:00`;
+    return `${startDate} - 13:00`;
   }
 
   const formattedDate = new Intl.DateTimeFormat(locale === "es" ? "es-AR" : "en-US", {
@@ -18,7 +18,7 @@ function formatTournamentSchedule(startDate: string, locale: Locale) {
     timeZone: "UTC",
   }).format(parsedDate);
 
-  return `${formattedDate} · 13:00`;
+  return `${formattedDate} - 13:00`;
 }
 
 export default async function HomePage({

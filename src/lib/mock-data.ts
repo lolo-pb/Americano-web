@@ -22,7 +22,7 @@ export const demoTournament: Tournament = {
   id: "demo-tournament",
   name: "Americano Belgrano Tenis",
   location: "Belgrano Tenis",
-  startDate: "2026-08-14",
+  startDate: "2026-06-28",
   signupOpen: true,
   bracketsPublished: true,
   description:

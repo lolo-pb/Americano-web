@@ -5,8 +5,7 @@ export const env = {
   publicSupabaseUrl,
   publicSupabaseAnonKey,
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "milagroslera59@gmail.com",
-  paymentAlias:
-    process.env.NEXT_PUBLIC_PAYMENT_ALIAS ?? process.env.NEXT_PUBLIC_PAYMENT_EMAIL ?? "mili.lera.2006",
+  paymentAlias: process.env.NEXT_PUBLIC_PAYMENT_ALIAS ?? "mili.lera.2006",
 };
 
 export function hasSupabaseEnv() {

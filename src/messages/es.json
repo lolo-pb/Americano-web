@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "Americano Belgrano Tenis",
-    "description": "Americano de duplas en Belgrano Tenis el 14 de agosto de 2026 desde las 13:00."
+    "description": "Americano de duplas en Belgrano Tenis el 28 de junio de 2026 desde las 13:00."
   },
   "common": {
     "appName": "Americano Belgrano Tenis",
-    "tagline": "Belgrano Tenis · Inicio 13:00",
+    "tagline": "Belgrano Tenis - Inicio 13:00",
     "demoMode": "El modo demo esta activo. Agrega `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` para conectar el backend real.",
     "languages": {
       "es": "ES",
@@ -49,11 +49,11 @@
     "eyebrow": "Americano de duplas",
     "title": "Americano en Belgrano Tenis.",
     "description": "Inscripcion abierta para parejas mixtas en un torneo estilo americano, pensado para todos los niveles.",
-    "deadlineNotice": "Inscribite antes del domingo 14 a las 23.59hs para no quedarte afuera.",
+    "deadlineNotice": "Inscribite antes del domingo 14 de junio a las 23.59hs para no quedarte afuera.",
     "pitchEyebrow": "Antes de venir",
     "pitchSteps": [
-      "Inscribite hasta el domingo 14 a las 23.59hs.",
-      "Transferi al alias {paymentAlias} para reservar el lugar",
+      "Inscribite hasta el domingo 14 de junio a las 23.59hs.",
+      "Transferi al alias {paymentAlias} para reservar tu lugar",
       "Consultas o comprobante a {contactEmail}",
       "Cada jugador debe llevar su equipamiento y sus pelotas."
     ],
@@ -85,7 +85,7 @@
   "signUp": {
     "eyebrow": "Inscripcion",
     "title": "Inscribi a tu dupla para Belgrano Tenis.",
-    "description": "Inscribite antes del domingo 14 a las 23.59hs y realiza el pago al alias indicado para que la dupla quede pendiente de aprobacion.",
+    "description": "Inscribite antes del domingo 14 de junio a las 23.59hs y realiza el pago al alias indicado para que la dupla quede pendiente de aprobacion.",
     "nextTitle": "Que pasa despues",
     "steps": [
       "1. Crea una sola cuenta para tu dupla.",
@@ -158,14 +158,14 @@
   "brackets": {
     "eyebrow": "Cuadro en vivo",
     "titleSuffix": "cuadro del torneo",
-    "description": "Apenas el admin bloquea el armado inicial, el cuadro en vivo aparece aca para todas las duplas y visitantes de Belgrano Tenis.",
+    "description": "Apenas el admin bloquea el armado inicial, el cuadro en vivo aparece aca para todas las duplas y visitantes en Belgrano Tenis.",
     "empty": "Todavia no hay cuadro en vivo publicado.",
     "cardEyebrow": "Cuadro",
     "emptyCard": "Todavia no hay duplas asignadas.",
     "publishHint": "Publicalo cuando las asignaciones y las duplas aceptadas ya esten definidas.",
     "joinNext": "Inscribir una dupla",
-    "slotLabel": "Slot",
-    "emptySlot": "Slot vacio",
+    "slotLabel": "Lugar",
+    "emptySlot": "Lugar vacio",
     "wonAction": "Gano",
     "roundTitles": ["Ronda de 32", "Ronda de 16", "Cuartos", "Semifinales", "Final", "Campeon"]
   },
@@ -203,7 +203,7 @@
     "assignedPlayers": "{count} duplas asignadas",
     "noBrackets": "Todavia no hay cuadros creados.",
     "openBracketManager": "Abrir armado del cuadro",
-    "openProgressManager": "Abrir progreso del torneo",
+    "openProgressManager": "Abrir panel de progreso",
     "players": {
       "eyebrow": "Duplas admin",
       "title": "Acepta duplas al torneo.",
@@ -221,8 +221,8 @@
     "brackets": {
       "eyebrow": "Armado del cuadro",
       "title": "Construye el orden inicial y bloquea el cuadro del torneo.",
-      "description": "Define el orden exacto de las 32 duplas. La posicion 0 juega con la 1, la 2 con la 3 y asi sucesivamente. Una vez aprobado, el armado queda solo lectura y el dashboard de progreso toma el control.",
-      "createTitle": "Dashboard de armado",
+      "description": "Define el orden exacto de las 32 duplas. La posicion 0 juega con la 1, la 2 con la 3 y asi sucesivamente. Una vez aprobado, el armado queda solo lectura y el panel de progreso toma el control.",
+      "createTitle": "Panel de armado",
       "createDescription": "Arrastra duplas confirmadas a la lista ordenada de la derecha. Ese orden exacto se guarda en la base como el punto de partida del torneo.",
       "fields": {
         "name": "Nombre del cuadro",
@@ -251,14 +251,14 @@
       "emptySelection": "Todavia no hay duplas seleccionadas. Construye el orden inicial aca.",
       "addAction": "Agregar",
       "removeAction": "Quitar",
-      "startingSlot": "Slot inicial",
+      "startingSlot": "Lugar inicial",
       "pairingHelp": "Los cruces se arman automaticamente desde el orden guardado: 0 vs 1, 2 vs 3, 4 vs 5 y asi sucesivamente.",
       "sizeLabel": "Tamano del cuadro",
       "sizeValue": "Fijo en 32 duplas y 6 columnas de progreso.",
       "approvalTitle": "Aprobar y bloquear armado",
-      "approvalDescription": "Aprobar el cuadro valida el armado, bloquea el orden, siembra la primera columna en la tabla de progreso y abre el dashboard del torneo.",
+      "approvalDescription": "Aprobar el cuadro valida el armado, bloquea el orden, siembra la primera columna en la tabla de progreso y abre el panel del torneo.",
       "approve": "Aprobar cuadro",
-      "openProgress": "Abrir dashboard de progreso",
+      "openProgress": "Abrir panel de progreso",
       "confirmedCount": "Duplas confirmadas",
       "assignedCount": "Duplas asignadas",
       "lockState": "Estado del armado",
@@ -268,11 +268,11 @@
     "progress": {
       "eyebrow": "Progreso del torneo",
       "title": "Avanza ganadores a traves del cuadro en vivo.",
-      "description": "Usa el boton Won en cualquier slot ocupado para mover esa dupla a la siguiente columna en floor(i / 2).",
+      "description": "Usa el boton Gano en cualquier lugar ocupado para mover esa dupla a la siguiente columna en floor(i / 2).",
       "lockedOnly": "Esta pagina solo se activa despues de aprobar y bloquear el armado inicial.",
       "backToSetup": "Volver al armado",
-      "slotLabel": "Slot",
-      "emptySlot": "Slot vacio",
+      "slotLabel": "Lugar",
+      "emptySlot": "Lugar vacio",
       "wonAction": "Gano",
       "roundTitles": ["Orden inicial", "Ronda 2", "Cuartos", "Semifinales", "Final", "Campeon"]
     }
