@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,7 +24,6 @@ export function LoginForm({
   justRegistered: boolean;
   locale: Locale;
 }) {
-  const router = useRouter();
   const { t } = useI18n();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,8 +78,7 @@ export function LoginForm({
         return;
       }
 
-      router.refresh();
-      router.push(localizeHref(locale, "/me"));
+      window.location.assign(localizeHref(locale, "/me"));
     } catch (error) {
       const message = error instanceof Error ? error.message : t("login.errors.generic");
       setServerError(message);

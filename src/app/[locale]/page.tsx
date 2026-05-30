@@ -1,9 +1,25 @@
 import Link from "next/link";
-import { BracketCard } from "@/components/bracket-card";
+import { BracketProgressBoard } from "@/components/bracket-progress-board";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
-import { getPublishedBrackets, getTournament, getViewerContext } from "@/lib/data";
-import { getDictionary, localizeHref, type Locale } from "@/lib/i18n";
+import { getPublicBracketView, getTournament, getViewerContext } from "@/lib/data";
+import { env } from "@/lib/env";
+import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+
+function formatTournamentSchedule(startDate: string, locale: Locale) {
+  const parsedDate = new Date(`${startDate}T00:00:00Z`);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return `${startDate} · 13:00`;
+  }
+
+  const formattedDate = new Intl.DateTimeFormat(locale === "es" ? "es-AR" : "en-US", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  }).format(parsedDate);
+
+  return `${formattedDate} · 13:00`;
+}
 
 export default async function HomePage({
   params,
@@ -11,12 +27,13 @@ export default async function HomePage({
   params: Promise<unknown>;
 }) {
   const { locale } = (await params) as { locale: Locale };
-  const [tournament, brackets, viewer, dictionary] = await Promise.all([
+  const [tournament, bracketView, viewer, dictionary] = await Promise.all([
     getTournament(),
-    getPublishedBrackets(),
+    getPublicBracketView(),
     getViewerContext(),
     getDictionary(locale),
   ]);
+  const tournamentSchedule = formatTournamentSchedule(tournament.startDate, locale);
 
   return (
     <div className="pb-16">
@@ -28,6 +45,9 @@ export default async function HomePage({
               {dictionary.home.title}
             </h1>
             <p className="max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">{dictionary.home.description}</p>
+            <p className="max-w-xl text-base font-bold leading-7 text-accent sm:text-lg sm:leading-8">
+              {dictionary.home.deadlineNotice}
+            </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -52,7 +72,7 @@ export default async function HomePage({
             </div>
             <div className="card rounded-[1.75rem] p-5">
               <p className="eyebrow text-sm text-accent">{dictionary.home.startDate}</p>
-              <p className="mt-2 text-lg font-bold text-ink">{tournament.startDate}</p>
+              <p className="mt-2 text-lg font-bold text-ink">{tournamentSchedule}</p>
             </div>
             <div className="card rounded-[1.75rem] p-5">
               <p className="eyebrow text-sm text-accent">{dictionary.home.status}</p>
@@ -78,7 +98,10 @@ export default async function HomePage({
             <div className="mt-6 grid gap-3">
               {dictionary.home.pitchSteps.map((item) => (
                 <div key={item} className="rounded-2xl bg-forest px-4 py-3 text-sm font-medium text-white">
-                  {item}
+                  {interpolate(item, {
+                    paymentAlias: env.paymentAlias,
+                    contactEmail: env.contactEmail,
+                  })}
                 </div>
               ))}
             </div>
@@ -86,7 +109,7 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="page-shell py-7 sm:py-14">
+      <section className="page-shell-wide py-7 sm:py-14">
         <SectionHeading
           eyebrow={dictionary.home.playersEyebrow}
           title={dictionary.home.playersTitle}
@@ -110,13 +133,30 @@ export default async function HomePage({
           description={dictionary.home.publishedDescription}
         />
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
-          {brackets.length ? (
-            brackets.map((bracket) => <BracketCard key={bracket.id} bracket={bracket} locale={locale} />)
-          ) : (
-            <div className="card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">{dictionary.home.emptyBrackets}</div>
-          )}
-        </div>
+        {bracketView ? (
+          <div className="mt-8 card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+            <h3 className="text-xl font-extrabold text-forest sm:text-2xl">{bracketView.bracket.name}</h3>
+            <p className="mt-1 text-sm text-muted">{bracketView.bracket.format}</p>
+            <div className="mt-6">
+              <BracketProgressBoard
+                bracket={bracketView.bracket}
+                columns={bracketView.columns}
+                locale={locale}
+                titles={dictionary.brackets.roundTitles}
+                labels={{
+                  slot: dictionary.brackets.slotLabel,
+                  empty: dictionary.brackets.emptySlot,
+                  won: dictionary.brackets.wonAction,
+                  openLevel: dictionary.common.levels.open,
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="mt-8 card rounded-[1.6rem] p-5 text-sm text-muted sm:rounded-[2rem] sm:p-8 sm:text-base">
+            {dictionary.home.emptyBrackets}
+          </div>
+        )}
       </section>
     </div>
   );

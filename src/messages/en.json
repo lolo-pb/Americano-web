@@ -1,11 +1,11 @@
 {
   "meta": {
-    "title": "Americano Open",
-    "description": "Mobile-first platform for team signup, approvals, and bracket publishing."
+    "title": "Americano Belgrano Tenis",
+    "description": "Doubles Americano at Belgrano Tenis on August 14, 2026 starting at 13:00."
   },
   "common": {
-    "appName": "Americano Open",
-    "tagline": "Play. Confirm. Publish.",
+    "appName": "Americano Belgrano Tenis",
+    "tagline": "Belgrano Tenis · Starts 13:00",
     "demoMode": "Demo mode is active. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to connect the real backend.",
     "languages": {
       "es": "ES",
@@ -46,49 +46,52 @@
     "signUp": "Sign up"
   },
   "home": {
-    "eyebrow": "Mobile-first tennis tournament",
-    "title": "Americano tennis, organized with zero chaos.",
-    "description": "Team signup, approvals, public team pages, and published brackets in one clean flow for pairs and staff.",
-    "pitchEyebrow": "Tournament pitch",
+    "eyebrow": "Doubles Americano",
+    "title": "Americano at Belgrano Tenis.",
+    "description": "Open registration for mixed doubles in an Americano-style tournament designed for all skill levels.",
+    "deadlineNotice": "Sign up before Sunday the 14th at 23:59 so your team does not miss out.",
+    "pitchEyebrow": "Before you arrive",
     "pitchSteps": [
-      "Create one account for your team of two.",
-      "Email your payment proof to the tournament inbox.",
-      "Get accepted by the admin and wait for bracket publication."
+      "Sign up before Sunday the 14th at 23:59.",
+      "Transfer to the alias {paymentAlias} to reserve your place",
+      "Questions or payment proof to {contactEmail}",
+      "Every player must bring their own equipment and balls."
     ],
     "location": "Location",
-    "startDate": "Start date",
+    "startDate": "Day and time",
     "status": "Status",
-    "playersEyebrow": "What teams get",
-    "playersTitle": "A clean path from signup to first serve.",
-    "playersDescription": "The public and team-facing experience is designed for phones first, so registration status and published draws are always easy to check.",
+    "playersEyebrow": "Event details",
+    "playersTitle": "Short sets, golden point, and a post-event finish.",
+    "playersDescription": "The app shows team status, the live bracket, and all the key event information teams may need.",
     "featureCards": [
       {
-        "title": "Fast team signup",
-        "body": "One account captures both names and immediately tells the team where to send payment proof."
+        "title": "Rules",
+        "body": "Matches are played as two sets to four games, with golden point and no two-game margin needed to win a set."
       },
       {
-        "title": "Clear approval state",
-        "body": "Every team sees whether its registration is pending, approved, or rejected, without chasing admins over chat."
+        "title": "Tiebreak",
+        "body": "If each team wins one set, the match is decided with a super tiebreak to 10."
       },
       {
-        "title": "Published brackets",
-        "body": "Once the admin finalizes the draw, the live bracket page becomes the source of truth for everyone."
+        "title": "Post-event",
+        "body": "The day closes with wine, snacks, and music after tournament play."
       }
     ],
-    "publishedEyebrow": "Published draws",
-    "publishedTitle": "Brackets teams can actually read on mobile.",
-    "publishedDescription": "Start with a simple, highly legible bracket list now. We can always evolve this into a richer tree view later.",
-    "emptyBrackets": "No published brackets yet. The admin will publish them once assignments are finalized."
+    "publishedEyebrow": "Live bracket",
+    "publishedTitle": "Follow the tournament throughout the day.",
+    "publishedDescription": "As winners are entered, the live bracket updates so every team can see how the day is unfolding.",
+    "emptyBrackets": "No live bracket yet. The admin will approve the starting order once all 32 teams are confirmed."
   },
   "signUp": {
     "eyebrow": "Registration",
-    "title": "Save your team a place in the next draw.",
-    "description": "Create one account for your pair, send payment proof by email, and the admin will approve your team before bracket publication.",
+    "title": "Register your team for Belgrano Tenis.",
+    "description": "Sign up before Sunday the 14th at 23:59 and complete the payment to the listed alias so your team can wait for approval.",
     "nextTitle": "What happens next",
     "steps": [
       "1. Create one account for your team of two.",
-      "2. Send your payment proof to {paymentEmail}.",
-      "3. Wait for admin approval and watch the bracket publication."
+      "2. Transfer to the alias {paymentAlias}",
+      "3. If you need help or want to send payment proof, write to {contactEmail}",
+      "4. Wait for admin approval and watch the live bracket."
     ],
     "fields": {
       "playerOneName": "Player one name",
@@ -109,7 +112,7 @@
       "confirmPassword": "Repeat your password",
       "phone": "+54 11 ..."
     },
-    "paymentNotice": "After signup, send your payment proof to {paymentEmail}. Once it is accepted, your team will be approved for the tournament.",
+    "paymentNotice": "After signup, make the transfer to the alias {paymentAlias} and if you need help or want to send payment proof, write to {contactEmail}",
     "important": "Important",
     "submitIdle": "Create account",
     "submitBusy": "Creating account...",
@@ -127,9 +130,9 @@
   },
   "login": {
     "eyebrow": "Welcome back",
-    "title": "Track your team status and tournament details.",
-    "description": "Teams can log in to review approval status, update team details, and confirm when their bracket has been published.",
-    "pendingInfo": "Pending teams can still log in. Your team page will show whether the registration is still awaiting admin review.",
+    "title": "Track your team status and event details.",
+    "description": "Teams can log in to review approval status, update team details, and follow the live bracket for Belgrano Tenis.",
+    "pendingInfo": "Pending teams can still log in. Your team page will show whether the registration is still awaiting review after the payment to the listed alias.",
     "teamMissingMessage": "Your auth account exists, but the team row is missing in the database. That usually means the Supabase trigger that creates `teams` did not run correctly at signup.",
     "registeredMessage": "Account created. You can log in now and track your team approval status from your team page.",
     "fields": {
@@ -153,14 +156,18 @@
     }
   },
   "brackets": {
-    "eyebrow": "Published brackets",
-    "titleSuffix": "draws",
-    "description": "As soon as the admin publishes the latest draw, it appears here for every team and visitor.",
-    "empty": "No brackets are published yet.",
+    "eyebrow": "Live bracket",
+    "titleSuffix": "tournament draw",
+    "description": "As soon as the admin locks the setup, the live tournament board appears here for every team and visitor at Belgrano Tenis.",
+    "empty": "No live bracket is published yet.",
     "cardEyebrow": "Bracket",
     "emptyCard": "No teams assigned yet.",
     "publishHint": "Publish when assignments are final and accepted teams are set.",
-    "joinNext": "Register a team"
+    "joinNext": "Register a team",
+    "slotLabel": "Slot",
+    "emptySlot": "Empty slot",
+    "wonAction": "Won",
+    "roundTitles": ["Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final", "Champion"]
   },
   "playerProfile": {
     "eyebrow": "Team profile",
@@ -175,27 +182,28 @@
     "description": "This page keeps the team informed about registration status and published tournament information.",
     "teamSlug": "Team slug",
     "tournament": "Tournament",
-    "paymentInbox": "Payment inbox",
+    "paymentInbox": "Payment alias",
     "bracketVisibility": "Bracket visibility",
-    "published": "Published brackets are live now.",
-    "notPublished": "Brackets are not published yet.",
-    "paymentHelp": "If your registration is still pending, email your payment proof to {paymentEmail}. Once the admin accepts it, your team can be assigned and published in a bracket.",
+    "published": "The live bracket is available now.",
+    "notPublished": "The bracket is not locked yet.",
+    "paymentHelp": "If your registration is still pending, make sure the payment was sent to the alias {paymentAlias} and if you need help or want to send payment proof, write to {contactEmail}. Once the admin approves it, your team can be placed into the tournament draw.",
     "updateTitle": "Update team",
     "bio": "Bio"
   },
   "admin": {
     "eyebrow": "Admin dashboard",
     "title": "Keep approvals and brackets moving.",
-    "description": "The admin view focuses on the two bottlenecks that matter most in v1: confirming teams and publishing the right bracket at the right time.",
-    "publishedBrackets": "Published brackets",
+    "description": "The admin view focuses on confirming teams, locking the setup, and advancing winners during the Belgrano Tenis event day.",
+    "publishedBrackets": "Live brackets",
     "activeTournament": "Active tournament",
     "pendingPlayers": "Pending teams",
     "fullPlayerList": "Full team list",
     "noPendingPlayers": "No pending teams right now.",
-    "publishingState": "Publishing state",
+    "publishingState": "Bracket state",
     "assignedPlayers": "{count} teams assigned",
     "noBrackets": "No brackets created yet.",
-    "openBracketManager": "Open bracket manager",
+    "openBracketManager": "Open setup dashboard",
+    "openProgressManager": "Open progress dashboard",
     "players": {
       "eyebrow": "Admin teams",
       "title": "Accept teams into the tournament.",
@@ -211,30 +219,62 @@
       "noCategory": "No category"
     },
     "brackets": {
-      "eyebrow": "Bracket manager",
-      "title": "Assign teams and publish when ready.",
-      "description": "V1 keeps bracket management explicit and manual: create a bracket, assign approved teams in order, then publish it for everyone.",
-      "createTitle": "Create a bracket",
-      "createDescription": "Choose approved teams and give each one a position. Use 0 to leave a team out of this bracket.",
+      "eyebrow": "Bracket setup",
+      "title": "Build the starting order and lock the tournament draw.",
+      "description": "Set the exact 32-team starting order. Position 0 plays 1, 2 plays 3, and so on. Once approved, setup becomes read-only and the progress dashboard takes over.",
+      "createTitle": "Setup dashboard",
+      "createDescription": "Drag confirmed teams into the ordered list on the right. That ordered list becomes the saved bracket start order in the database.",
       "fields": {
         "name": "Bracket name",
         "format": "Format",
         "teams": "Approved teams"
       },
       "placeholders": {
-        "name": "Saturday Sunrise Draw",
-        "format": "Americano - 8 teams"
+        "name": "Americano Draw",
+        "format": "Americano - 32 teams"
       },
-      "save": "Save bracket",
+      "save": "Save setup",
       "approvedPlayers": "Accepted teams",
       "noApprovedPlayers": "No approved teams yet.",
       "positionLabel": "Position",
-      "selectionHelp": "Every approved team is listed here. Keep a positive position number to include it in the bracket, or set 0 to skip it.",
+      "selectionHelp": "Build the right-hand order exactly as you want the tournament to start.",
       "publishingControls": "Publishing controls",
-      "publishingDescription": "Toggle visibility on the public brackets page. Draft brackets stay admin-only.",
+      "publishingDescription": "Live bracket visibility follows setup approval in this tournament mode.",
       "unpublish": "Unpublish bracket",
       "publish": "Publish bracket",
-      "empty": "No brackets created yet. Use the form above to create the first one."
+      "empty": "No bracket created yet.",
+      "availableTitle": "Confirmed teams",
+      "availableDescription": "Drag teams into the setup list, or drop them back here to remove them.",
+      "selectedTitle": "Starting order",
+      "selectedDescription": "This exact order is saved to the database. Pairings are 0 vs 1, 2 vs 3, and so on.",
+      "noAvailableTeams": "All confirmed teams are already in the starting order.",
+      "emptySelection": "No teams selected yet. Build the starting order here.",
+      "addAction": "Add",
+      "removeAction": "Remove",
+      "startingSlot": "Start slot",
+      "pairingHelp": "Pairings are automatic from the saved order: 0 vs 1, 2 vs 3, 4 vs 5, and so on.",
+      "sizeLabel": "Bracket size",
+      "sizeValue": "Fixed at 32 teams and 6 progress columns.",
+      "approvalTitle": "Approve and lock setup",
+      "approvalDescription": "Approving the bracket validates the setup, locks the order, seeds round one into the progress table, and opens the tournament progress dashboard.",
+      "approve": "Approve bracket",
+      "openProgress": "Open progress dashboard",
+      "confirmedCount": "Confirmed teams",
+      "assignedCount": "Assigned teams",
+      "lockState": "Setup state",
+      "locked": "Locked",
+      "unlocked": "Draft"
+    },
+    "progress": {
+      "eyebrow": "Tournament progress",
+      "title": "Advance winners across the live bracket.",
+      "description": "Use the Won button on any occupied slot to move that team into the next column at floor(i / 2).",
+      "lockedOnly": "This page only becomes active after the bracket setup is approved and locked.",
+      "backToSetup": "Back to setup",
+      "slotLabel": "Slot",
+      "emptySlot": "Empty slot",
+      "wonAction": "Won",
+      "roundTitles": ["Start order", "Round 2", "Quarterfinals", "Semifinals", "Final", "Champion"]
     }
   }
 }

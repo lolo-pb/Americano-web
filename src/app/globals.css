@@ -76,6 +76,11 @@ textarea {
   width: min(1120px, calc(100% - 1.5rem));
 }
 
+.page-shell-wide {
+  margin-inline: auto;
+  width: min(1320px, calc(100% - 1.5rem));
+}
+
 .card {
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface) 92%, white);
@@ -100,7 +105,11 @@ textarea {
 
 @media (max-width: 767px) {
   .page-shell {
-    width: min(1120px, calc(100% - 1rem));
+    width: min(1120px, calc(100% - 3rem));
+  }
+
+  .page-shell-wide {
+    width: min(1320px, calc(100% - 3rem));
   }
 
   .card {

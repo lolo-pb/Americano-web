@@ -2,9 +2,20 @@ import { cache } from "react";
 import { redirect } from "next/navigation";
 import { hasSupabaseEnv } from "@/lib/env";
 import { localizeHref, type Locale } from "@/lib/i18n";
-import { demoBrackets, demoTeams, demoTournament } from "@/lib/mock-data";
+import { demoBracket, demoBracketProgress, demoBrackets, demoTeams, demoTournament } from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
-import type { Bracket, BracketEntry, PublicTeam, Team, Tournament, ViewerContext } from "@/lib/types";
+import type {
+  Bracket,
+  BracketEntry,
+  BracketProgressColumn,
+  BracketProgressSlot,
+  PublicTeam,
+  Team,
+  Tournament,
+  ViewerContext,
+} from "@/lib/types";
+
+export const BRACKET_ROUND_SLOT_COUNTS = [32, 16, 8, 4, 2, 1] as const;
 
 function buildTeamName(playerOneName: string, playerTwoName: string) {
   return playerTwoName ? `${playerOneName} & ${playerTwoName}` : playerOneName;
@@ -24,11 +35,41 @@ function toPublicTeam(team: Team): PublicTeam {
   };
 }
 
-function mapBracketEntry(entry: Record<string, unknown>): BracketEntry {
-  const team = (entry.team as Record<string, unknown> | null) ?? {};
+function mapPublicTeam(team: Record<string, unknown> | null, fallbackTeamId?: string | null): PublicTeam | null {
+  if (!team) {
+    return fallbackTeamId
+      ? {
+          id: fallbackTeamId,
+          slug: "",
+          playerOneName: "Unknown",
+          playerTwoName: "",
+          teamName: "Deleted Team",
+          avatarUrl: null,
+          category: null,
+          approvalStatus: "rejected",
+          bio: null,
+        }
+      : null;
+  }
+
   const playerOneName = String(team.player_one_name ?? "Unknown");
   const playerTwoName = String(team.player_two_name ?? "");
-  const hasTeam = Object.keys(team).length > 0;
+
+  return {
+    id: String(team.id ?? fallbackTeamId ?? ""),
+    slug: team.slug ? String(team.slug) : "",
+    playerOneName,
+    playerTwoName,
+    teamName: buildTeamName(playerOneName, playerTwoName),
+    avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
+    category: team.category ? String(team.category) : null,
+    approvalStatus: String(team.approval_status ?? "rejected") as Team["approvalStatus"],
+    bio: team.bio ? String(team.bio) : null,
+  };
+}
+
+function mapBracketEntry(entry: Record<string, unknown>): BracketEntry {
+  const team = mapPublicTeam((entry.team as Record<string, unknown> | null) ?? null, String(entry.team_id));
 
   return {
     id: String(entry.id),
@@ -36,17 +77,56 @@ function mapBracketEntry(entry: Record<string, unknown>): BracketEntry {
     teamId: String(entry.team_id),
     position: Number(entry.position),
     seed: entry.seed ? Number(entry.seed) : null,
-    team: {
-      id: String(team.id ?? entry.team_id),
-      slug: team.slug ? String(team.slug) : "",
-      playerOneName,
-      playerTwoName,
-      teamName: hasTeam ? buildTeamName(playerOneName, playerTwoName) : "Deleted Team",
-      avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
-      category: team.category ? String(team.category) : null,
-      approvalStatus: hasTeam ? (String(team.approval_status) as Team["approvalStatus"]) : "rejected",
-      bio: team.bio ? String(team.bio) : null,
-    },
+    team: team!,
+  };
+}
+
+function mapProgressSlot(slot: Record<string, unknown>): BracketProgressSlot {
+  return {
+    id: String(slot.id),
+    bracketId: String(slot.bracket_id),
+    roundIndex: Number(slot.round_index),
+    slotIndex: Number(slot.slot_index),
+    teamId: slot.team_id ? String(slot.team_id) : null,
+    team: mapPublicTeam((slot.team as Record<string, unknown> | null) ?? null, slot.team_id ? String(slot.team_id) : null),
+  };
+}
+
+function buildProgressColumns(progressSlots: BracketProgressSlot[]): BracketProgressColumn[] {
+  const slotMap = new Map(progressSlots.map((slot) => [`${slot.roundIndex}:${slot.slotIndex}`, slot]));
+
+  return BRACKET_ROUND_SLOT_COUNTS.map((slotCount, roundIndex) => ({
+    roundIndex,
+    slotCount,
+    slots: Array.from({ length: slotCount }, (_, slotIndex) => {
+      const key = `${roundIndex}:${slotIndex}`;
+      return (
+        slotMap.get(key) ?? {
+          id: `empty-${key}`,
+          bracketId: progressSlots[0]?.bracketId ?? "",
+          roundIndex,
+          slotIndex,
+          teamId: null,
+          team: null,
+        }
+      );
+    }),
+  }));
+}
+
+function mapBracket(bracket: Record<string, unknown>): Bracket {
+  return {
+    id: String(bracket.id),
+    tournamentId: String(bracket.tournament_id),
+    name: String(bracket.name),
+    format: String(bracket.format),
+    status: String(bracket.status) as Bracket["status"],
+    setupLocked: Boolean(bracket.setup_locked),
+    bracketSize: Number(bracket.bracket_size ?? 32),
+    publishedAt: bracket.published_at ? String(bracket.published_at) : null,
+    entries: ((bracket.bracket_entries as Record<string, unknown>[]) ?? [])
+      .map(mapBracketEntry)
+      .sort((a, b) => a.position - b.position),
   };
 }
 
@@ -168,59 +248,6 @@ export async function getTournament(): Promise<Tournament> {
   };
 }
 
-export async function getPublishedBrackets(): Promise<Bracket[]> {
-  if (!hasSupabaseEnv()) {
-    return demoBrackets;
-  }
-
-  const supabase = await createClient();
-  const { data } = await supabase!
-    .from("brackets")
-    .select(`
-      id,
-      tournament_id,
-      name,
-      format,
-      status,
-      published_at,
-      bracket_entries (
-        id,
-        bracket_id,
-        team_id,
-        position,
-        seed,
-        team:public_approved_teams!team_id (
-          id,
-          slug,
-          player_one_name,
-          player_two_name,
-          avatar_url,
-          category,
-          approval_status,
-          bio
-        )
-      )
-    `)
-    .eq("status", "published")
-    .order("name");
-
-  if (!data) {
-    return [];
-  }
-
-  return data.map((bracket) => ({
-    id: String(bracket.id),
-    tournamentId: String(bracket.tournament_id),
-    name: String(bracket.name),
-    format: String(bracket.format),
-    status: String(bracket.status) as Bracket["status"],
-    publishedAt: bracket.published_at ? String(bracket.published_at) : null,
-    entries: ((bracket.bracket_entries as Record<string, unknown>[]) ?? [])
-      .map(mapBracketEntry)
-      .sort((a, b) => a.position - b.position),
-  }));
-}
-
 export async function getPublicTeam(slug: string): Promise<PublicTeam | null> {
   if (!hasSupabaseEnv()) {
     const team = demoTeams.find((entry) => entry.slug === slug);
@@ -238,20 +265,7 @@ export async function getPublicTeam(slug: string): Promise<PublicTeam | null> {
     return null;
   }
 
-  const playerOneName = String(data.player_one_name ?? "");
-  const playerTwoName = String(data.player_two_name ?? "");
-
-  return {
-    id: String(data.id),
-    slug: String(data.slug),
-    playerOneName,
-    playerTwoName,
-    teamName: buildTeamName(playerOneName, playerTwoName),
-    avatarUrl: data.avatar_url ? String(data.avatar_url) : null,
-    category: data.category ? String(data.category) : null,
-    approvalStatus: String(data.approval_status) as PublicTeam["approvalStatus"],
-    bio: data.bio ? String(data.bio) : null,
-  };
+  return mapPublicTeam(data as unknown as Record<string, unknown>);
 }
 
 export async function getApprovedTeams(): Promise<PublicTeam[]> {
@@ -268,22 +282,7 @@ export async function getApprovedTeams(): Promise<PublicTeam[]> {
     .eq("approval_status", "approved")
     .order("player_one_name");
 
-  return (data ?? []).map((team) => {
-    const playerOneName = String(team.player_one_name ?? "");
-    const playerTwoName = String(team.player_two_name ?? "");
-
-    return {
-      id: String(team.id),
-      slug: String(team.slug),
-      playerOneName,
-      playerTwoName,
-      teamName: buildTeamName(playerOneName, playerTwoName),
-      avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
-      category: team.category ? String(team.category) : null,
-      approvalStatus: String(team.approval_status) as PublicTeam["approvalStatus"],
-      bio: team.bio ? String(team.bio) : null,
-    };
-  });
+  return (data ?? []).map((team) => mapPublicTeam(team as unknown as Record<string, unknown>)!);
 }
 
 export async function getAdminTeams(): Promise<Team[]> {
@@ -325,6 +324,7 @@ export async function getAdminBrackets(): Promise<Bracket[]> {
     return demoBrackets;
   }
 
+  const tournament = await getTournament();
   const supabase = await createClient();
   const { data } = await supabase!
     .from("brackets")
@@ -334,6 +334,8 @@ export async function getAdminBrackets(): Promise<Bracket[]> {
       name,
       format,
       status,
+      setup_locked,
+      bracket_size,
       published_at,
       bracket_entries (
         id,
@@ -353,17 +355,105 @@ export async function getAdminBrackets(): Promise<Bracket[]> {
         )
       )
     `)
+    .eq("tournament_id", tournament.id)
     .order("created_at");
 
-  return (data ?? []).map((bracket) => ({
-    id: String(bracket.id),
-    tournamentId: String(bracket.tournament_id),
-    name: String(bracket.name),
-    format: String(bracket.format),
-    status: String(bracket.status) as Bracket["status"],
-    publishedAt: bracket.published_at ? String(bracket.published_at) : null,
-    entries: ((bracket.bracket_entries as Record<string, unknown>[]) ?? [])
-      .map(mapBracketEntry)
-      .sort((a, b) => a.position - b.position),
-  }));
+  return (data ?? []).map((bracket) => mapBracket(bracket as unknown as Record<string, unknown>));
+}
+
+export async function getActiveAdminBracket(): Promise<Bracket | null> {
+  if (!hasSupabaseEnv()) {
+    return demoBracket;
+  }
+
+  const brackets = await getAdminBrackets();
+  return brackets[0] ?? null;
+}
+
+export async function getBracketProgress(bracketId: string): Promise<BracketProgressColumn[]> {
+  if (!hasSupabaseEnv()) {
+    return buildProgressColumns(demoBracketProgress.filter((slot) => slot.bracketId === bracketId));
+  }
+
+  const supabase = await createClient();
+  const { data } = await supabase!
+    .from("bracket_progress")
+    .select(`
+      id,
+      bracket_id,
+      round_index,
+      slot_index,
+      team_id,
+      team:public_approved_teams!team_id (
+        id,
+        slug,
+        player_one_name,
+        player_two_name,
+        avatar_url,
+        category,
+        approval_status,
+        bio
+      )
+    `)
+    .eq("bracket_id", bracketId)
+    .order("round_index")
+    .order("slot_index");
+
+  return buildProgressColumns(((data ?? []) as Record<string, unknown>[]).map(mapProgressSlot));
+}
+
+export async function getPublicBracketView(): Promise<{ bracket: Bracket; columns: BracketProgressColumn[] } | null> {
+  if (!hasSupabaseEnv()) {
+    return {
+      bracket: demoBracket,
+      columns: buildProgressColumns(demoBracketProgress),
+    };
+  }
+
+  const tournament = await getTournament();
+  const supabase = await createClient();
+  const { data } = await supabase!
+    .from("brackets")
+    .select(`
+      id,
+      tournament_id,
+      name,
+      format,
+      status,
+      setup_locked,
+      bracket_size,
+      published_at,
+      bracket_entries (
+        id,
+        bracket_id,
+        team_id,
+        position,
+        seed,
+        team:public_approved_teams!team_id (
+          id,
+          slug,
+          player_one_name,
+          player_two_name,
+          avatar_url,
+          category,
+          approval_status,
+          bio
+        )
+      )
+    `)
+    .eq("tournament_id", tournament.id)
+    .eq("status", "published")
+    .eq("setup_locked", true)
+    .order("created_at")
+    .limit(1)
+    .maybeSingle();
+
+  if (!data) {
+    return null;
+  }
+
+  const bracket = mapBracket(data as unknown as Record<string, unknown>);
+  const columns = await getBracketProgress(bracket.id);
+
+  return { bracket, columns };
 }

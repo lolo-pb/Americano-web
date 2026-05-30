@@ -53,8 +53,25 @@ export type Bracket = {
   name: string;
   format: string;
   status: BracketStatus;
+  setupLocked: boolean;
+  bracketSize: number;
   publishedAt?: string | null;
   entries: BracketEntry[];
+};
+
+export type BracketProgressSlot = {
+  id: string;
+  bracketId: string;
+  roundIndex: number;
+  slotIndex: number;
+  teamId: string | null;
+  team: PublicTeam | null;
+};
+
+export type BracketProgressColumn = {
+  roundIndex: number;
+  slotCount: number;
+  slots: BracketProgressSlot[];
 };
 
 export type ViewerContext = {
