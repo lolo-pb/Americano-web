@@ -353,10 +353,10 @@ insert into public.tournaments (
 values (
   'Americano Belgrano Tenis',
   'Belgrano Tenis',
-  '2026-08-14',
+  '2026-06-28',
   true,
   false,
   true,
-  'Doubles Americano at Belgrano Tenis on August 14, 2026 starting at 13:00.'
+  'Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 13:00.'
 )
 on conflict do nothing;
