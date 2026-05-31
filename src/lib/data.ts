@@ -291,12 +291,16 @@ export async function getAdminTeams(): Promise<Team[]> {
   }
 
   const supabase = await createClient();
-  const { data } = await supabase!
+  const { data, error } = await supabase!
     .from("teams")
     .select(
       "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, category, bio, avatar_url",
     )
     .order("created_at", { ascending: false });
+
+  if (error) {
+    throw new Error(`Failed to load admin teams: ${error.message}`);
+  }
 
   return (data ?? []).map((team) => {
     const playerOneName = String(team.player_one_name ?? "");

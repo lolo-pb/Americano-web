@@ -5,6 +5,8 @@ import { SectionHeading } from "@/components/section-heading";
 import { getActiveAdminBracket, getApprovedTeams, getTournament, requireAdmin } from "@/lib/data";
 import { getDictionary, localizeHref, type Locale } from "@/lib/i18n";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminBracketsPage({
   params,
 }: {

@@ -89,16 +89,19 @@ $$;
 
 create or replace function public.is_admin()
 returns boolean
-language sql
+language plpgsql
 stable
 security definer
-set search_path = public
+set search_path = public, pg_temp
+set row_security = off
 as $$
-  select exists (
+begin
+  return exists (
     select 1
     from public.teams
     where owner_user_id = auth.uid() and role = 'admin'
   );
+end;
 $$;
 
 create or replace function public.normalize_slug_part(raw_value text)

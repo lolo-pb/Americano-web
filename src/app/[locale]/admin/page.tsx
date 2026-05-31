@@ -5,6 +5,8 @@ import { StatusBadge } from "@/components/status-badge";
 import { getAdminBrackets, getAdminTeams, getTournament, requireAdmin } from "@/lib/data";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardPage({
   params,
 }: {
