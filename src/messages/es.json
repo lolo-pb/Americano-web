@@ -49,7 +49,7 @@
   },
   "home": {
     "eyebrow": "Americano de duplas",
-    "title": "Americano en Belgrano Tenis.",
+    "title": "Torneo tus Americanos",
     "description": "Inscripcion abierta para parejas mixtas en un torneo estilo americano, pensado para todos los niveles.",
     "deadlineNotice": "Inscribite antes del domingo 14 de junio a las 23.59hs para no quedarte afuera.",
     "pitchEyebrow": "Antes de venir",
@@ -84,13 +84,18 @@
     "publishedEyebrow": "Cuadro en vivo",
     "publishedTitle": "Segui el torneo durante toda la jornada.",
     "publishedDescription": "A medida que se cargan ganadores, el cuadro en vivo se actualiza para que todas las duplas sepan como viene el dia.",
-    "emptyBrackets": "Todavia no hay cuadro en vivo. El admin lo aprobara cuando las 32 duplas esten confirmadas."
+    "emptyBrackets": "Todavia no hay cuadro en vivo. El admin lo aprobara cuando las 32 duplas esten confirmadas.",
+    "finalCtaTitle": "Inscribite ahora y no pierdas tu oportunidad"
   },
   "signUp": {
     "eyebrow": "Inscripcion",
     "title": "Inscribi a tu dupla para Belgrano Tenis.",
     "description": "Inscribite antes del domingo 14 de junio a las 23.59hs y realiza el pago al alias indicado para que la dupla quede pendiente de aprobacion.",
     "nextTitle": "Que pasa despues",
+    "priceTitle": "Valor de inscripcion",
+    "priceAmount": "$60.000",
+    "priceAliasLabel": "Alias: {paymentAlias}",
+    "priceReceiptLabel": "Comprobante a {contactEmail}",
     "steps": [
       "1. Crea una sola cuenta para tu dupla.",
       "2. Transferi al alias {paymentAlias}",
@@ -117,6 +122,11 @@
       "phone": "+54 11 ..."
     },
     "paymentNotice": "Despues de inscribirte, realiza la transferencia al alias {paymentAlias} y si necesitas ayuda o enviar el comprobante escribe a {contactEmail}",
+    "successEyebrow": "Inscripcion enviada",
+    "successTitle": "Inscripcion realizada con exito",
+    "successDescription": "Ahora solo queda esperar a que un organizador apruebe tu inscripcion. Recorda enviar la informacion del pago al alias {paymentAlias}",
+    "successProfileAction": "Ver mi perfil",
+    "successBracketsAction": "Ver cuadros",
     "important": "Importante",
     "submitIdle": "Crear cuenta",
     "submitBusy": "Creando cuenta...",
@@ -184,6 +194,7 @@
   "me": {
     "eyebrow": "Mi dupla",
     "description": "Esta pagina mantiene a la dupla al tanto del estado de su inscripcion y la informacion publicada para el torneo.",
+    "email": "Email",
     "teamSlug": "Slug de la dupla",
     "tournament": "Torneo",
     "paymentInbox": "Alias de pago",
