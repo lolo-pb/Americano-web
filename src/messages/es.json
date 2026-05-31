@@ -92,6 +92,10 @@
     "title": "Inscribi a tu dupla para Belgrano Tenis.",
     "description": "Inscribite antes del domingo 14 de junio a las 23.59hs y realiza el pago al alias indicado para que la dupla quede pendiente de aprobacion.",
     "nextTitle": "Que pasa despues",
+    "priceTitle": "Valor de inscripcion",
+    "priceAmount": "$60.000",
+    "priceAliasLabel": "Alias: {paymentAlias}",
+    "priceReceiptLabel": "Comprobante a {contactEmail}",
     "steps": [
       "1. Crea una sola cuenta para tu dupla.",
       "2. Transferi al alias {paymentAlias}",
