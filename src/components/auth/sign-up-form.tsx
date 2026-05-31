@@ -94,9 +94,7 @@ export function SignUpForm({
         return;
       }
 
-      router.push(
-        `${localizeHref(locale, "/login")}?registered=1&email=${encodeURIComponent(parsed.email)}`,
-      );
+      router.push(localizeHref(locale, "/sign-up/success"));
       router.refresh();
     } catch (error) {
       const message = error instanceof Error ? error.message : t("signUp.errors.generic");
