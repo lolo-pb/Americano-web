@@ -38,6 +38,22 @@ export default async function SignUpPage({
             ))}
           </ol>
         </div>
+        <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+          <p className="eyebrow text-sm text-accent">{dictionary.signUp.priceTitle}</p>
+          <p className="mt-3 text-3xl font-extrabold text-forest sm:text-4xl">
+            {dictionary.signUp.priceAmount}
+          </p>
+          <p className="mt-2 text-sm text-muted">
+            {interpolate(dictionary.signUp.priceAliasLabel, {
+              paymentAlias: env.paymentAlias,
+            })}
+          </p>
+          <p className="mt-1 text-sm text-muted">
+            {interpolate(dictionary.signUp.priceReceiptLabel, {
+              contactEmail: env.contactEmail,
+            })}
+          </p>
+        </div>
       </div>
 
       <SignUpForm

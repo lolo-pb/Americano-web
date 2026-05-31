@@ -242,6 +242,22 @@ export default async function HomePage({
           </div>
         )}
       </section>
+
+      <section className="page-shell pb-6 pt-2 sm:pb-10 sm:pt-4">
+        <div className="card rounded-[1.8rem] px-6 py-8 text-center sm:px-10 sm:py-10">
+          <h2 className="text-2xl font-extrabold text-forest sm:text-3xl">
+            {dictionary.home.finalCtaTitle}
+          </h2>
+          <div className="mt-5 flex justify-center">
+            <Link
+              href={viewer.team ? localizeHref(locale, "/me") : localizeHref(locale, "/sign-up")}
+              className="rounded-full bg-accent px-6 py-3 text-center font-semibold text-white hover:bg-accent-strong"
+            >
+              {dictionary.common.actions.signUp}
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
