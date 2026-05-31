@@ -75,12 +75,14 @@ export function SignUpForm({
     try {
       const supabase = createClient();
       const parsed = signUpSchema.parse(values);
+      const teamDisplayName = `${parsed.playerOneName.trim()} / ${parsed.playerTwoName.trim()}`;
 
       const { error } = await supabase.auth.signUp({
         email: parsed.email,
         password: parsed.password,
         options: {
           data: {
+            display_name: teamDisplayName,
             player_one_name: parsed.playerOneName.trim(),
             player_two_name: parsed.playerTwoName.trim(),
             phone: parsed.phone,
@@ -94,9 +96,7 @@ export function SignUpForm({
         return;
       }
 
-      router.push(
-        `${localizeHref(locale, "/login")}?registered=1&email=${encodeURIComponent(parsed.email)}`,
-      );
+      router.push(localizeHref(locale, "/sign-up/success"));
       router.refresh();
     } catch (error) {
       const message = error instanceof Error ? error.message : t("signUp.errors.generic");

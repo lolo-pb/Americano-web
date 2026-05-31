@@ -1,0 +1,44 @@
+import Link from "next/link";
+import { SectionHeading } from "@/components/section-heading";
+import { env } from "@/lib/env";
+import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+
+export default async function SignUpSuccessPage({
+  params,
+}: {
+  params: Promise<unknown>;
+}) {
+  const { locale } = (await params) as { locale: Locale };
+  const dictionary = await getDictionary(locale);
+
+  return (
+    <div className="page-shell py-8 sm:py-14">
+      <div className="mx-auto max-w-2xl card rounded-[1.8rem] p-5 text-center sm:rounded-[2.2rem] sm:p-8">
+        <div className="text-center">
+          <SectionHeading
+            eyebrow={dictionary.signUp.successEyebrow}
+            title={dictionary.signUp.successTitle}
+            description={interpolate(dictionary.signUp.successDescription, {
+              paymentAlias: env.paymentAlias,
+            })}
+          />
+        </div>
+
+        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link
+            href={localizeHref(locale, "/me")}
+            className="rounded-full bg-accent px-6 py-3 text-center font-semibold text-white hover:bg-accent-strong"
+          >
+            {dictionary.signUp.successProfileAction}
+          </Link>
+          <Link
+            href={localizeHref(locale, "/brackets")}
+            className="rounded-full border border-line px-6 py-3 text-center font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
+          >
+            {dictionary.signUp.successBracketsAction}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

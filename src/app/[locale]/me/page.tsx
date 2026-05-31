@@ -1,11 +1,10 @@
-import Link from "next/link";
 import { updateTeamAction } from "@/app/actions";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
 import { demoTeams } from "@/lib/mock-data";
 import { getTournament, requireUser } from "@/lib/data";
 import { env } from "@/lib/env";
-import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+import { getDictionary, interpolate, type Locale } from "@/lib/i18n";
 
 export default async function MyProfilePage({
   params,
@@ -35,6 +34,10 @@ export default async function MyProfilePage({
           </div>
           <dl className="mt-5 grid gap-4 text-sm">
             <div>
+              <dt className="font-semibold text-ink">{dictionary.me.email}</dt>
+              <dd className="text-muted">{team.email}</dd>
+            </div>
+            <div>
               <dt className="font-semibold text-ink">{dictionary.me.teamSlug}</dt>
               <dd className="text-muted">{team.slug}</dd>
             </div>
@@ -62,20 +65,6 @@ export default async function MyProfilePage({
           })}
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href={localizeHref(locale, "/brackets")}
-            className="inline-flex rounded-full border border-line px-5 py-3 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
-          >
-            {dictionary.common.actions.viewBrackets}
-          </Link>
-          <Link
-            href={localizeHref(locale, `/teams/${team.slug}`)}
-            className="inline-flex rounded-full border border-line px-5 py-3 text-sm font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"
-          >
-            {dictionary.common.actions.viewPublicTeam}
-          </Link>
-        </div>
       </div>
 
       <form action={updateTeamAction} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">
