@@ -4,7 +4,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { demoTeams } from "@/lib/mock-data";
 import { getTournament, requireUser } from "@/lib/data";
 import { env } from "@/lib/env";
-import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+import { getDictionary, interpolate, type Locale } from "@/lib/i18n";
 
 export default async function MyProfilePage({
   params,
