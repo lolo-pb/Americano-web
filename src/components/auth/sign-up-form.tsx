@@ -75,12 +75,14 @@ export function SignUpForm({
     try {
       const supabase = createClient();
       const parsed = signUpSchema.parse(values);
+      const teamDisplayName = `${parsed.playerOneName.trim()} / ${parsed.playerTwoName.trim()}`;
 
       const { error } = await supabase.auth.signUp({
         email: parsed.email,
         password: parsed.password,
         options: {
           data: {
+            display_name: teamDisplayName,
             player_one_name: parsed.playerOneName.trim(),
             player_two_name: parsed.playerTwoName.trim(),
             phone: parsed.phone,
