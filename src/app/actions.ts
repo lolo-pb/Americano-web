@@ -145,7 +145,7 @@ export async function approveBracketAction(formData: FormData) {
   const sortedEntries = (entries ?? []).sort((a, b) => Number(a.position) - Number(b.position));
   const uniqueTeamIds = new Set(sortedEntries.map((entry) => String(entry.team_id)));
 
-  if (sortedEntries.length !== BRACKET_ROUND_SLOT_COUNTS[0] || uniqueTeamIds.size !== BRACKET_ROUND_SLOT_COUNTS[0]) {
+  if (!sortedEntries.length || uniqueTeamIds.size !== sortedEntries.length) {
     return;
   }
 
@@ -173,6 +173,7 @@ export async function approveBracketAction(formData: FormData) {
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/progress"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/brackets"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin"));
+  revalidatePath(localizeHref(locale as typeof defaultLocale, "/"));
 }
 
 function descendantPath(startRoundIndex: number, startSlotIndex: number) {
