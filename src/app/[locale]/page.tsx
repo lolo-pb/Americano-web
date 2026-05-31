@@ -163,26 +163,29 @@ export default async function HomePage({
                 </a>
               ))}
             </div>
-            <div className="mt-4 flex justify-center">
+            <div className="mt-4">
               <a
                 href={instagramUrl}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={dictionary.common.actions.instagram}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white hover:bg-accent-strong"
+                className="flex items-center gap-3 rounded-[1.1rem] border border-line bg-white/70 px-4 py-3 text-sm text-forest hover:border-forest hover:bg-forest hover:text-white"
               >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="h-5 w-5 fill-none stroke-current"
-                  strokeWidth="1.9"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
-                </svg>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-4.5 w-4.5 fill-none stroke-current"
+                    strokeWidth="1.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+                  </svg>
+                </span>
+                <span className="font-semibold">@tus_americanos</span>
               </a>
             </div>
           </div>
