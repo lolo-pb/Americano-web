@@ -92,7 +92,7 @@
     "title": "Register your team for Belgrano Tenis.",
     "description": "Sign up before Sunday, June 14 at 23:59 and complete the payment to the listed alias so your team can wait for approval.",
     "nextTitle": "What happens next",
-    "priceTitle": "Entry fee",
+    "priceTitle": "Entry fee: Per person",
     "priceAmount": "$60.000",
     "priceAliasLabel": "Alias: {paymentAlias}",
     "priceReceiptLabel": "Payment proof to {contactEmail}",
