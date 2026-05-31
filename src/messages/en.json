@@ -49,7 +49,7 @@
   },
   "home": {
     "eyebrow": "Doubles Americano",
-    "title": "Americano at Belgrano Tenis.",
+    "title": "Torneo tus Americanos",
     "description": "Open registration for mixed doubles in an Americano-style tournament designed for all skill levels.",
     "deadlineNotice": "Sign up before Sunday, June 14 at 23:59 so your team does not miss out.",
     "pitchEyebrow": "Before you arrive",
@@ -84,7 +84,8 @@
     "publishedEyebrow": "Live bracket",
     "publishedTitle": "Follow the tournament throughout the day.",
     "publishedDescription": "As winners are entered, the live bracket updates so every team can see how the day is unfolding.",
-    "emptyBrackets": "No live bracket yet. The admin will approve the starting order once all 32 teams are confirmed."
+    "emptyBrackets": "No live bracket yet. The admin will approve the starting order once all 32 teams are confirmed.",
+    "finalCtaTitle": "Sign up now and do not miss your chance"
   },
   "signUp": {
     "eyebrow": "Registration",

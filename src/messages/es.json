@@ -49,7 +49,7 @@
   },
   "home": {
     "eyebrow": "Americano de duplas",
-    "title": "Americano en Belgrano Tenis.",
+    "title": "Torneo tus Americanos",
     "description": "Inscripcion abierta para parejas mixtas en un torneo estilo americano, pensado para todos los niveles.",
     "deadlineNotice": "Inscribite antes del domingo 14 de junio a las 23.59hs para no quedarte afuera.",
     "pitchEyebrow": "Antes de venir",
@@ -84,7 +84,8 @@
     "publishedEyebrow": "Cuadro en vivo",
     "publishedTitle": "Segui el torneo durante toda la jornada.",
     "publishedDescription": "A medida que se cargan ganadores, el cuadro en vivo se actualiza para que todas las duplas sepan como viene el dia.",
-    "emptyBrackets": "Todavia no hay cuadro en vivo. El admin lo aprobara cuando las 32 duplas esten confirmadas."
+    "emptyBrackets": "Todavia no hay cuadro en vivo. El admin lo aprobara cuando las 32 duplas esten confirmadas.",
+    "finalCtaTitle": "Inscribite ahora y no pierdas tu oportunidad"
   },
   "signUp": {
     "eyebrow": "Inscripcion",
