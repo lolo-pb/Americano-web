@@ -36,11 +36,7 @@ export default async function HomePage({
   const tournamentSchedule = formatTournamentSchedule(tournament.startDate, locale);
   const instagramUrl = "https://www.instagram.com/tus_americanos/?utm_source=ig_web_button_share_sheet";
   const mapUrl = "https://maps.app.goo.gl/CqRLfQAob9PsTzuD9?g_st=iw";
-  const contactEmails = [
-    "lpizzutobeltran@gmail.com",
-    "homerogarcialorenzo937@gmail.com",
-    "milagroslera59@gmail.com",
-  ];
+  const contactEmails = ["tusamericanos@gmail.com"];
 
   return (
     <div className="pb-16">
