@@ -96,6 +96,7 @@
     "priceAmount": "$60.000",
     "priceAliasLabel": "Alias: {paymentAlias}",
     "priceReceiptLabel": "Payment proof to {contactEmail}",
+    "submitAliasTitle": "Alias to transfer to",
     "steps": [
       "1. Create one account for your team of two.",
       "2. Transfer to the alias {paymentAlias}",

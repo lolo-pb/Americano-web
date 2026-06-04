@@ -96,6 +96,7 @@
     "priceAmount": "$60.000",
     "priceAliasLabel": "Alias: {paymentAlias}",
     "priceReceiptLabel": "Comprobante a {contactEmail}",
+    "submitAliasTitle": "Alias para transferir",
     "steps": [
       "1. Crea una sola cuenta para tu dupla.",
       "2. Transferi al alias {paymentAlias}",

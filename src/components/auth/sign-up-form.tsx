@@ -36,6 +36,8 @@ export function SignUpForm({
   const { t } = useI18n();
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const paymentNotice = t("signUp.paymentNotice", { paymentAlias, contactEmail });
+  const paymentNoticeParts = paymentNotice.split(paymentAlias);
   const signUpSchema = z
     .object({
       playerOneName: z.string().min(2, t("signUp.errors.nameLength")),
@@ -207,12 +209,23 @@ export function SignUpForm({
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-forest">
                 {t("signUp.important")}
               </p>
-              <p className="mt-1">{t("signUp.paymentNotice", { paymentAlias, contactEmail })}</p>
+              <p className="mt-1">
+                {paymentNoticeParts[0]}
+                <strong>{paymentAlias}</strong>
+                {paymentNoticeParts.slice(1).join(paymentAlias)}
+              </p>
             </div>
           </div>
         </div>
 
         {serverError && <p className="text-sm text-danger">{serverError}</p>}
+
+        <div className="rounded-[1.15rem] border border-forest/20 bg-white px-4 py-3 text-center sm:rounded-2xl sm:px-5 sm:py-4">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
+            {t("signUp.submitAliasTitle")}
+          </p>
+          <p className="mt-2 text-xl font-extrabold text-forest sm:text-2xl">{paymentAlias}</p>
+        </div>
 
         <button
           type="submit"

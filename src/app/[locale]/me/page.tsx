@@ -65,6 +65,15 @@ export default async function MyProfilePage({
           })}
         </div>
 
+        {team.approvalStatus === "pending" && (
+          <div className="card rounded-[1.6rem] p-4 text-center sm:rounded-[2rem] sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
+              {dictionary.signUp.submitAliasTitle}
+            </p>
+            <p className="mt-2 text-2xl font-extrabold text-forest">{env.paymentAlias}</p>
+          </div>
+        )}
+
       </div>
 
       <form action={updateTeamAction} className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-8">

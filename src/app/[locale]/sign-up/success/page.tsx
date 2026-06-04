@@ -24,6 +24,13 @@ export default async function SignUpSuccessPage({
           />
         </div>
 
+        <div className="mx-auto mt-6 max-w-md rounded-[1.15rem] border border-forest/20 bg-white px-4 py-3 text-center sm:rounded-2xl sm:px-5 sm:py-4">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
+            {dictionary.signUp.submitAliasTitle}
+          </p>
+          <p className="mt-2 text-xl font-extrabold text-forest sm:text-2xl">{env.paymentAlias}</p>
+        </div>
+
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
             href={localizeHref(locale, "/me")}
