@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Americano Belgrano Tenis",
-  description: "Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 13:00.",
+  description: "Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 12:00.",
 };
 
 export default async function RootLayout({

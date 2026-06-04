@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "Americano Belgrano Tenis",
-    "description": "Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 13:00."
+    "description": "Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 12:00."
   },
   "common": {
     "appName": "Americano Belgrano Tenis",
-    "tagline": "Belgrano Tenis - Starts 13:00",
+    "tagline": "Belgrano Tenis - Starts 12:00",
     "demoMode": "Demo mode is active. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to connect the real backend.",
     "languages": {
       "es": "ES",

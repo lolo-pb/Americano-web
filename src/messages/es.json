@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "Americano Belgrano Tenis",
-    "description": "Americano de duplas en Belgrano Tenis el 28 de junio de 2026 desde las 13:00."
+    "description": "Americano de duplas en Belgrano Tenis el 28 de junio de 2026 desde las 12:00."
   },
   "common": {
     "appName": "Americano Belgrano Tenis",
-    "tagline": "Belgrano Tenis - Inicio 13:00",
+    "tagline": "Belgrano Tenis - Inicio 12:00",
     "demoMode": "El modo demo esta activo. Agrega `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` para conectar el backend real.",
     "languages": {
       "es": "ES",

@@ -360,6 +360,6 @@ values (
   true,
   false,
   true,
-  'Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 13:00.'
+  'Doubles Americano at Belgrano Tenis on June 28, 2026 starting at 12:00.'
 )
 on conflict do nothing;
