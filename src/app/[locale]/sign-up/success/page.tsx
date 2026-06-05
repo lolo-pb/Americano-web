@@ -10,6 +10,10 @@ export default async function SignUpSuccessPage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   const dictionary = await getDictionary(locale);
+  const receiptLabel = interpolate(dictionary.signUp.priceReceiptLabel, {
+    contactEmail: env.contactEmail,
+  });
+  const receiptLabelParts = receiptLabel.split(env.contactEmail);
 
   return (
     <div className="page-shell py-8 sm:py-14">
@@ -29,6 +33,11 @@ export default async function SignUpSuccessPage({
             {dictionary.signUp.submitAliasTitle}
           </p>
           <p className="mt-2 text-xl font-extrabold text-forest sm:text-2xl">{env.paymentAlias}</p>
+          <p className="mt-2 text-sm text-muted">
+            {receiptLabelParts[0]}
+            <strong className="text-base font-semibold text-forest">{env.contactEmail}</strong>
+            {receiptLabelParts.slice(1).join(env.contactEmail)}
+          </p>
         </div>
 
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">

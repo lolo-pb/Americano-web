@@ -18,6 +18,10 @@ export default async function MyProfilePage({
     getDictionary(locale),
   ]);
   const team = viewer.team ?? demoTeams[2];
+  const receiptLabel = interpolate(dictionary.signUp.priceReceiptLabel, {
+    contactEmail: env.contactEmail,
+  });
+  const receiptLabelParts = receiptLabel.split(env.contactEmail);
 
   return (
     <div className="page-shell grid gap-7 py-8 sm:gap-8 sm:py-14 lg:grid-cols-[0.82fr_1.18fr]">
@@ -71,6 +75,11 @@ export default async function MyProfilePage({
               {dictionary.signUp.submitAliasTitle}
             </p>
             <p className="mt-2 text-2xl font-extrabold text-forest">{env.paymentAlias}</p>
+            <p className="mt-2 text-sm text-muted">
+              {receiptLabelParts[0]}
+              <strong className="text-base font-semibold text-forest">{env.contactEmail}</strong>
+              {receiptLabelParts.slice(1).join(env.contactEmail)}
+            </p>
           </div>
         )}
 

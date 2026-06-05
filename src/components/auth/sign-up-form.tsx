@@ -220,13 +220,6 @@ export function SignUpForm({
 
         {serverError && <p className="text-sm text-danger">{serverError}</p>}
 
-        <div className="rounded-[1.15rem] border border-forest/20 bg-white px-4 py-3 text-center sm:rounded-2xl sm:px-5 sm:py-4">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
-            {t("signUp.submitAliasTitle")}
-          </p>
-          <p className="mt-2 text-xl font-extrabold text-forest sm:text-2xl">{paymentAlias}</p>
-        </div>
-
         <button
           type="submit"
           disabled={isSubmitting}

@@ -125,7 +125,7 @@
     "paymentNotice": "Despues de inscribirte, realiza la transferencia al alias {paymentAlias} y si necesitas ayuda o enviar el comprobante escribe a {contactEmail}",
     "successEyebrow": "Inscripcion enviada",
     "successTitle": "Inscripcion realizada con exito",
-    "successDescription": "Ahora solo queda esperar a que un organizador apruebe tu inscripcion. Recorda enviar la informacion del pago al alias {paymentAlias}",
+    "successDescription": "Ahora solo queda esperar a que un organizador apruebe tu inscripcion. Recorda enviar la informacion del pago",
     "successProfileAction": "Ver mi perfil",
     "successBracketsAction": "Ver cuadros",
     "important": "Importante",
