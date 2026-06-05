@@ -19,6 +19,11 @@ create table if not exists public.teams (
   bio text,
   role public.user_role not null default 'client',
   approval_status public.approval_status not null default 'pending',
+  payment_status public.payment_status not null default 'pending',
+  mercadopago_preference_id text,
+  mercadopago_payment_id text,
+  payment_amount_ars integer,
+  payment_paid_at timestamptz,
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
@@ -237,7 +242,8 @@ begin
     phone,
     category,
     role,
-    approval_status
+    approval_status,
+    payment_status
   )
   values (
     new.id,
@@ -249,6 +255,7 @@ begin
     nullif(trim(coalesce(new.raw_user_meta_data ->> 'phone', '')), ''),
     nullif(trim(coalesce(new.raw_user_meta_data ->> 'category', '')), ''),
     'client',
+    'pending',
     'pending'
   )
   on conflict (id) do nothing;

@@ -32,6 +32,12 @@
       "signupsOpen": "Inscripcion abierta",
       "closed": "Cerrado"
     },
+    "paymentStatuses": {
+      "pending": "Pago pendiente",
+      "paid": "Pago recibido",
+      "failed": "Pago fallido",
+      "refunded": "Pago devuelto"
+    },
     "levels": {
       "select": "Seleccionar nivel",
       "beginner": "Principiante",
@@ -128,6 +134,7 @@
     "successDescription": "Ahora solo queda esperar a que un organizador apruebe tu inscripcion. Recorda enviar la informacion del pago",
     "successProfileAction": "Ver mi perfil",
     "successBracketsAction": "Ver cuadros",
+    "mercadoPagoAction": "Pagar con Mercado Pago",
     "important": "Importante",
     "submitIdle": "Crear cuenta",
     "submitBusy": "Creando cuenta...",
@@ -199,10 +206,17 @@
     "teamSlug": "Slug de la dupla",
     "tournament": "Torneo",
     "paymentInbox": "Alias de pago",
+    "paymentStatus": "Estado del pago",
     "bracketVisibility": "Visibilidad del cuadro",
     "published": "El cuadro en vivo ya esta disponible.",
     "notPublished": "El cuadro todavia no esta bloqueado.",
     "paymentHelp": "Si tu inscripcion sigue pendiente, revisa que el pago este hecho al alias {paymentAlias} y si necesitas ayuda o enviar el comprobante escribe a {contactEmail}. Cuando el admin lo apruebe, tu dupla podra entrar al cuadro principal.",
+    "paymentReturnSuccess": "Mercado Pago devolvio una compra aprobada. Si el pago ya aparece como recibido, solo falta que el organizador apruebe tu dupla.",
+    "paymentReturnPending": "El pago fue enviado a Mercado Pago y puede tardar un poco en confirmarse. Revisa este estado en unos minutos.",
+    "paymentReturnFailure": "Mercado Pago informo que el pago no se completo. Puedes intentarlo de nuevo o usar el alias manual.",
+    "paymentReceived": "Ya registramos el pago de tu dupla. Solo falta la aprobacion del organizador para entrar al torneo.",
+    "paymentFailed": "El ultimo intento de pago no quedo aprobado. Puedes volver a intentar con Mercado Pago o usar el alias manual.",
+    "paymentRefunded": "Este pago figura como devuelto. Si necesitas ayuda, escribe al mail de contacto.",
     "updateTitle": "Actualizar dupla",
     "bio": "Biografia"
   },
@@ -228,6 +242,7 @@
       "columns": {
         "player": "Dupla",
         "contact": "Contacto",
+        "payment": "Pago",
         "status": "Estado",
         "save": "Guardar"
       },

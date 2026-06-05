@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { MercadoPagoCheckoutForm } from "@/components/mercadopago-checkout-form";
 import { SectionHeading } from "@/components/section-heading";
-import { env } from "@/lib/env";
+import { env, hasSupabaseEnv } from "@/lib/env";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+import { hasMercadoPagoEnv } from "@/lib/mercadopago";
 
 export default async function SignUpSuccessPage({
   params,
@@ -10,6 +12,7 @@ export default async function SignUpSuccessPage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   const dictionary = await getDictionary(locale);
+  const canUseMercadoPago = hasSupabaseEnv() && hasMercadoPagoEnv();
   const receiptLabel = interpolate(dictionary.signUp.priceReceiptLabel, {
     contactEmail: env.contactEmail,
   });
@@ -44,6 +47,14 @@ export default async function SignUpSuccessPage({
             {receiptLabelParts.slice(1).join(env.contactEmail)}
           </p>
         </div>
+
+        {canUseMercadoPago && (
+          <MercadoPagoCheckoutForm
+            locale={locale}
+            label={dictionary.signUp.mercadoPagoAction}
+            className="mt-6 inline-flex rounded-full bg-sky-600 px-6 py-3 text-center text-sm font-semibold text-white hover:bg-sky-700 sm:text-base"
+          />
+        )}
 
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <Link

@@ -1,5 +1,6 @@
 export type Role = "client" | "admin";
 export type ApprovalStatus = "pending" | "approved" | "rejected";
+export type PaymentStatus = "pending" | "paid" | "failed" | "refunded";
 export type BracketStatus = "draft" | "published";
 
 export type Tournament = {
@@ -28,6 +29,11 @@ export type Team = PublicTeam & {
   email: string;
   phone?: string | null;
   role: Role;
+  paymentStatus: PaymentStatus;
+  mercadopagoPreferenceId?: string | null;
+  mercadopagoPaymentId?: string | null;
+  paymentAmountArs?: number | null;
+  paymentPaidAt?: string | null;
 };
 
 export type Registration = {

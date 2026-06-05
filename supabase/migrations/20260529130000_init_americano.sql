@@ -2,6 +2,7 @@ create extension if not exists "pgcrypto";
 
 create type public.user_role as enum ('client', 'admin');
 create type public.approval_status as enum ('pending', 'approved', 'rejected');
+create type public.payment_status as enum ('pending', 'paid', 'failed', 'refunded');
 create type public.bracket_status as enum ('draft', 'published');
 
 create table if not exists public.tournaments (
@@ -29,6 +30,11 @@ create table if not exists public.teams (
   bio text,
   role public.user_role not null default 'client',
   approval_status public.approval_status not null default 'pending',
+  payment_status public.payment_status not null default 'pending',
+  mercadopago_preference_id text,
+  mercadopago_payment_id text,
+  payment_amount_ars integer,
+  payment_paid_at timestamptz,
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
@@ -83,6 +89,27 @@ language plpgsql
 as $$
 begin
   new.updated_at = timezone('utc', now());
+  return new;
+end;
+$$;
+
+create or replace function public.protect_team_payment_fields()
+returns trigger
+language plpgsql
+as $$
+begin
+  if coalesce(auth.role(), '') in ('service_role', 'supabase_admin') or public.is_admin() then
+    return new;
+  end if;
+
+  if new.payment_status is distinct from old.payment_status
+    or new.mercadopago_preference_id is distinct from old.mercadopago_preference_id
+    or new.mercadopago_payment_id is distinct from old.mercadopago_payment_id
+    or new.payment_amount_ars is distinct from old.payment_amount_ars
+    or new.payment_paid_at is distinct from old.payment_paid_at then
+    raise exception 'Only Mercado Pago webhooks or admins can modify payment fields.';
+  end if;
+
   return new;
 end;
 $$;
@@ -173,7 +200,8 @@ begin
     phone,
     category,
     role,
-    approval_status
+    approval_status,
+    payment_status
   )
   values (
     new.id,
@@ -185,6 +213,7 @@ begin
     nullif(trim(coalesce(new.raw_user_meta_data ->> 'phone', '')), ''),
     nullif(trim(coalesce(new.raw_user_meta_data ->> 'category', '')), ''),
     'client',
+    'pending',
     'pending'
   )
   returning id into created_team_id;
@@ -215,6 +244,11 @@ drop trigger if exists teams_set_updated_at on public.teams;
 create trigger teams_set_updated_at
   before update on public.teams
   for each row execute procedure public.set_updated_at();
+
+drop trigger if exists teams_protect_payment_fields on public.teams;
+create trigger teams_protect_payment_fields
+  before update on public.teams
+  for each row execute procedure public.protect_team_payment_fields();
 
 drop trigger if exists brackets_set_updated_at on public.brackets;
 create trigger brackets_set_updated_at

@@ -1,7 +1,11 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { createCheckoutPreference, hasMercadoPagoEnv } from "@/lib/mercadopago";
+import { TEAM_PAYMENT_AMOUNT_ARS } from "@/lib/payments";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient, hasSupabaseAdminEnv } from "@/lib/supabase/admin";
 import { hasSupabaseEnv } from "@/lib/env";
 import { BRACKET_ROUND_SLOT_COUNTS, getActiveAdminBracket, requireAdmin, requireUser } from "@/lib/data";
 import { defaultLocale, localizeHref } from "@/lib/i18n";
@@ -56,6 +60,45 @@ export async function updateTeamStatusAction(formData: FormData) {
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/players"));
   revalidatePath(localizeHref(locale as typeof defaultLocale, "/admin/brackets"));
+}
+
+export async function createMercadoPagoCheckoutAction(formData: FormData) {
+  const locale = String(formData.get("locale") ?? defaultLocale);
+  const viewer = await requireUser(locale as typeof defaultLocale);
+
+  if (
+    viewer.demoMode ||
+    !viewer.team ||
+    !hasSupabaseEnv() ||
+    !hasSupabaseAdminEnv() ||
+    !hasMercadoPagoEnv()
+  ) {
+    redirect(localizeHref(locale as typeof defaultLocale, "/me"));
+  }
+
+  const { preferenceId, initPoint } = await createCheckoutPreference({
+    team: viewer.team,
+    locale: locale as typeof defaultLocale,
+  });
+
+  const adminSupabase = createAdminClient();
+
+  await adminSupabase
+    .from("teams")
+    .update(
+      {
+        mercadopago_preference_id: preferenceId,
+        payment_amount_ars: viewer.team.paymentAmountArs ?? TEAM_PAYMENT_AMOUNT_ARS,
+        payment_status: "pending",
+      } as never,
+    )
+    .eq("id", viewer.team.id);
+
+  if (!initPoint) {
+    redirect(localizeHref(locale as typeof defaultLocale, "/me"));
+  }
+
+  redirect(initPoint);
 }
 
 export async function saveBracketAction(formData: FormData) {

@@ -76,6 +76,12 @@ export default async function AdminDashboardPage({
                         {team.playerOneName} + {team.playerTwoName}
                       </p>
                       <p className="text-sm text-muted">{team.email}</p>
+                      <div className="mt-2">
+                        <StatusBadge
+                          label={dictionary.common.paymentStatuses[team.paymentStatus]}
+                          tone={team.paymentStatus}
+                        />
+                      </div>
                     </div>
                     <div className="flex flex-wrap items-center gap-3">
                       <select

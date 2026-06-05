@@ -32,6 +32,12 @@
       "signupsOpen": "Signups open",
       "closed": "Closed"
     },
+    "paymentStatuses": {
+      "pending": "Payment pending",
+      "paid": "Payment received",
+      "failed": "Payment failed",
+      "refunded": "Payment refunded"
+    },
     "levels": {
       "select": "Select level",
       "beginner": "Beginner",
@@ -128,6 +134,7 @@
     "successDescription": "Now you just have to wait for an organizer to approve your submission. Remember to send payment information",
     "successProfileAction": "See my profile",
     "successBracketsAction": "See brackets",
+    "mercadoPagoAction": "Pay with Mercado Pago",
     "important": "Important",
     "submitIdle": "Create account",
     "submitBusy": "Creating account...",
@@ -199,10 +206,17 @@
     "teamSlug": "Team slug",
     "tournament": "Tournament",
     "paymentInbox": "Payment alias",
+    "paymentStatus": "Payment status",
     "bracketVisibility": "Bracket visibility",
     "published": "The live bracket is available now.",
     "notPublished": "The bracket is not locked yet.",
     "paymentHelp": "If your registration is still pending, make sure the payment was sent to the alias {paymentAlias} and if you need help or want to send payment proof, write to {contactEmail}. Once the admin approves it, your team can be placed into the tournament draw.",
+    "paymentReturnSuccess": "Mercado Pago returned an approved purchase. If the payment already shows as received, only organizer approval is left.",
+    "paymentReturnPending": "The payment was sent to Mercado Pago and may take a little time to confirm. Check this status again in a few minutes.",
+    "paymentReturnFailure": "Mercado Pago reported that the payment did not complete. You can try again or use the manual alias fallback.",
+    "paymentReceived": "Your team's payment is already registered. Only organizer approval is left before entering the tournament.",
+    "paymentFailed": "The last payment attempt was not approved. You can try Mercado Pago again or use the manual alias fallback.",
+    "paymentRefunded": "This payment appears as refunded. If you need help, contact the support email.",
     "updateTitle": "Update team",
     "bio": "Bio"
   },
@@ -228,6 +242,7 @@
       "columns": {
         "player": "Team",
         "contact": "Contact",
+        "payment": "Payment",
         "status": "Status",
         "save": "Save"
       },

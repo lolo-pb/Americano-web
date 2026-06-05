@@ -3,8 +3,11 @@ import { cn } from "@/lib/utils";
 const toneMap = {
   pending: "bg-gold/20 text-ink ring-gold/40",
   approved: "bg-forest-soft text-forest ring-forest/20",
+  paid: "bg-forest-soft text-forest ring-forest/20",
   published: "bg-forest-soft text-forest ring-forest/20",
   rejected: "bg-danger/12 text-danger ring-danger/20",
+  failed: "bg-danger/12 text-danger ring-danger/20",
+  refunded: "bg-surface-strong text-ink ring-line",
   draft: "bg-surface-strong text-ink ring-line",
 } as const;
 

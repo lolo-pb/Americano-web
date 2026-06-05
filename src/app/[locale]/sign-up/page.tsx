@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { getViewerContext } from "@/lib/data";
 import { env, hasSupabaseEnv } from "@/lib/env";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+import { formatArsAmount, PAYMENT_AMOUNT_ARS_PER_PERSON } from "@/lib/payments";
 
 export default async function SignUpPage({
   params,
@@ -41,7 +42,7 @@ export default async function SignUpPage({
         <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.signUp.priceTitle}</p>
           <p className="mt-3 text-3xl font-extrabold text-forest sm:text-4xl">
-            {dictionary.signUp.priceAmount}
+            ${formatArsAmount(PAYMENT_AMOUNT_ARS_PER_PERSON)}
           </p>
           <p className="mt-2 text-sm text-muted">
             {interpolate(dictionary.signUp.priceAliasLabel, {

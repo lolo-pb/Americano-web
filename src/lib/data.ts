@@ -9,6 +9,7 @@ import type {
   BracketEntry,
   BracketProgressColumn,
   BracketProgressSlot,
+  PaymentStatus,
   PublicTeam,
   Team,
   Tournament,
@@ -160,7 +161,7 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   const { data: team } = await supabase
     .from("teams")
     .select(
-      "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, category, bio, avatar_url",
+      "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, payment_status, mercadopago_preference_id, mercadopago_payment_id, payment_amount_ars, payment_paid_at, category, bio, avatar_url",
     )
     .eq("owner_user_id", user.id)
     .maybeSingle();
@@ -189,6 +190,11 @@ export const getViewerContext = cache(async (): Promise<ViewerContext> => {
       phone: team.phone ? String(team.phone) : null,
       role: String(team.role) as Team["role"],
       approvalStatus: String(team.approval_status) as Team["approvalStatus"],
+      paymentStatus: String(team.payment_status ?? "pending") as PaymentStatus,
+      mercadopagoPreferenceId: team.mercadopago_preference_id ? String(team.mercadopago_preference_id) : null,
+      mercadopagoPaymentId: team.mercadopago_payment_id ? String(team.mercadopago_payment_id) : null,
+      paymentAmountArs: typeof team.payment_amount_ars === "number" ? team.payment_amount_ars : null,
+      paymentPaidAt: team.payment_paid_at ? String(team.payment_paid_at) : null,
       category: team.category ? String(team.category) : null,
       bio: team.bio ? String(team.bio) : null,
       avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
@@ -294,7 +300,7 @@ export async function getAdminTeams(): Promise<Team[]> {
   const { data, error } = await supabase!
     .from("teams")
     .select(
-      "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, category, bio, avatar_url",
+      "id, slug, player_one_name, player_two_name, email, phone, role, approval_status, payment_status, mercadopago_preference_id, mercadopago_payment_id, payment_amount_ars, payment_paid_at, category, bio, avatar_url",
     )
     .order("created_at", { ascending: false });
 
@@ -316,6 +322,11 @@ export async function getAdminTeams(): Promise<Team[]> {
       phone: team.phone ? String(team.phone) : null,
       role: String(team.role) as Team["role"],
       approvalStatus: String(team.approval_status) as Team["approvalStatus"],
+      paymentStatus: String(team.payment_status ?? "pending") as PaymentStatus,
+      mercadopagoPreferenceId: team.mercadopago_preference_id ? String(team.mercadopago_preference_id) : null,
+      mercadopagoPaymentId: team.mercadopago_payment_id ? String(team.mercadopago_payment_id) : null,
+      paymentAmountArs: typeof team.payment_amount_ars === "number" ? team.payment_amount_ars : null,
+      paymentPaidAt: team.payment_paid_at ? String(team.payment_paid_at) : null,
       category: team.category ? String(team.category) : null,
       bio: team.bio ? String(team.bio) : null,
       avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
