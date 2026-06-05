@@ -35,7 +35,12 @@ export default async function SignUpSuccessPage({
           <p className="mt-2 text-xl font-extrabold text-forest sm:text-2xl">{env.paymentAlias}</p>
           <p className="mt-2 text-sm text-muted">
             {receiptLabelParts[0]}
-            <strong className="text-base font-semibold text-forest">{env.contactEmail}</strong>
+            <a
+              href={`mailto:${env.contactEmail}`}
+              className="text-base font-semibold text-forest underline decoration-forest/30 underline-offset-2"
+            >
+              {env.contactEmail}
+            </a>
             {receiptLabelParts.slice(1).join(env.contactEmail)}
           </p>
         </div>

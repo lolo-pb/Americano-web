@@ -62,13 +62,6 @@ export default async function MyProfilePage({
           </dl>
         </div>
 
-        <div className="card rounded-[1.6rem] p-4 text-sm leading-6 text-muted sm:rounded-[2rem] sm:p-6 sm:leading-7">
-          {interpolate(dictionary.me.paymentHelp, {
-            paymentAlias: env.paymentAlias,
-            contactEmail: env.contactEmail,
-          })}
-        </div>
-
         {team.approvalStatus === "pending" && (
           <div className="card rounded-[1.6rem] p-4 text-center sm:rounded-[2rem] sm:p-6">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
@@ -77,7 +70,12 @@ export default async function MyProfilePage({
             <p className="mt-2 text-2xl font-extrabold text-forest">{env.paymentAlias}</p>
             <p className="mt-2 text-sm text-muted">
               {receiptLabelParts[0]}
-              <strong className="text-base font-semibold text-forest">{env.contactEmail}</strong>
+              <a
+                href={`mailto:${env.contactEmail}`}
+                className="text-base font-semibold text-forest underline decoration-forest/30 underline-offset-2"
+              >
+                {env.contactEmail}
+              </a>
               {receiptLabelParts.slice(1).join(env.contactEmail)}
             </p>
           </div>
