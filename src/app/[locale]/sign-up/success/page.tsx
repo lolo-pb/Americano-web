@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MercadoPagoButton } from "@/components/mercado-pago-button";
 import { SectionHeading } from "@/components/section-heading";
 import { env } from "@/lib/env";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
@@ -43,6 +44,7 @@ export default async function SignUpSuccessPage({
             </a>
             {receiptLabelParts.slice(1).join(env.contactEmail)}
           </p>
+          <MercadoPagoButton locale={locale} />
         </div>
 
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">

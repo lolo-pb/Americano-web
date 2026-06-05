@@ -1,4 +1,5 @@
 import { updateTeamAction } from "@/app/actions";
+import { MercadoPagoButton } from "@/components/mercado-pago-button";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
 import { demoTeams } from "@/lib/mock-data";
@@ -62,7 +63,7 @@ export default async function MyProfilePage({
           </dl>
         </div>
 
-        {team.approvalStatus === "pending" && (
+        {(
           <div className="card rounded-[1.6rem] p-4 text-center sm:rounded-[2rem] sm:p-6">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-accent">
               {dictionary.signUp.submitAliasTitle}
@@ -78,6 +79,7 @@ export default async function MyProfilePage({
               </a>
               {receiptLabelParts.slice(1).join(env.contactEmail)}
             </p>
+            <MercadoPagoButton locale={locale} />
           </div>
         )}
 

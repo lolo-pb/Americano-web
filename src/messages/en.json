@@ -126,6 +126,7 @@
     "successEyebrow": "Signup sent",
     "successTitle": "Successfully signed up",
     "successDescription": "Now you just have to wait for an organizer to approve your submission. Remember to send payment information",
+    "paymentLinkAction": "Pay with Mercado Pago",
     "successProfileAction": "See my profile",
     "successBracketsAction": "See brackets",
     "important": "Important",
