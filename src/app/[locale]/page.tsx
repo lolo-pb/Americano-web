@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BracketProgressBoard } from "@/components/bracket-progress-board";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getPublicBracketView, getTournament, getViewerContext } from "@/lib/data";
 import { env } from "@/lib/env";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
@@ -37,6 +38,7 @@ export default async function HomePage({
   const instagramUrl = "https://www.instagram.com/tus_americanos/?utm_source=ig_web_button_share_sheet";
   const mapUrl = "https://maps.app.goo.gl/CqRLfQAob9PsTzuD9?g_st=iw";
   const contactEmails = ["tusamericanos@gmail.com"];
+  const whatsappNumber = "+54 9 11 2650-7505";
 
   return (
     <div className="pb-16">
@@ -60,6 +62,11 @@ export default async function HomePage({
             >
               {viewer.team ? dictionary.common.actions.openProfile : dictionary.common.actions.signUp}
             </Link>
+            <WhatsAppButton
+              phoneNumber={whatsappNumber}
+              label={dictionary.common.actions.whatsapp}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-center font-semibold text-white hover:bg-[#1fb759]"
+            />
             <Link
               href={localizeHref(locale, "/brackets")}
               className="rounded-full border border-line px-6 py-3 text-center font-semibold text-forest hover:border-forest hover:bg-forest hover:text-white"

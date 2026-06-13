@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { SignUpForm } from "@/components/auth/sign-up-form";
 import { SectionHeading } from "@/components/section-heading";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getViewerContext } from "@/lib/data";
 import { env, hasSupabaseEnv } from "@/lib/env";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
@@ -12,6 +13,7 @@ export default async function SignUpPage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   const [viewer, dictionary] = await Promise.all([getViewerContext(), getDictionary(locale)]);
+  const whatsappNumber = "+54 9 11 2650-7505";
 
   if (viewer.team) {
     redirect(localizeHref(locale, "/me"));
@@ -38,6 +40,11 @@ export default async function SignUpPage({
             ))}
           </ol>
         </div>
+        <WhatsAppButton
+          phoneNumber={whatsappNumber}
+          label={dictionary.signUp.whatsappHelpAction}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-center font-semibold text-white hover:bg-[#1fb759] sm:w-auto"
+        />
         <div className="card rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
           <p className="eyebrow text-sm text-accent">{dictionary.signUp.priceTitle}</p>
           <p className="mt-3 text-3xl font-extrabold text-forest sm:text-4xl">
