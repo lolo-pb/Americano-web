@@ -12,7 +12,7 @@
       "en": "EN"
     },
     "actions": {
-      "signUp": "Inscribir dupla",
+      "signUp": "Inscripcion",
       "login": "Ingresar",
       "logout": "Salir",
       "save": "Guardar",
@@ -42,11 +42,12 @@
     }
   },
   "nav": {
+    "home": "Inicio",
     "brackets": "Cuadros",
     "profile": "Mi dupla",
     "admin": "Admin",
     "login": "Ingresar",
-    "signUp": "Inscribir dupla"
+    "signUp": "Inscripcion"
   },
   "home": {
     "eyebrow": "Americano de duplas",

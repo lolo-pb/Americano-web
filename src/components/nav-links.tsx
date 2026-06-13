@@ -38,8 +38,8 @@ export function NavLinks({
 
   return (
     <>
-      <Link href={localizeHref(locale, "/brackets")} className={linkClass("/brackets")}>
-        {t("nav.brackets")}
+      <Link href={localizeHref(locale, "/")} className={linkClass("/")}>
+        {t("nav.home")}
       </Link>
       {team ? (
         <>

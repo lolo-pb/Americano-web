@@ -42,6 +42,7 @@
     }
   },
   "nav": {
+    "home": "Home",
     "brackets": "Brackets",
     "profile": "My team",
     "admin": "Admin",
