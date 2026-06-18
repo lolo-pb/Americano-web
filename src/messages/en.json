@@ -53,10 +53,10 @@
     "eyebrow": "Doubles Americano",
     "title": "Torneo tus Americanos",
     "description": "Open registration for mixed doubles in an Americano-style tournament designed for all skill levels.",
-    "deadlineNotice": "Sign up before Sunday, June 14 at 23:59 so your team does not miss out.",
+    "deadlineNotice": "Last places remaining. Sign up before the event reaches capacity.",
     "pitchEyebrow": "Before you arrive",
     "pitchSteps": [
-      "Sign up before Sunday, June 14 at 23:59.",
+      "Last places remaining.",
       "Transfer to the alias {paymentAlias} to reserve your place",
       "Questions or payment proof to {contactEmail}",
       "Every player must bring their own equipment and balls."
@@ -92,7 +92,7 @@
   "signUp": {
     "eyebrow": "Registration",
     "title": "Register your team for Belgrano Tenis.",
-    "description": "Sign up before Sunday, June 14 at 23:59 and complete the payment to the listed alias so your team can wait for approval.",
+    "description": "Last places remaining. Complete the payment to the listed alias so your team can wait for approval.",
     "nextTitle": "What happens next",
     "priceTitle": "Entry fee: Per person",
     "priceAmount": "$60.000",

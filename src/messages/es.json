@@ -53,10 +53,10 @@
     "eyebrow": "Americano de duplas",
     "title": "Torneo tus Americanos",
     "description": "Inscripcion abierta para parejas mixtas en un torneo estilo americano, pensado para todos los niveles.",
-    "deadlineNotice": "Inscribite antes del domingo 14 de junio a las 23.59hs para no quedarte afuera.",
+    "deadlineNotice": "Ultimos lugares disponibles. Inscribite antes de que se complete el cupo.",
     "pitchEyebrow": "Antes de venir",
     "pitchSteps": [
-      "Inscribite hasta el domingo 14 de junio a las 23.59hs.",
+      "Ultimos lugares disponibles.",
       "Transferi al alias {paymentAlias} para reservar tu lugar",
       "Consultas o comprobante a {contactEmail}",
       "Cada jugador debe llevar su equipamiento y sus pelotas."
@@ -92,7 +92,7 @@
   "signUp": {
     "eyebrow": "Inscripcion",
     "title": "Inscribi a tu dupla para Belgrano Tenis.",
-    "description": "Inscribite antes del domingo 14 de junio a las 23.59hs y realiza el pago al alias indicado para que la dupla quede pendiente de aprobacion.",
+    "description": "Ultimos lugares disponibles. Completa el pago al alias indicado para que la dupla quede pendiente de aprobacion.",
     "nextTitle": "Que pasa despues",
     "priceTitle": "Valor de inscripcion: Por persona",
     "priceAmount": "$60.000",
