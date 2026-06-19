@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignUpForm } from "@/components/auth/sign-up-form";
 import { SectionHeading } from "@/components/section-heading";
@@ -5,6 +6,7 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getViewerContext } from "@/lib/data";
 import { env, hasSupabaseEnv } from "@/lib/env";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
+import { REFERRAL_CODE_COOKIE } from "@/lib/referral";
 
 export default async function SignUpPage({
   params,
@@ -12,6 +14,8 @@ export default async function SignUpPage({
   params: Promise<unknown>;
 }) {
   const { locale } = (await params) as { locale: Locale };
+  const cookieStore = await cookies();
+  const referralCode = cookieStore.get(REFERRAL_CODE_COOKIE)?.value ?? null;
   const [viewer, dictionary] = await Promise.all([getViewerContext(), getDictionary(locale)]);
   const whatsappNumber = "+54 9 11 2650-7505";
 
@@ -64,6 +68,7 @@ export default async function SignUpPage({
           contactEmail={env.contactEmail}
           enabled={hasSupabaseEnv()}
           locale={locale}
+          referralCode={referralCode}
         />
       </div>
 

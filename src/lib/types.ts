@@ -38,6 +38,14 @@ export type Registration = {
   notes?: string | null;
 };
 
+export type CustomSignupLinkStats = {
+  id: string;
+  code: string;
+  label: string;
+  uniqueAccessCount: number;
+  signupCount: number;
+};
+
 export type BracketEntry = {
   id: string;
   bracketId: string;

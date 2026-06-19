@@ -2,13 +2,21 @@ import { cache } from "react";
 import { redirect } from "next/navigation";
 import { hasSupabaseEnv } from "@/lib/env";
 import { localizeHref, type Locale } from "@/lib/i18n";
-import { demoBracket, demoBracketProgress, demoBrackets, demoTeams, demoTournament } from "@/lib/mock-data";
+import {
+  demoBracket,
+  demoBracketProgress,
+  demoBrackets,
+  demoCustomSignupLinkStats,
+  demoTeams,
+  demoTournament,
+} from "@/lib/mock-data";
 import { createClient } from "@/lib/supabase/server";
 import type {
   Bracket,
   BracketEntry,
   BracketProgressColumn,
   BracketProgressSlot,
+  CustomSignupLinkStats,
   PublicTeam,
   Team,
   Tournament,
@@ -321,6 +329,27 @@ export async function getAdminTeams(): Promise<Team[]> {
       avatarUrl: team.avatar_url ? String(team.avatar_url) : null,
     };
   });
+}
+
+export async function getCustomSignupLinkStats(): Promise<CustomSignupLinkStats[]> {
+  if (!hasSupabaseEnv()) {
+    return demoCustomSignupLinkStats;
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase!.rpc("get_admin_custom_signup_link_stats");
+
+  if (error) {
+    throw new Error(`Failed to load custom signup link stats: ${error.message}`);
+  }
+
+  return ((data ?? []) as Record<string, unknown>[]).map((entry) => ({
+    id: String(entry.id),
+    code: String(entry.code),
+    label: String(entry.label),
+    uniqueAccessCount: Number(entry.unique_access_count ?? 0),
+    signupCount: Number(entry.signup_count ?? 0),
+  }));
 }
 
 export async function getAdminBrackets(): Promise<Bracket[]> {

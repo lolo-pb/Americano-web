@@ -223,6 +223,17 @@
     "noBrackets": "Todavia no hay cuadros creados.",
     "openBracketManager": "Abrir armado del cuadro",
     "openProgressManager": "Abrir panel de progreso",
+    "referrals": {
+      "title": "Links de inscripcion",
+      "description": "Revisa cada codigo manual y compara visitas unicas con inscripciones concretadas.",
+      "empty": "Todavia no se agregaron links de inscripcion personalizados.",
+      "columns": {
+        "salesman": "Vendedor",
+        "code": "Codigo",
+        "accesses": "Accesos",
+        "signups": "Inscripciones"
+      }
+    },
     "players": {
       "eyebrow": "Duplas admin",
       "title": "Acepta duplas al torneo.",

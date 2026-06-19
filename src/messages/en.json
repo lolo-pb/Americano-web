@@ -223,6 +223,17 @@
     "noBrackets": "No brackets created yet.",
     "openBracketManager": "Open setup dashboard",
     "openProgressManager": "Open progress dashboard",
+    "referrals": {
+      "title": "Custom signup links",
+      "description": "Review each manually created referral code and compare unique visits with completed signups.",
+      "empty": "No custom signup links have been added yet.",
+      "columns": {
+        "salesman": "Salesman",
+        "code": "Code",
+        "accesses": "Accesses",
+        "signups": "Signups"
+      }
+    },
     "players": {
       "eyebrow": "Admin teams",
       "title": "Accept teams into the tournament.",

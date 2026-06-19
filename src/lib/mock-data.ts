@@ -1,4 +1,4 @@
-import type { Bracket, BracketProgressSlot, PublicTeam, Team, Tournament } from "@/lib/types";
+import type { Bracket, BracketProgressSlot, CustomSignupLinkStats, PublicTeam, Team, Tournament } from "@/lib/types";
 
 function buildTeamName(playerOneName: string, playerTwoName: string) {
   return `${playerOneName} & ${playerTwoName}`;
@@ -88,6 +88,30 @@ export const demoBracket: Bracket = {
 };
 
 export const demoBrackets: Bracket[] = [demoBracket];
+
+export const demoCustomSignupLinkStats: CustomSignupLinkStats[] = [
+  {
+    id: "custom-link-1",
+    code: "juan",
+    label: "Juan",
+    uniqueAccessCount: 18,
+    signupCount: 6,
+  },
+  {
+    id: "custom-link-2",
+    code: "mili",
+    label: "Mili",
+    uniqueAccessCount: 12,
+    signupCount: 4,
+  },
+  {
+    id: "custom-link-3",
+    code: "agus",
+    label: "Agus",
+    uniqueAccessCount: 7,
+    signupCount: 1,
+  },
+];
 
 export const demoBracketProgress: BracketProgressSlot[] = [
   ...demoBracket.entries.map((entry) => ({

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { updateTeamStatusAction } from "@/app/actions";
 import { SectionHeading } from "@/components/section-heading";
 import { StatusBadge } from "@/components/status-badge";
-import { getAdminBrackets, getAdminTeams, getTournament, requireAdmin } from "@/lib/data";
+import { getAdminBrackets, getAdminTeams, getCustomSignupLinkStats, getTournament, requireAdmin } from "@/lib/data";
 import { getDictionary, interpolate, localizeHref, type Locale } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
@@ -14,9 +14,10 @@ export default async function AdminDashboardPage({
 }) {
   const { locale } = (await params) as { locale: Locale };
   await requireAdmin(locale);
-  const [teams, brackets, tournament, dictionary] = await Promise.all([
+  const [teams, brackets, customSignupLinks, tournament, dictionary] = await Promise.all([
     getAdminTeams(),
     getAdminBrackets(),
+    getCustomSignupLinkStats(),
     getTournament(),
     getDictionary(locale),
   ]);
@@ -145,6 +146,44 @@ export default async function AdminDashboardPage({
           </Link>
         </aside>
       </div>
+
+      <section className="card mt-8 rounded-[1.6rem] p-4 sm:rounded-[2rem] sm:p-6">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-extrabold text-forest sm:text-2xl">{dictionary.admin.referrals.title}</h2>
+            <p className="mt-1 text-sm text-muted">{dictionary.admin.referrals.description}</p>
+          </div>
+        </div>
+
+        <div className="mt-6 overflow-x-auto">
+          {customSignupLinks.length ? (
+            <table className="min-w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-line text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                  <th className="pb-3 pr-4">{dictionary.admin.referrals.columns.salesman}</th>
+                  <th className="pb-3 pr-4">{dictionary.admin.referrals.columns.code}</th>
+                  <th className="pb-3 pr-4">{dictionary.admin.referrals.columns.accesses}</th>
+                  <th className="pb-3">{dictionary.admin.referrals.columns.signups}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {customSignupLinks.map((link) => (
+                  <tr key={link.id} className="border-b border-line/70 last:border-b-0">
+                    <td className="py-3 pr-4 font-semibold text-ink">{link.label}</td>
+                    <td className="py-3 pr-4 font-mono text-xs text-muted sm:text-sm">{link.code}</td>
+                    <td className="py-3 pr-4 text-ink">{link.uniqueAccessCount}</td>
+                    <td className="py-3 text-ink">{link.signupCount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="rounded-[1.5rem] border border-dashed border-line px-4 py-6 text-sm text-muted">
+              {dictionary.admin.referrals.empty}
+            </p>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

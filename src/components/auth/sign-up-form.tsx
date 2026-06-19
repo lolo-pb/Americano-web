@@ -26,11 +26,13 @@ export function SignUpForm({
   contactEmail,
   enabled,
   locale,
+  referralCode,
 }: {
   paymentAlias: string;
   contactEmail: string;
   enabled: boolean;
   locale: Locale;
+  referralCode?: string | null;
 }) {
   const router = useRouter();
   const { t } = useI18n();
@@ -89,6 +91,7 @@ export function SignUpForm({
             player_two_name: parsed.playerTwoName.trim(),
             phone: parsed.phone,
             category: parsed.category,
+            custom_signup_code: referralCode ?? undefined,
           },
         },
       });
