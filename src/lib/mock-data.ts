@@ -23,7 +23,7 @@ export const demoTournament: Tournament = {
   name: "Americano Belgrano Tenis",
   location: "Belgrano Tenis",
   startDate: "2026-06-28",
-  signupOpen: true,
+  signupOpen: false,
   bracketsPublished: true,
   description:
     "Americano de duplas en Belgrano Tenis, con vinito, picadita y musica al cierre del evento.",
